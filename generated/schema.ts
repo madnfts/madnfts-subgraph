@@ -365,8 +365,17 @@ export class ERC721Token extends Entity {
     this.set("approval", Value.fromBytes(value));
   }
 
-  get uri(): string | null {
+  get uri(): string {
     let value = this.get("uri");
+    return value!.toString();
+  }
+
+  set uri(value: string) {
+    this.set("uri", Value.fromString(value));
+  }
+
+  get name(): string | null {
+    let value = this.get("name");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -374,11 +383,190 @@ export class ERC721Token extends Entity {
     }
   }
 
-  set uri(value: string | null) {
+  set name(value: string | null) {
     if (!value) {
-      this.unset("uri");
+      this.unset("name");
     } else {
-      this.set("uri", Value.fromString(<string>value));
+      this.set("name", Value.fromString(<string>value));
+    }
+  }
+
+  get image(): string | null {
+    let value = this.get("image");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set image(value: string | null) {
+    if (!value) {
+      this.unset("image");
+    } else {
+      this.set("image", Value.fromString(<string>value));
+    }
+  }
+
+  get type(): BigInt | null {
+    let value = this.get("type");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set type(value: BigInt | null) {
+    if (!value) {
+      this.unset("type");
+    } else {
+      this.set("type", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get description(): string | null {
+    let value = this.get("description");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set description(value: string | null) {
+    if (!value) {
+      this.unset("description");
+    } else {
+      this.set("description", Value.fromString(<string>value));
+    }
+  }
+
+  get externalUrl(): string | null {
+    let value = this.get("externalUrl");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set externalUrl(value: string | null) {
+    if (!value) {
+      this.unset("externalUrl");
+    } else {
+      this.set("externalUrl", Value.fromString(<string>value));
+    }
+  }
+
+  get unlockableUrl(): string | null {
+    let value = this.get("unlockableUrl");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set unlockableUrl(value: string | null) {
+    if (!value) {
+      this.unset("unlockableUrl");
+    } else {
+      this.set("unlockableUrl", Value.fromString(<string>value));
+    }
+  }
+
+  get explicitContent(): boolean {
+    let value = this.get("explicitContent");
+    return value!.toBoolean();
+  }
+
+  set explicitContent(value: boolean) {
+    this.set("explicitContent", Value.fromBoolean(value));
+  }
+
+  get tags(): Array<string> | null {
+    let value = this.get("tags");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set tags(value: Array<string> | null) {
+    if (!value) {
+      this.unset("tags");
+    } else {
+      this.set("tags", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get attributes(): Array<string> | null {
+    let value = this.get("attributes");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set attributes(value: Array<string> | null) {
+    if (!value) {
+      this.unset("attributes");
+    } else {
+      this.set("attributes", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get files(): Array<string> | null {
+    let value = this.get("files");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set files(value: Array<string> | null) {
+    if (!value) {
+      this.unset("files");
+    } else {
+      this.set("files", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get updatedAt(): BigInt | null {
+    let value = this.get("updatedAt");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updatedAt(value: BigInt | null) {
+    if (!value) {
+      this.unset("updatedAt");
+    } else {
+      this.set("updatedAt", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get createdAt(): BigInt | null {
+    let value = this.get("createdAt");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set createdAt(value: BigInt | null) {
+    if (!value) {
+      this.unset("createdAt");
+    } else {
+      this.set("createdAt", Value.fromBigInt(<BigInt>value));
     }
   }
 
@@ -389,6 +577,172 @@ export class ERC721Token extends Entity {
 
   set transfers(value: Array<string>) {
     this.set("transfers", Value.fromStringArray(value));
+  }
+}
+
+export class Attribute extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Attribute entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Attribute must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Attribute", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Attribute | null {
+    return changetype<Attribute | null>(store.get("Attribute", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get trait_type(): string | null {
+    let value = this.get("trait_type");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set trait_type(value: string | null) {
+    if (!value) {
+      this.unset("trait_type");
+    } else {
+      this.set("trait_type", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): string | null {
+    let value = this.get("value");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set value(value: string | null) {
+    if (!value) {
+      this.unset("value");
+    } else {
+      this.set("value", Value.fromString(<string>value));
+    }
+  }
+
+  get max_value(): string | null {
+    let value = this.get("max_value");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set max_value(value: string | null) {
+    if (!value) {
+      this.unset("max_value");
+    } else {
+      this.set("max_value", Value.fromString(<string>value));
+    }
+  }
+
+  get display_type(): string | null {
+    let value = this.get("display_type");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set display_type(value: string | null) {
+    if (!value) {
+      this.unset("display_type");
+    } else {
+      this.set("display_type", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class File extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save File entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type File must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("File", id.toString(), this);
+    }
+  }
+
+  static load(id: string): File | null {
+    return changetype<File | null>(store.get("File", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get display_type(): string | null {
+    let value = this.get("display_type");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set display_type(value: string | null) {
+    if (!value) {
+      this.unset("display_type");
+    } else {
+      this.set("display_type", Value.fromString(<string>value));
+    }
+  }
+
+  get value(): string | null {
+    let value = this.get("value");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set value(value: string | null) {
+    if (!value) {
+      this.unset("value");
+    } else {
+      this.set("value", Value.fromString(<string>value));
+    }
   }
 }
 

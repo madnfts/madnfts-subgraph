@@ -56,6 +56,7 @@ export function handleTransfer(event: TransferEvent): void {
 		let to    = fetchAccount(event.params.to)
 
 		token.owner = to.id
+		//token.updatedAt = Date.now()
 
 		contract.save()
 		token.save()
