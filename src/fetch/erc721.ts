@@ -100,18 +100,19 @@ export function fetchERC721Token(
         token.externalUrl = data.get('externalUrl')!.toString();
         token.unlockableUrl = data.get('unlockableUrl')!.toString();
         token.explicitContent = data.get('explicitContent')!.toBool();
-        token.tags = data.get('tags')!.toArray().map<string>( tag => tag.toString());
-        //EXTRACT attributtes
-        token.attributes = data.get('attributes')!.toArray().map<string>( attribute => attribute.toString())
-        token.files = data.get('files')!.toArray().map<string>( attribute => attribute.toString())
-
-        };
-      
-
-        ////
-        //token.attributes = data.get('attributes')!.toString()
-        //token.files = data.get('files')!.toString()
-      
+        token.tags = data
+          .get('tags')!
+          .toArray()
+          .map<string>(tag => tag.toString());
+        token.attributes = data
+          .get('attributes')!
+          .toArray()
+          .map<string>(attribute => attribute.toString());
+        token.files = data
+          .get('files')!
+          .toArray()
+          .map<string>(file => file.toString());
+      }
     }
   }
 

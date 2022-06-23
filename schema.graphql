@@ -43,26 +43,13 @@ type ERC721Token @entity {
   unlockableUrl: String
   explicitContent: Boolean
   tags: [String!]
-  attributes: [Attribute!]
-  files: [File!]
+  attributes: [String!]
+  files:[String!]
   updatedAt: BigInt
   createdAt: BigInt
   transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
 }
 
-type Attribute @entity {
-  id: ID!
-  trait_type: String
-  value: String
-  max_value: String
-  display_type: String
-}
-
-type File @entity {
-  id: ID!
-  display_type: String
-  value: String
-}
 
 type ERC721Operator @entity {
   id: ID!

@@ -24,7 +24,7 @@ import {
 } from '../fetch/account'
 
 export function replaceURI(uri: string, identifier: BigInt): string {
-	return uri.replaceAll(
+	return uri.replace(
 		'{id}',
 		identifier.toHex().slice(2).padStart(64, '0'),
 	)
