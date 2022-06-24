@@ -28,6 +28,14 @@ type ERC721Contract @entity(immutable: true) {
   transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
 }
 
+type _Schema_
+  @fulltext(
+    name: "ERC721TokenSearch"
+    language: en
+    algorithm: rank
+    include: [{ entity: "ERC721Token", fields: [{ name: "name" }, { name: "description" }, { name: "tags" }] }]
+  )
+
 type ERC721Token @entity {
   id: ID!
   contract: ERC721Contract!

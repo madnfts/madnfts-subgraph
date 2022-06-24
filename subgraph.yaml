@@ -1,5 +1,7 @@
 specVersion: 0.0.5
 description: Subgraph for both ERC721 and ERC1155
+features:
+  - fullTextSearch
 repository: https://github.com/sunny0714/madnfts-subgraph
 schema:
   file: ./schema.graphql
