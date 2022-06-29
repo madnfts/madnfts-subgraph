@@ -56,3 +56,23 @@ dataSources:
         - event: URI(string,indexed uint256)
           handler: handleURI
       file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: TransferExecutor
+    network: rinkeby
+    source:
+      address: '0x62d8a6D5Ab9Ef0352c86a8777f3b3aae10bFbc3e' ## change address
+      abi: TransferExecutor
+      startBlock: 10691209
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC1155Contract
+      abis:
+        - name: TransferExecutor
+          file: ./abis/TransferExecutor.json
+      eventHandlers:
+        - event: Transfer(((bytes4,bytes),uint256),address,address,bytes4,bytes4)
+          handler: handleTransferExecutor
+      file: ./src/mapping.ts

@@ -46,6 +46,7 @@ type ERC721Token @entity {
   name: String
   image: String
   type: BigInt
+  price: BigInt
   description: String
   externalUrl: String
   unlockableUrl: String

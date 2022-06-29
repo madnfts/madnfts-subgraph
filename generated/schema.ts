@@ -425,6 +425,23 @@ export class ERC721Token extends Entity {
     }
   }
 
+  get price(): BigInt | null {
+    let value = this.get("price");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set price(value: BigInt | null) {
+    if (!value) {
+      this.unset("price");
+    } else {
+      this.set("price", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
   get description(): string | null {
     let value = this.get("description");
     if (!value || value.kind == ValueKind.NULL) {
