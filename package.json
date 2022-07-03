@@ -4,10 +4,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ sunny0714/Madsubgraph",
-    "create-local": "graph create --node http://localhost:8020/ sunny0714/Madsubgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ sunny0714/Madsubgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 sunny0714/Madsubgraph"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ madnfts/madnfts-subgraph",
+    "create-local": "graph create --node http://localhost:8020/ madnfts/madnfts-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ madnfts/madnfts-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 madnfts/madnfts-subgraph"
   },
   "dependencies": {
     "@amxx/graphprotocol-utils": "^1.1.0",

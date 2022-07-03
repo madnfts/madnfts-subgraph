@@ -7,7 +7,7 @@ This project uses the
 [ERC1155MadNfts contract](https://rinkeby.etherscan.io/address/0x62d8a6D5Ab9Ef0352c86a8777f3b3aae10bFbc3e)
 
 See playground:
-https://thegraph.com/hosted-service/subgraph/sunny0714/madsubgraph
+https://thegraph.com/hosted-service/subgraph/madnfts/madnfts-subgraph
 
 Feel free to extend the [`schema.graphql`](./schema.graphql) and the
 [`mapping.ts`](./src/mapping.ts)
