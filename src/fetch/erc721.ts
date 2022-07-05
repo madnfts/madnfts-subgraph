@@ -97,9 +97,9 @@ export function fetchERC721Token(
         token.image = data.get('image')!.toString();
         token.type = data.get('type')!.toBigInt();
         token.description = data.get('description')!.toString();
-        token.externalUrl = data.get('externalUrl')!.toString();
-        token.unlockableUrl = data.get('unlockableUrl')!.toString();
-        token.explicitContent = data.get('explicitContent')!.toBool();
+        token.externalUrl = data.get('external_url')!.toString();
+        token.unlockableUrl = data.get('unlockable_url')!.toString();
+        token.explicitContent = data.get('explicit_content')!.toBool();
         token.tags = data
           .get('tags')!
           .toArray()
