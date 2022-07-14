@@ -4,8 +4,6 @@ import {
   Bytes,
   ipfs,
   json,
-  JSONValue,
-  Value,
 } from '@graphprotocol/graph-ts';
 
 import {
@@ -93,25 +91,23 @@ export function fetchERC721Token(
       let getIPFSData = ipfs.cat(hash);
       if (getIPFSData !== null) {
         let data = json.fromBytes(getIPFSData).toObject();
-        token.name = data.get('name')!.toString();
-        token.image = data.get('image')!.toString();
-        token.type = data.get('type')!.toBigInt();
-        token.description = data.get('description')!.toString();
-        token.externalUrl = data.get('external_url')!.toString();
-        token.unlockableUrl = data.get('unlockable_url')!.toString();
-        token.explicitContent = data.get('explicit_content')!.toBool();
-        token.tags = data
-          .get('tags')!
-          .toArray()
-          .map<string>(tag => tag.toString());
-        token.attributes = data
-          .get('attributes')!
-          .toArray()
-          .map<string>(attribute => attribute.toString());
-        token.files = data
-          .get('files')!
-          .toArray()
-          .map<string>(file => file.toString());
+        token.name = data.get('name') ? data.get('name')!.toString() : '';
+        token.image = data.get('image') ? data.get('image')!.toString() : '';
+        token.description = data.get('description') ? data.get('description')!.toString() : '';
+        token.type = data.get('type') ? data.get('type')!.toI64() as i32 : 1;
+        // token.externalUrl = data.get('external_url') ? data.get('external_url')!.toString() : '';
+        // token.unlockableUrl = data.get('unlockable_url') ? data.get('unlockable_url')!.toString() : '';
+        // token.explicitContent = !!data.get('explicit_content');
+
+        // token.tags = data.get('tags')
+        //   ? data.get('tags')!.toArray().join(',').toString()
+        //   : '' ;
+        // token.attributes = data.get('attributes')
+        //   ? data.get('attributes')!.toArray().map<string>(attribute => attribute.toString())
+        //   : [] ;
+        // token.files = data.get('files')
+        //   ? data.get('files')!.toArray().map<string>(file => file.toString())
+        //   : [] ;
       }
     }
   }
