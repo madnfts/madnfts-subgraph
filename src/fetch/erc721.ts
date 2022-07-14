@@ -100,15 +100,33 @@ export function fetchERC721Token(
         token.unlockableUrl = (data.get('unlockable_url') && data.mustGet('unlockable_url').kind == JSONValueKind.STRING) ? data.get('unlockable_url')!.toString() : '';
         token.explicitContent = !!data.get('explicit_content');
 
-        // token.tags = data.get('tags')
-        //   ? data.get('tags')!.toArray().join(',').toString()
-        //   : '' ;
-        // token.attributes = data.get('attributes')
-        //   ? data.get('attributes')!.toArray().map<string>(attribute => attribute.toString())
-        //   : [] ;
-        // token.files = data.get('files')
-        //   ? data.get('files')!.toArray().map<string>(file => file.toString())
-        //   : [] ;
+        if (data.get('tags') && data.mustGet('tags').kind == JSONValueKind.ARRAY) {
+          token.tags = data.get('tags')!.toArray().map<string>(t => t.toString().replace(',', '')).join(',').toString()
+        } else {
+          token.tags = '';
+        }
+
+        // @todo - store attributes array appropriately
+        if (data.get('attributes') && data.mustGet('attributes').kind == JSONValueKind.ARRAY) {
+          let attributes = data.get('attributes')!.toArray();
+          for (let i=0; i < attributes.length; i++) {
+            let item = attributes[i].toObject();
+            // item.display_type, item.trait_type, item.value, item.max_value
+          }
+        } else {
+          token.attributes = '';
+        }
+
+        // @todo - store attributes array appropriately
+        if (data.get('files') && data.mustGet('files').kind == JSONValueKind.ARRAY) {
+          let files = data.get('files')!.toArray();
+          for (let i=0; i < files.length; i++) {
+            let item = files[i].toObject();
+            // item.display_type, item.trait_type, item.value
+          }
+        } else {
+          token.files = '';
+        }
       }
     }
   }

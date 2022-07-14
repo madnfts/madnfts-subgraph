@@ -494,54 +494,54 @@ export class ERC721Token extends Entity {
     this.set("explicitContent", Value.fromBoolean(value));
   }
 
-  get tags(): Array<string> | null {
+  get tags(): string | null {
     let value = this.get("tags");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toStringArray();
+      return value.toString();
     }
   }
 
-  set tags(value: Array<string> | null) {
+  set tags(value: string | null) {
     if (!value) {
       this.unset("tags");
     } else {
-      this.set("tags", Value.fromStringArray(<Array<string>>value));
+      this.set("tags", Value.fromString(<string>value));
     }
   }
 
-  get attributes(): Array<string> | null {
-    let value = this.get("attributes");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toStringArray();
-    }
-  }
-
-  set attributes(value: Array<string> | null) {
-    if (!value) {
-      this.unset("attributes");
-    } else {
-      this.set("attributes", Value.fromStringArray(<Array<string>>value));
-    }
-  }
-
-  get files(): Array<string> | null {
+  get files(): string | null {
     let value = this.get("files");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toStringArray();
+      return value.toString();
     }
   }
 
-  set files(value: Array<string> | null) {
+  set files(value: string | null) {
     if (!value) {
       this.unset("files");
     } else {
-      this.set("files", Value.fromStringArray(<Array<string>>value));
+      this.set("files", Value.fromString(<string>value));
+    }
+  }
+
+  get attributes(): string | null {
+    let value = this.get("attributes");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set attributes(value: string | null) {
+    if (!value) {
+      this.unset("attributes");
+    } else {
+      this.set("attributes", Value.fromString(<string>value));
     }
   }
 

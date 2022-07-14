@@ -51,9 +51,9 @@ type ERC721Token @entity {
   externalUrl: String
   unlockableUrl: String
   explicitContent: Boolean
-  tags: [String!]
-  attributes: [String!]
-  files: [String!]
+  tags: String
+  files: String
+  attributes: String
   updatedAt: BigInt
   createdAt: BigInt
   transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
