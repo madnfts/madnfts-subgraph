@@ -4,6 +4,7 @@ import {
   Bytes,
   ipfs,
   json,
+  JSONValueKind,
 } from '@graphprotocol/graph-ts';
 
 import {
@@ -95,9 +96,9 @@ export function fetchERC721Token(
         token.image = data.get('image') ? data.get('image')!.toString() : '';
         token.description = data.get('description') ? data.get('description')!.toString() : '';
         token.type = data.get('type') ? data.get('type')!.toI64() as i32 : 1;
-        // token.externalUrl = data.get('external_url') ? data.get('external_url')!.toString() : '';
-        // token.unlockableUrl = data.get('unlockable_url') ? data.get('unlockable_url')!.toString() : '';
-        // token.explicitContent = !!data.get('explicit_content');
+        token.externalUrl = (data.get('external_url') && data.mustGet('external_url').kind == JSONValueKind.STRING) ? data.get('external_url')!.toString() : '';
+        token.unlockableUrl = (data.get('unlockable_url') && data.mustGet('unlockable_url').kind == JSONValueKind.STRING) ? data.get('unlockable_url')!.toString() : '';
+        token.explicitContent = !!data.get('explicit_content');
 
         // token.tags = data.get('tags')
         //   ? data.get('tags')!.toArray().join(',').toString()
