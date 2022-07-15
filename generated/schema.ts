@@ -545,8 +545,8 @@ export class ERC721Token extends Entity {
     }
   }
 
-  get updatedAt(): BigInt | null {
-    let value = this.get("updatedAt");
+  get timestamp(): BigInt | null {
+    let value = this.get("timestamp");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -554,28 +554,11 @@ export class ERC721Token extends Entity {
     }
   }
 
-  set updatedAt(value: BigInt | null) {
+  set timestamp(value: BigInt | null) {
     if (!value) {
-      this.unset("updatedAt");
+      this.unset("timestamp");
     } else {
-      this.set("updatedAt", Value.fromBigInt(<BigInt>value));
-    }
-  }
-
-  get createdAt(): BigInt | null {
-    let value = this.get("createdAt");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set createdAt(value: BigInt | null) {
-    if (!value) {
-      this.unset("createdAt");
-    } else {
-      this.set("createdAt", Value.fromBigInt(<BigInt>value));
+      this.set("timestamp", Value.fromBigInt(<BigInt>value));
     }
   }
 

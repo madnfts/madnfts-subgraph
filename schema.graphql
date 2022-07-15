@@ -54,8 +54,7 @@ type ERC721Token @entity {
   tags: String
   files: String
   attributes: String
-  updatedAt: BigInt
-  createdAt: BigInt
+  timestamp: BigInt
   transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
 }
 
