@@ -81,6 +81,8 @@ type ERC721Transfer implements Event @entity(immutable: true) {
 type ERC1155Contract @entity(immutable: true) {
   id: Bytes!
   asAccount: Account!
+  name: String
+  symbol: String
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
   balances: [ERC1155Balance!]! @derivedFrom(field: "contract")
   operators: [ERC1155Operator!]! @derivedFrom(field: "contract")

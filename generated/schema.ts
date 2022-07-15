@@ -777,6 +777,40 @@ export class ERC1155Contract extends Entity {
     this.set("asAccount", Value.fromBytes(value));
   }
 
+  get name(): string | null {
+    let value = this.get("name");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set name(value: string | null) {
+    if (!value) {
+      this.unset("name");
+    } else {
+      this.set("name", Value.fromString(<string>value));
+    }
+  }
+
+  get symbol(): string | null {
+    let value = this.get("symbol");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set symbol(value: string | null) {
+    if (!value) {
+      this.unset("symbol");
+    } else {
+      this.set("symbol", Value.fromString(<string>value));
+    }
+  }
+
   get tokens(): Array<string> {
     let value = this.get("tokens");
     return value!.toStringArray();

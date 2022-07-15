@@ -31,7 +31,13 @@ export function replaceURI(uri: string, identifier: BigInt): string {
 }
 
 export function fetchERC1155(address: Address): ERC1155Contract {
+	let erc1155   = ERC1155.bind(address)
+
 	let contract       = new ERC1155Contract(address)
+	let try_name              = erc1155.try_name()
+	let try_symbol            = erc1155.try_symbol()
+	contract.name             = try_name.reverted   ? '' : try_name.value
+	contract.symbol           = try_symbol.reverted ? '' : try_symbol.value
 	contract.asAccount = address
 	contract.save()
 
