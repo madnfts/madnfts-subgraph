@@ -22,6 +22,7 @@ import {
 import {
 	fetchAccount,
 } from '../fetch/account'
+import { fetchIpfsERC1155 } from './ipfs';
 
 export function replaceURI(uri: string, identifier: BigInt): string {
 	return uri.replace(
@@ -59,7 +60,10 @@ export function fetchERC1155Token(contract: ERC1155Contract, identifier: BigInt)
 		token.contract         = contract.id
 		token.identifier       = identifier
 		token.totalSupply      = fetchERC1155Balance(token as ERC1155Token, null).id
-		token.uri              = try_uri.reverted ? null : replaceURI(try_uri.value, identifier)
+		token.uri              = try_uri.reverted ? '' : replaceURI(try_uri.value, identifier)
+		if (token.uri) {
+			fetchIpfsERC1155(token, 'https://ipfs.io/ipfs/');
+		}
 		token.save()
 	}
 

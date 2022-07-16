@@ -93,8 +93,20 @@ type ERC1155Token @entity {
   id: ID!
   contract: ERC1155Contract!
   identifier: BigInt!
-  uri: String
+  uri: String!
   totalSupply: ERC1155Balance!
+  name: String
+  image: String
+  type: Int
+  price: BigInt
+  description: String
+  externalUrl: String
+  unlockableUrl: String
+  explicitContent: Boolean
+  tags: String
+  files: String
+  attributes: String
+  timestamp: BigInt
   balances: [ERC1155Balance!]! @derivedFrom(field: "token")
   transfers: [ERC1155Transfer!]! @derivedFrom(field: "token")
 }

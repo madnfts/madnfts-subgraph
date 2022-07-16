@@ -170,6 +170,7 @@ function registerTransfer(
     ev.toBalance = balance.id;
   }
 
+  token.timestamp = event.block.timestamp;
   token.save();
   ev.save();
 }
@@ -234,6 +235,7 @@ export function handleApprovalForAllERC1155(
 export function handleURI(event: URIEvent): void {
   let contract = fetchERC1155(event.address);
   let token = fetchERC1155Token(contract, event.params.id);
+  token.timestamp = event.block.timestamp;
   token.uri = replaceURI(event.params.value, event.params.id);
   token.save();
 }
@@ -246,6 +248,8 @@ export function handleTransferExecutor(event: TransferExecutorEvent): void {
     .concat('/')
     .concat(decode[1].toBigInt().toHex());
   let token = ERC721Token.load(id)!;
+
+  token.timestamp = event.block.timestamp;
   token.price = event.params.asset.value;
   token.save();
 }

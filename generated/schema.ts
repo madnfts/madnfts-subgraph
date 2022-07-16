@@ -897,21 +897,13 @@ export class ERC1155Token extends Entity {
     this.set("identifier", Value.fromBigInt(value));
   }
 
-  get uri(): string | null {
+  get uri(): string {
     let value = this.get("uri");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set uri(value: string | null) {
-    if (!value) {
-      this.unset("uri");
-    } else {
-      this.set("uri", Value.fromString(<string>value));
-    }
+  set uri(value: string) {
+    this.set("uri", Value.fromString(value));
   }
 
   get totalSupply(): string {
@@ -921,6 +913,194 @@ export class ERC1155Token extends Entity {
 
   set totalSupply(value: string) {
     this.set("totalSupply", Value.fromString(value));
+  }
+
+  get name(): string | null {
+    let value = this.get("name");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set name(value: string | null) {
+    if (!value) {
+      this.unset("name");
+    } else {
+      this.set("name", Value.fromString(<string>value));
+    }
+  }
+
+  get image(): string | null {
+    let value = this.get("image");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set image(value: string | null) {
+    if (!value) {
+      this.unset("image");
+    } else {
+      this.set("image", Value.fromString(<string>value));
+    }
+  }
+
+  get type(): i32 {
+    let value = this.get("type");
+    return value!.toI32();
+  }
+
+  set type(value: i32) {
+    this.set("type", Value.fromI32(value));
+  }
+
+  get price(): BigInt | null {
+    let value = this.get("price");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set price(value: BigInt | null) {
+    if (!value) {
+      this.unset("price");
+    } else {
+      this.set("price", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get description(): string | null {
+    let value = this.get("description");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set description(value: string | null) {
+    if (!value) {
+      this.unset("description");
+    } else {
+      this.set("description", Value.fromString(<string>value));
+    }
+  }
+
+  get externalUrl(): string | null {
+    let value = this.get("externalUrl");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set externalUrl(value: string | null) {
+    if (!value) {
+      this.unset("externalUrl");
+    } else {
+      this.set("externalUrl", Value.fromString(<string>value));
+    }
+  }
+
+  get unlockableUrl(): string | null {
+    let value = this.get("unlockableUrl");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set unlockableUrl(value: string | null) {
+    if (!value) {
+      this.unset("unlockableUrl");
+    } else {
+      this.set("unlockableUrl", Value.fromString(<string>value));
+    }
+  }
+
+  get explicitContent(): boolean {
+    let value = this.get("explicitContent");
+    return value!.toBoolean();
+  }
+
+  set explicitContent(value: boolean) {
+    this.set("explicitContent", Value.fromBoolean(value));
+  }
+
+  get tags(): string | null {
+    let value = this.get("tags");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set tags(value: string | null) {
+    if (!value) {
+      this.unset("tags");
+    } else {
+      this.set("tags", Value.fromString(<string>value));
+    }
+  }
+
+  get files(): string | null {
+    let value = this.get("files");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set files(value: string | null) {
+    if (!value) {
+      this.unset("files");
+    } else {
+      this.set("files", Value.fromString(<string>value));
+    }
+  }
+
+  get attributes(): string | null {
+    let value = this.get("attributes");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set attributes(value: string | null) {
+    if (!value) {
+      this.unset("attributes");
+    } else {
+      this.set("attributes", Value.fromString(<string>value));
+    }
+  }
+
+  get timestamp(): BigInt | null {
+    let value = this.get("timestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set timestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("timestamp");
+    } else {
+      this.set("timestamp", Value.fromBigInt(<BigInt>value));
+    }
   }
 
   get balances(): Array<string> {
