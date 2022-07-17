@@ -1,3 +1,44 @@
+# Schemas & shared
+
+type _Schema_ @fulltext(
+  name: "ERC721TokenSearch"
+  language: en
+  algorithm: rank
+  include: [
+    { entity: "ERC721Token", fields: [{ name: "name" }, { name: "description" }] },
+    { entity: "ERC1155Token", fields: [{ name: "name" }, { name: "description" }] }
+  ]
+)
+
+interface Event {
+  id: ID!
+  transaction: Transaction!
+  emitter: Account!
+  timestamp: BigInt!
+}
+
+type Attribute @entity {
+  id: ID!
+  displayType: String
+  traitType: String
+  value: String
+  maxValue: String
+}
+
+type File @entity {
+  id: ID!
+  displayType: String
+  traitType: String
+  value: String
+}
+
+type Tag @entity {
+  id: ID!
+  value: String
+}
+
+# Account
+
 type Account @entity {
   id: Bytes!
   asERC721: ERC721Contract
@@ -12,10 +53,11 @@ type Account @entity {
   ERC1155operatorOperator: [ERC1155Operator!]! @derivedFrom(field: "operator")
   ERC1155transferFromEvent: [ERC1155Transfer!]! @derivedFrom(field: "from")
   ERC1155transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "to")
-  ERC1155transferOperatorEvent: [ERC1155Transfer!]!
-    @derivedFrom(field: "operator")
+  ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
   events: [Event!]! @derivedFrom(field: "emitter")
 }
+
+# ERC721
 
 type ERC721Contract @entity(immutable: true) {
   id: Bytes!
@@ -27,14 +69,6 @@ type ERC721Contract @entity(immutable: true) {
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
 }
-
-type _Schema_
-  @fulltext(
-    name: "ERC721TokenSearch"
-    language: en
-    algorithm: rank
-    include: [{ entity: "ERC721Token", fields: [{ name: "name" }, { name: "description" }, { name: "tags" }] }]
-  )
 
 type ERC721Token @entity {
   id: ID!
@@ -51,13 +85,12 @@ type ERC721Token @entity {
   externalUrl: String
   unlockableUrl: String
   explicitContent: Boolean
-  tags: String
-  files: String
-  attributes: String
+  tags: [Tag!]
+  files: [File!]
+  attributes: [Attribute!]
   timestamp: BigInt
   transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
 }
-
 
 type ERC721Operator @entity {
   id: ID!
@@ -77,6 +110,8 @@ type ERC721Transfer implements Event @entity(immutable: true) {
   from: Account!
   to: Account!
 }
+
+# ERC1155
 
 type ERC1155Contract @entity(immutable: true) {
   id: Bytes!
@@ -103,9 +138,9 @@ type ERC1155Token @entity {
   externalUrl: String
   unlockableUrl: String
   explicitContent: Boolean
-  tags: String
-  files: String
-  attributes: String
+  tags: [Tag!]
+  files: [File!]
+  attributes: [Attribute!]
   timestamp: BigInt
   balances: [ERC1155Balance!]! @derivedFrom(field: "token")
   transfers: [ERC1155Transfer!]! @derivedFrom(field: "token")
@@ -146,12 +181,7 @@ type ERC1155Transfer implements Event @entity(immutable: true) {
   valueExact: BigInt!
 }
 
-interface Event {
-  id: ID!
-  transaction: Transaction!
-  emitter: Account!
-  timestamp: BigInt!
-}
+# Exchange
 
 type Transaction @entity(immutable: true) {
   id: ID!

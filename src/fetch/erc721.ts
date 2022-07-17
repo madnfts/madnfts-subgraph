@@ -87,7 +87,7 @@ export function fetchERC721Token(
       let try_tokenURI = erc721.try_tokenURI(identifier);
       token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value;
       if (token.uri) {
-        fetchIpfsERC721(token, 'https://ipfs.io/ipfs/');
+        fetchIpfsERC721(token, contract.id, 'https://ipfs.io/ipfs/');
       }
     }
   }
