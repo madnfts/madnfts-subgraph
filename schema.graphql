@@ -65,6 +65,8 @@ type ERC721Contract @entity(immutable: true) {
   supportsMetadata: Boolean
   name: String
   symbol: String
+  owner: Account
+  timestamp: BigInt
   tokens: [ERC721Token!]! @derivedFrom(field: "contract")
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
@@ -118,6 +120,8 @@ type ERC1155Contract @entity(immutable: true) {
   asAccount: Account!
   name: String
   symbol: String
+  owner: Account
+  timestamp: BigInt
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
   balances: [ERC1155Balance!]! @derivedFrom(field: "contract")
   operators: [ERC1155Operator!]! @derivedFrom(field: "contract")

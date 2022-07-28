@@ -16,6 +16,8 @@ import {
 	ERC1155 as ERC1155ContractTemplate
 } from '../generated/templates'
 
+import { fetchAccount } from './fetch/account';
+
 export function handle721Created(event: Create721MadNftProxy): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
@@ -25,12 +27,19 @@ export function handle721Created(event: Create721MadNftProxy): void {
 		contract = new ERC721Contract(address)
 		contract.name = event.params.name.toString()
 		contract.symbol = event.params.symbol.toString()
+		contract.timestamp = event.block.timestamp
 	}
 	contract.asAccount = address
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
 
   ERC721ContractTemplate.create(address)
   // Entities can be written to the store with `.save()`
   contract.save()
+
+	let account = fetchAccount(address);
+	account.asERC721 = address;
+	account.save();
 }
 
 export function handle1155Created(event: Create1155MadNftProxy): void {
@@ -42,10 +51,17 @@ export function handle1155Created(event: Create1155MadNftProxy): void {
 		contract = new ERC1155Contract(address)
 		contract.name = event.params.name.toString()
 		contract.symbol = event.params.symbol.toString()
+		contract.timestamp = event.block.timestamp
 	}
 	contract.asAccount = address
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
 
   ERC1155ContractTemplate.create(event.params.proxy)
   // Entities can be written to the store with `.save()`
   contract.save()
+
+	let account        = fetchAccount(address)
+	account.asERC1155  = address
+	account.save()
 }
