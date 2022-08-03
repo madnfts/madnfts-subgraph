@@ -94,7 +94,7 @@ dataSources:
         - name: ERC721Factory
           file: ./abis/ERC721Factory.json
       eventHandlers:
-        - event: Create721MadNftProxy(indexed address,indexed string,indexed string,uint256)
+        - event: Create721MadNftProxy(indexed address,string,string,uint256)
           handler: handle721Created
       file: ./src/factory.ts
   - kind: ethereum/contract
@@ -114,7 +114,7 @@ dataSources:
         - name: ERC1155Factory
           file: ./abis/ERC1155Factory.json
       eventHandlers:
-        - event: Create1155MadNftProxy(indexed address,indexed string,indexed string,uint256)
+        - event: Create1155MadNftProxy(indexed address,string,string,uint256)
           handler: handle1155Created
       file: ./src/factory.ts
 templates:
