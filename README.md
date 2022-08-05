@@ -1,21 +1,52 @@
-# MADNFTs Subgraph for indexing NFTs from ERC721 and ERC1155 on Rinkeby Testnet
+# MADNFTs Subgraph
 
-Subgraph to index all NFTs whether they are EIP721/EIP1155 compliant or not
+Indexing 721 and 1155 factory contracts and NFTs whether they are EIP721/EIP1155 compliant or not
 
-This project uses the
-[ERC721MadNfts contract](https://rinkeby.etherscan.io/address/0x53358dB1825EFEed349915e31298aB464637b0E4),
-[ERC1155MadNfts contract](https://rinkeby.etherscan.io/address/0x62d8a6D5Ab9Ef0352c86a8777f3b3aae10bFbc3e)
+---
 
-See playground:
-https://thegraph.com/hosted-service/subgraph/madnfts/madnfts-subgraph
-
-Feel free to extend the [`schema.graphql`](./schema.graphql) and the
-[`mapping.ts`](./src/mapping.ts)
+### Development
 
 ```
 yarn install
 yarn codegen
 yarn build
 graph auth
+# you will be asked to input your key
 yarn deploy
 ```
+
+---
+
+### Local environment
+
+**1.** We configure a ganache environment
+```
+ganache --host 0.0.0.0 --port 7545 -i 1337 -m "copper borrow project spy rabbit month tuna card patient blind display picture"
+```
+
+**2.** Deploy smart contracts to ganache using truffle
+Once running we need to deploy the contracts onto the local chain
+```
+# madnfts-marketplace-contracts repo
+
+truffle migrate
+```
+
+**3.** Running local Graph node
+Install docker and use the below script to fire up the graph node and IPFS and postgres
+```
+# madnfts-subgraph repo
+
+cd docker
+docker-compose down -v;
+
+if [ -d "data" ]
+then
+  # we need to sudo this
+  sudo rm -rf data/;
+fi
+
+docker-compose up;
+```
+
+
