@@ -11,9 +11,8 @@ dataSources:
     name: ERC721
     network: rinkeby
     source:
-      address: '0x53358dB1825EFEed349915e31298aB464637b0E4'
+      address: '0xfd9D14B64BDfd5d2aA95dd787a76c689ad8Afdd2'
       abi: ERC721
-      startBlock: 11066216
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -35,9 +34,8 @@ dataSources:
     name: ERC1155
     network: rinkeby
     source:
-      address: '0x62d8a6D5Ab9Ef0352c86a8777f3b3aae10bFbc3e'
+      address: '0x86b6294ce7c5685C4e3f5a35Ee4353A8DF9De967'
       abi: ERC1155
-      startBlock: 11066216
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -61,9 +59,8 @@ dataSources:
     name: TransferExecutor
     network: rinkeby
     source:
-      address: '0x62d8a6D5Ab9Ef0352c86a8777f3b3aae10bFbc3e' ## change address
+      address: '0x5b3d131475F640FEb84157A351538d72863105e4' ## change address
       abi: TransferExecutor
-      startBlock: 11066216
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -81,9 +78,8 @@ dataSources:
     name: ERC721Factory
     network: rinkeby
     source:
-      address: '0x108E3CDF96a8106b53B8A641F6799F3fB1DaD251'
+      address: '0xD200a9a316Fcef0AB3BD2394f5c0561fb77bCF7E'
       abi: ERC721Factory
-      startBlock: 11066216
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -101,9 +97,8 @@ dataSources:
     name: ERC1155Factory
     network: rinkeby
     source:
-      address: '0x9482a2E454fC0f08E1F854164f5D863F2FCB1f86'
+      address: '0x932FF918660014d71F6371BbCB9C17E018d0ac1b'
       abi: ERC1155Factory
-      startBlock: 11066216
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5

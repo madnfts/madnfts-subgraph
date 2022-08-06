@@ -7,7 +7,7 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ devhallsmad/marketplace",
     "create-local": "graph create --node http://localhost:8020/ devhallsmad/marketplace",
     "remove-local": "graph remove --node http://localhost:8020/ devhallsmad/marketplace",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 madnfts/marketplace"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 devhallsmad/marketplace"
   },
   "dependencies": {
     "@amxx/graphprotocol-utils": "^1.1.0",

@@ -49,4 +49,17 @@ fi
 docker-compose up;
 ```
 
+**4.** Deploy local subgraph
 
+```
+yarn create-local
+yarn install
+yarn codegen
+yarn build
+yarn deploy-local
+```
+
+You can remove a local subgraph via
+```
+yarn remove-local
+```
