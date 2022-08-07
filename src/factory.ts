@@ -17,6 +17,8 @@ import {
 } from '../generated/templates'
 
 import { fetchAccount } from './fetch/account';
+import { ERC721 } from '../generated/ERC721/ERC721';
+import { Address } from '@graphprotocol/graph-ts/index';
 
 export function handle721Created(event: Create721MadNftProxy): void {
   // Entities can be loaded from the store using a string ID; this ID
@@ -28,6 +30,7 @@ export function handle721Created(event: Create721MadNftProxy): void {
 		contract.name = event.params.name.toString()
 		contract.symbol = event.params.symbol.toString()
 		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
 	}
 	contract.asAccount = address
 	let from = fetchAccount(event.transaction.from);
@@ -52,6 +55,7 @@ export function handle1155Created(event: Create1155MadNftProxy): void {
 		contract.name = event.params.name.toString()
 		contract.symbol = event.params.symbol.toString()
 		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
 	}
 	contract.asAccount = address
 	let from = fetchAccount(event.transaction.from);

@@ -2,8 +2,8 @@ import { ipfs, json, JSONValueKind } from '@graphprotocol/graph-ts/index';
 import { Attribute, ERC1155Token, ERC721Token, File, Tag } from '../../generated/schema';
 import { Bytes } from '@graphprotocol/graph-ts';
 
-export function fetchIpfsERC721(token: ERC721Token, contractId: Bytes, basUri: string = 'https://ipfs.io/ipfs/'): void {
-	let hash = token.uri.replace(basUri, '');
+export function fetchIpfsERC721(token: ERC721Token, contractId: Bytes, basUri: string | null = 'https://ipfs.io/ipfs/'): void {
+	let hash = basUri ? token.uri.replace(basUri, '') : token.uri;
 	let getIPFSData = ipfs.cat(hash);
 	if (getIPFSData !== null) {
 		let data = json.fromBytes(getIPFSData).toObject();

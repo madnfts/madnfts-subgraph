@@ -66,6 +66,7 @@ type ERC721Contract @entity(immutable: true) {
   name: String
   symbol: String
   owner: Account
+  baseUri: String
   timestamp: BigInt
   tokens: [ERC721Token!]! @derivedFrom(field: "contract")
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
@@ -121,6 +122,7 @@ type ERC1155Contract @entity(immutable: true) {
   name: String
   symbol: String
   owner: Account
+  baseUri: String
   timestamp: BigInt
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
   balances: [ERC1155Balance!]! @derivedFrom(field: "contract")

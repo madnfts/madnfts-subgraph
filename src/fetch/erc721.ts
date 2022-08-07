@@ -82,12 +82,13 @@ export function fetchERC721Token(
     token.identifier = identifier;
     token.approval = fetchAccount(constants.ADDRESS_ZERO).id;
 
-    if (contract.supportsMetadata) {
+    // @todo - this fails with check contract.supportsMetadata
+    if (contract) {
       let erc721 = ERC721.bind(Address.fromBytes(contract.id));
       let try_tokenURI = erc721.try_tokenURI(identifier);
       token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value;
       if (token.uri) {
-        fetchIpfsERC721(token, contract.id, 'https://ipfs.io/ipfs/');
+        fetchIpfsERC721(token, contract.id, contract.baseUri);
       }
     }
   }
