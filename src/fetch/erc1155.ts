@@ -8,8 +8,8 @@ import {
 	ERC1155Contract,
 	ERC1155Token,
 	ERC1155Balance,
-	ERC1155Operator,
-} from '../../generated/schema'
+	ERC1155Operator, ERC721Contract,
+} from '../../generated/schema';
 
 import {
 	ERC1155,
@@ -22,7 +22,7 @@ import {
 import {
 	fetchAccount,
 } from '../fetch/account'
-import { fetchIpfsERC1155 } from './ipfs';
+import { fetchIpfsERC1155, fetchIpfsERC721 } from './ipfs';
 
 export function replaceURI(uri: string, identifier: BigInt): string {
 	return uri.replace(
@@ -34,7 +34,13 @@ export function replaceURI(uri: string, identifier: BigInt): string {
 export function fetchERC1155(address: Address): ERC1155Contract {
 	let erc1155   = ERC1155.bind(address)
 
-	let contract       = new ERC1155Contract(address)
+	// Try load entry
+	let contract = ERC1155Contract.load(address);
+	if (contract != null) {
+		return contract;
+	}
+
+	contract       = new ERC1155Contract(address)
 	let try_name              = erc1155.try_name()
 	let try_symbol            = erc1155.try_symbol()
 	contract.name             = try_name.reverted   ? '' : try_name.value
@@ -60,9 +66,10 @@ export function fetchERC1155Token(contract: ERC1155Contract, identifier: BigInt)
 		token.contract         = contract.id
 		token.identifier       = identifier
 		token.totalSupply      = fetchERC1155Balance(token as ERC1155Token, null).id
-		token.uri              = try_uri.reverted ? '' : replaceURI(try_uri.value, identifier)
+		token.uri 						 = try_uri.reverted ? '' : try_uri.value;
+
 		if (token.uri) {
-			fetchIpfsERC1155(token, 'https://ipfs.io/ipfs/');
+			fetchIpfsERC1155(token, contract.id, contract.baseUri);
 		}
 		token.save()
 	}
