@@ -8,7 +8,7 @@ import {
 	ERC1155Contract,
 	ERC1155Token,
 	ERC1155Balance,
-	ERC1155Operator, ERC721Contract,
+	ERC1155Operator,
 } from '../../generated/schema';
 
 import {
@@ -22,7 +22,7 @@ import {
 import {
 	fetchAccount,
 } from '../fetch/account'
-import { fetchIpfsERC1155, fetchIpfsERC721 } from './ipfs';
+import { fetchIpfsERC1155 } from './ipfs';
 
 export function replaceURI(uri: string, identifier: BigInt): string {
 	return uri.replace(

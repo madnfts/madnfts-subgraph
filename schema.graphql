@@ -159,6 +159,7 @@ type ERC1155Balance @entity {
   account: Account
   value: BigDecimal!
   valueExact: BigInt!
+  timestamp: BigInt
   transferFromEvent: [ERC1155Transfer!]! @derivedFrom(field: "fromBalance")
   transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "toBalance")
 }

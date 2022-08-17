@@ -159,11 +159,13 @@ function registerTransfer(
     let totalSupply = fetchERC1155Balance(token, null);
     totalSupply.valueExact = totalSupply.valueExact.minus(value);
     totalSupply.value = decimals.toDecimals(totalSupply.valueExact);
+    totalSupply.timestamp = event.block.timestamp;
     totalSupply.save();
   } else {
     let balance = fetchERC1155Balance(token, to);
     balance.valueExact = balance.valueExact.plus(value);
     balance.value = decimals.toDecimals(balance.valueExact);
+    balance.timestamp = event.block.timestamp;
     balance.save();
 
     ev.to = to.id;
