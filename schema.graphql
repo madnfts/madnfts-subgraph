@@ -10,11 +10,59 @@ type _Schema_ @fulltext(
   ]
 )
 
+# interface
+
 interface Event {
   id: ID!
   transaction: Transaction!
   emitter: Account!
   timestamp: BigInt!
+}
+
+interface TimeUnit {
+  id: ID!
+  epoch: BigInt!
+  orders: [Order!]!
+  blocks: [Block!]
+  transactions: [Transaction!]!
+}
+
+interface ERC721Volume {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC721Contract!
+  nftTransactions: [ERC721NftTransaction!]!
+  timeUnit: TimeUnit!
+}
+
+interface ERC1155Volume {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC1155Contract!
+  nftTransactions: [ERC1155NftTransaction!]!
+  timeUnit: TimeUnit!
+}
+
+# Common
+
+type Account @entity {
+  id: Bytes!
+  asERC721: ERC721Contract
+  ERC721tokens: [ERC721Token!]! @derivedFrom(field: "owner")
+  ERC721operatorOwner: [ERC721Operator!]! @derivedFrom(field: "owner")
+  ERC721operatorOperator: [ERC721Operator!]! @derivedFrom(field: "operator")
+  ERC721transferFromEvent: [ERC721Transfer!]! @derivedFrom(field: "from")
+  ERC721transferToEvent: [ERC721Transfer!]! @derivedFrom(field: "to")
+  asERC1155: ERC1155Contract
+  ERC1155balances: [ERC1155Balance!]! @derivedFrom(field: "account")
+  ERC1155operatorOwner: [ERC1155Operator!]! @derivedFrom(field: "owner")
+  ERC1155operatorOperator: [ERC1155Operator!]! @derivedFrom(field: "operator")
+  ERC1155transferFromEvent: [ERC1155Transfer!]! @derivedFrom(field: "from")
+  ERC1155transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "to")
+  ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
+  events: [Event!]! @derivedFrom(field: "emitter")
 }
 
 type Attribute @entity {
@@ -37,24 +85,63 @@ type Tag @entity {
   value: String
 }
 
-# Account
+type Minute implements TimeUnit @entity {
+  id: ID!
+  epoch: BigInt!
+  orders: [Order!]! @derivedFrom(field: "minute")
+  blocks: [Block!] @derivedFrom(field: "minute")
+  transactions: [Transaction!]! @derivedFrom(field: "minute")
+}
 
-type Account @entity {
-  id: Bytes!
-  asERC721: ERC721Contract
-  ERC721tokens: [ERC721Token!]! @derivedFrom(field: "owner")
-  ERC721operatorOwner: [ERC721Operator!]! @derivedFrom(field: "owner")
-  ERC721operatorOperator: [ERC721Operator!]! @derivedFrom(field: "operator")
-  ERC721transferFromEvent: [ERC721Transfer!]! @derivedFrom(field: "from")
-  ERC721transferToEvent: [ERC721Transfer!]! @derivedFrom(field: "to")
-  asERC1155: ERC1155Contract
-  ERC1155balances: [ERC1155Balance!]! @derivedFrom(field: "account")
-  ERC1155operatorOwner: [ERC1155Operator!]! @derivedFrom(field: "owner")
-  ERC1155operatorOperator: [ERC1155Operator!]! @derivedFrom(field: "operator")
-  ERC1155transferFromEvent: [ERC1155Transfer!]! @derivedFrom(field: "from")
-  ERC1155transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "to")
-  ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
-  events: [Event!]! @derivedFrom(field: "emitter")
+type Hour implements TimeUnit @entity {
+  id: ID!
+  epoch: BigInt!
+  orders: [Order!]! @derivedFrom(field: "hour")
+  blocks: [Block!] @derivedFrom(field: "hour")
+  transactions: [Transaction!]! @derivedFrom(field: "hour")
+}
+
+type Day implements TimeUnit @entity {
+  id: ID!
+  epoch: BigInt!
+  orders: [Order!]! @derivedFrom(field: "day")
+  blocks: [Block!] @derivedFrom(field: "day")
+  transactions: [Transaction!]! @derivedFrom(field: "day")
+}
+
+type Week implements TimeUnit @entity {
+  id: ID!
+  epoch: BigInt!
+  orders: [Order!]! @derivedFrom(field: "week")
+  blocks: [Block!] @derivedFrom(field: "week")
+  transactions: [Transaction!]! @derivedFrom(field: "week")
+  volume: Volume! @derivedFrom(field: "timeUnit")
+}
+
+type Order @entity {
+  id: ID!
+  maker: Account
+  taker: Account
+  # paymentToken: Erc20Token!
+  sale: Sale!
+  block: Block!
+  transaction: Transaction!
+  minute: Minute!
+  hour: Hour!
+  day: Day!
+  week: Week!
+}
+
+type Sale @entity {
+  id: ID!
+  # token: Erc20Token
+  orders: [Order!]! @derivedFrom(field: "sale")
+  block: Block!
+  transaction: Transaction!
+  minute: Minute!
+  hour: Hour!
+  day: Day!
+  week: Week!
 }
 
 # ERC721
@@ -112,6 +199,62 @@ type ERC721Transfer implements Event @entity(immutable: true) {
   token: ERC721Token!
   from: Account!
   to: Account!
+}
+
+type ERC721NftTransaction @entity {
+  id: ID!
+  timestamp: BigInt!
+  block: Block!
+  from: Account
+  to: Account
+  order: Order
+  contract: ERC721Contract!
+  sale: Sale
+  events: [Event!]! @derivedFrom(field: "transaction")
+  minute: Minute!
+  hour: Hour!
+  day: Day!
+  week: Week!
+  minuteVolume: ERC721MinuteVolume!
+  hourVolume: ERC721HourVolume!
+  dayVolume: ERC721DayVolume!
+  weekVolume: ERC721WeekVolume!
+}
+
+type ERC721MinuteVolume implements ERC721Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC721Contract!
+  nftTransactions: [ERC721NftTransaction!]! @derivedFrom(field: "minuteVolume")
+  timeUnit: TimeUnit!
+}
+
+type ERC721HourVolume implements ERC721Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC721Contract!
+  nftTransactions: [ERC721NftTransaction!]! @derivedFrom(field: "hourVolume")
+  timeUnit: TimeUnit!
+}
+
+type ERC721DayVolume implements ERC721Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC721Contract!
+  nftTransactions: [ERC721NftTransaction!]! @derivedFrom(field: "dayVolume")
+  timeUnit: TimeUnit!
+}
+
+type ERC721WeekVolume implements ERC721Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC721Contract!
+  nftTransactions: [ERC721NftTransaction!]! @derivedFrom(field: "weekVolume")
+  timeUnit: TimeUnit!
 }
 
 # ERC1155
@@ -186,6 +329,62 @@ type ERC1155Transfer implements Event @entity(immutable: true) {
   toBalance: ERC1155Balance
   value: BigDecimal!
   valueExact: BigInt!
+}
+
+type ERC1155NftTransaction @entity {
+  id: ID!
+  timestamp: BigInt!
+  block: Block!
+  from: Account
+  to: Account
+  order: Order
+  contract: ERC1155Contract!
+  sale: Sale
+  events: [Event!]! @derivedFrom(field: "transaction")
+  minute: Minute!
+  hour: Hour!
+  day: Day!
+  week: Week!
+  minuteVolume: ERC1155MinuteVolume!
+  hourVolume: ERC1155HourVolume!
+  dayVolume: ERC1155DayVolume!
+  weekVolume: ERC1155WeekVolume!
+}
+
+type ERC1155MinuteVolume implements ERC1155Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC1155Contract!
+  nftTransactions: [ERC1155NftTransaction!]! @derivedFrom(field: "minuteVolume")
+  timeUnit: TimeUnit!
+}
+
+type ERC721HourVolume implements ERC1155Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC1155Contract!
+  nftTransactions: [ERC1155NftTransaction!]! @derivedFrom(field: "hourVolume")
+  timeUnit: TimeUnit!
+}
+
+type ERC721DayVolume implements ERC1155Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC1155Contract!
+  nftTransactions: [ERC1155NftTransaction!]! @derivedFrom(field: "dayVolume")
+  timeUnit: TimeUnit!
+}
+
+type ERC721WeekVolume implements ERC1155Volume @entity {
+  id: ID!
+  amount: BigInt!
+  transactionAmount: BigInt!
+  contract: ERC1155Contract!
+  nftTransactions: [ERC1155NftTransaction!]! @derivedFrom(field: "weekVolume")
+  timeUnit: TimeUnit!
 }
 
 # Exchange
