@@ -215,6 +215,7 @@ type ERC721Transfer implements Event @entity(immutable: true) {
   id: ID!
   emitter: Account!
   transaction: Transaction!
+  block: Block!
   timestamp: BigInt!
   contract: ERC721Contract!
   token: ERC721Token!
@@ -341,6 +342,7 @@ type ERC1155Transfer implements Event @entity(immutable: true) {
   emitter: Account!
   transaction: Transaction!
   timestamp: BigInt!
+  block: Block!
   contract: ERC1155Contract!
   token: ERC1155Token!
   operator: Account!
