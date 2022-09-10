@@ -21,8 +21,6 @@ import {
   URI as URIEvent,
 } from '../generated/ERC1155/ERC1155';
 
-import { Transfer as TransferExecutorEvent } from '../generated/TransferExecutor/TransferExecutor';
-
 import {
   constants,
   decimals,
@@ -239,19 +237,5 @@ export function handleURI(event: URIEvent): void {
   let token = fetchERC1155Token(contract, event.params.id);
   token.timestamp = event.block.timestamp;
   token.uri = replaceURI(event.params.value, event.params.id);
-  token.save();
-}
-
-export function handleTransferExecutor(event: TransferExecutorEvent): void {
-  let decode = ethereum.decode('(address,uint256)', event.params.asset.assetType.data)!.toTuple();
-  let contract = fetchERC721(decode[0].toAddress())!;
-  let id = contract.id
-    .toHex()
-    .concat('/')
-    .concat(decode[1].toBigInt().toHex());
-  let token = ERC721Token.load(id)!;
-
-  token.timestamp = event.block.timestamp;
-  token.price = event.params.asset.value;
   token.save();
 }

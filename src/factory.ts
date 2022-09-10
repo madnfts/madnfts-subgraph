@@ -4,11 +4,19 @@ import {
 } from '../generated/schema'
 
 import {
-	Create721MadNftProxy
+	SplitterCreated as ERC721SplitterCreated,
+	ERC721MinimalCreated,
+	ERC721BasicCreated,
+	ERC721WhitelistCreated,
+	ERC721LazyCreated,
 } from '../generated/ERC721Factory/ERC721Factory'
 
 import {
-	Create1155MadNftProxy
+	SplitterCreated as ERC1155SplitterCreated,
+	ERC1155MinimalCreated,
+	ERC1155BasicCreated,
+	ERC1155WhitelistCreated,
+	ERC1155LazyCreated,
 } from '../generated/ERC1155Factory/ERC1155Factory'
 
 import {
@@ -17,27 +25,25 @@ import {
 } from '../generated/templates'
 
 import { fetchAccount } from './fetch/account';
-import { ERC721 } from '../generated/ERC721/ERC721';
-import { Address } from '@graphprotocol/graph-ts/index';
 
-export function handle721Created(event: Create721MadNftProxy): void {
-  // Entities can be loaded from the store using a string ID; this ID
+export function handle721SplitterCreated(event: ERC721SplitterCreated): void {
+	// Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-	let address = event.params.proxy
+}
+
+export function handle721MinimalCreated(event: ERC721MinimalCreated): void {
+	let address = event.params.newCollection
 	let contract = ERC721Contract.load(address)
 	if(!contract) {
 		contract = new ERC721Contract(address)
-		contract.name = event.params.name.toString()
-		contract.symbol = event.params.symbol.toString()
+		contract.type = 'Minimal'
 		contract.timestamp = event.block.timestamp
 		contract.baseUri = 'ipfs://'
 	}
-	contract.asAccount = address
 	let from = fetchAccount(event.transaction.from);
 	contract.owner = from.id
 
   ERC721ContractTemplate.create(address)
-  // Entities can be written to the store with `.save()`
   contract.save()
 
 	let account = fetchAccount(address);
@@ -45,27 +51,147 @@ export function handle721Created(event: Create721MadNftProxy): void {
 	account.save();
 }
 
-export function handle1155Created(event: Create1155MadNftProxy): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-	let address = event.params.proxy
-	let contract = ERC1155Contract.load(address)
+export function handle721BasicCreated(event: ERC721BasicCreated): void {
+	let address = event.params.newCollection
+	let contract = ERC721Contract.load(address)
 	if(!contract) {
-		contract = new ERC1155Contract(address)
-		contract.name = event.params.name.toString()
-		contract.symbol = event.params.symbol.toString()
+		contract = new ERC721Contract(address)
+		contract.type = 'Basic'
 		contract.timestamp = event.block.timestamp
 		contract.baseUri = 'ipfs://'
 	}
-	contract.asAccount = address
 	let from = fetchAccount(event.transaction.from);
 	contract.owner = from.id
 
-  ERC1155ContractTemplate.create(event.params.proxy)
-  // Entities can be written to the store with `.save()`
+  ERC721ContractTemplate.create(address)
   contract.save()
 
-	let account        = fetchAccount(address)
-	account.asERC1155  = address
-	account.save()
+	let account = fetchAccount(address);
+	account.asERC721 = address;
+	account.save();
+}
+
+export function handle721WhitelistCreated(event: ERC721WhitelistCreated): void {
+	let address = event.params.newCollection
+	let contract = ERC721Contract.load(address)
+	if(!contract) {
+		contract = new ERC721Contract(address)
+		contract.type = 'Whitelist'
+		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
+	}
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
+
+  ERC721ContractTemplate.create(address)
+  contract.save()
+
+	let account = fetchAccount(address);
+	account.asERC721 = address;
+	account.save();
+}
+
+export function handle721LazyCreated(event: ERC721LazyCreated): void {
+	let address = event.params.newCollection
+	let contract = ERC721Contract.load(address)
+	if(!contract) {
+		contract = new ERC721Contract(address)
+		contract.type = 'Lazy'
+		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
+	}
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
+
+  ERC721ContractTemplate.create(address)
+  contract.save()
+
+	let account = fetchAccount(address);
+	account.asERC721 = address;
+	account.save();
+}
+
+export function handle1155SplitterCreated(event: ERC1155SplitterCreated): void {
+	// Entities can be loaded from the store using a string ID; this ID
+  // needs to be unique across all entities of the same type
+}
+
+export function handle1155MinimalCreated(event: ERC1155MinimalCreated): void {
+	let address = event.params.newCollection
+	let contract = ERC1155Contract.load(address)
+	if(!contract) {
+		contract = new ERC1155Contract(address)
+		contract.type = 'Minimal'
+		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
+	}
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
+
+  ERC1155ContractTemplate.create(address)
+  contract.save()
+
+	let account = fetchAccount(address);
+	account.asERC1155 = address;
+	account.save();
+}
+
+export function handle1155BasicCreated(event: ERC1155BasicCreated): void {
+	let address = event.params.newCollection
+	let contract = ERC1155Contract.load(address)
+	if(!contract) {
+		contract = new ERC1155Contract(address)
+		contract.type = 'Basic'
+		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
+	}
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
+
+  ERC1155ContractTemplate.create(address)
+  contract.save()
+
+	let account = fetchAccount(address);
+	account.asERC1155 = address;
+	account.save();
+}
+
+export function handle1155WhitelistCreated(event: ERC1155WhitelistCreated): void {
+	let address = event.params.newCollection
+	let contract = ERC1155Contract.load(address)
+	if(!contract) {
+		contract = new ERC1155Contract(address)
+		contract.type = 'Whitelist'
+		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
+	}
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
+
+  ERC1155ContractTemplate.create(address)
+  contract.save()
+
+	let account = fetchAccount(address);
+	account.asERC1155 = address;
+	account.save();
+}
+
+export function handle1155LazyCreated(event: ERC1155LazyCreated): void {
+	let address = event.params.newCollection
+	let contract = ERC1155Contract.load(address)
+	if(!contract) {
+		contract = new ERC1155Contract(address)
+		contract.type = 'Lazy'
+		contract.timestamp = event.block.timestamp
+		contract.baseUri = 'ipfs://'
+	}
+	let from = fetchAccount(event.transaction.from);
+	contract.owner = from.id
+
+  ERC1155ContractTemplate.create(address)
+  contract.save()
+
+	let account = fetchAccount(address);
+	account.asERC1155 = address;
+	account.save();
 }

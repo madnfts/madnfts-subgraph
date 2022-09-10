@@ -58,32 +58,12 @@ dataSources:
           handler: handleURI
       file: ./src/mapping.ts
   - kind: ethereum/contract
-    name: TransferExecutor
-    network: rinkeby
-    source:
-      address: '0x62d8a6D5Ab9Ef0352c86a8777f3b3aae10bFbc3e' ## change address
-      abi: TransferExecutor
-      startBlock: 11066216
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - ERC1155Contract
-      abis:
-        - name: TransferExecutor
-          file: ./abis/TransferExecutor.json
-      eventHandlers:
-        - event: Transfer(((bytes4,bytes),uint256),address,address,bytes4,bytes4)
-          handler: handleTransferExecutor
-      file: ./src/mapping.ts
-  - kind: ethereum/contract
     name: ERC721Factory
     network: rinkeby
     source:
-      address: '0x108E3CDF96a8106b53B8A641F6799F3fB1DaD251'
+      address: '0xD9C0C90C082FE1Bc7cD876dEF8544bfDfEc2eC59'
       abi: ERC721Factory
-      startBlock: 11066216
+      startBlock: 11333169
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -94,16 +74,24 @@ dataSources:
         - name: ERC721Factory
           file: ./abis/ERC721Factory.json
       eventHandlers:
-        - event: Create721MadNftProxy(indexed address,string,string,uint256)
-          handler: handle721Created
+        - event: SplitterCreated(indexed address,uint256[],address[],address)
+          handler: handle721SplitterCreated
+        - event: ERC721MinimalCreated(indexed address,indexed address,indexed address)
+          handler: handle721MinimalCreated
+        - event: ERC721BasicCreated(indexed address,indexed address,indexed address)
+          handler: handle721BasicCreated
+        - event: ERC721WhitelistCreated(indexed address,indexed address,indexed address)
+          handler: handle721WhitelistCreated
+        - event: ERC721LazyCreated(indexed address,indexed address,indexed address)
+          handler: handle721LazyCreated
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC1155Factory
     network: rinkeby
     source:
-      address: '0x9482a2E454fC0f08E1F854164f5D863F2FCB1f86'
+      address: '0x10247872B9f202Ff9e0d371bAF7bc210f5315D99'
       abi: ERC1155Factory
-      startBlock: 11066216
+      startBlock: 11333208
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -114,8 +102,16 @@ dataSources:
         - name: ERC1155Factory
           file: ./abis/ERC1155Factory.json
       eventHandlers:
-        - event: Create1155MadNftProxy(indexed address,string,string,uint256)
-          handler: handle1155Created
+        - event: SplitterCreated(indexed address,uint256[],address[],address)
+          handler: handle1155SplitterCreated
+        - event: ERC1155MinimalCreated(indexed address,indexed address,indexed address)
+          handler: handle1155MinimalCreated
+        - event: ERC1155BasicCreated(indexed address,indexed address,indexed address)
+          handler: handle1155BasicCreated
+        - event: ERC1155WhitelistCreated(indexed address,indexed address,indexed address)
+          handler: handle1155WhitelistCreated
+        - event: ERC1155LazyCreated(indexed address,indexed address,indexed address)
+          handler: handle1155LazyCreated
       file: ./src/factory.ts
 templates:
   - kind: ethereum/contract

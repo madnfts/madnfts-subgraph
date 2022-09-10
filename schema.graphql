@@ -1,5 +1,12 @@
 # Schemas & shared
 
+enum ContractType {
+  Minimal
+  Basic
+  Whitelist
+  Lazy
+}
+
 type _Schema_ @fulltext(
   name: "ERC721TokenSearch"
   language: en
@@ -15,6 +22,7 @@ type _Schema_ @fulltext(
 interface Event {
   id: ID!
   transaction: Transaction!
+  block: Block!
   emitter: Account!
   timestamp: BigInt!
 }
@@ -115,7 +123,7 @@ type Week implements TimeUnit @entity {
   orders: [Order!]! @derivedFrom(field: "week")
   blocks: [Block!] @derivedFrom(field: "week")
   transactions: [Transaction!]! @derivedFrom(field: "week")
-  volume: Volume! @derivedFrom(field: "timeUnit")
+  # volume: Volume! @derivedFrom(field: "timeUnit")
 }
 
 type Order @entity {
@@ -144,11 +152,24 @@ type Sale @entity {
   week: Week!
 }
 
+type Block @entity {
+	id: ID!
+	timestamp: BigInt!	
+  number: BigInt!
+	events: [Event!]! @derivedFrom(field: "block")
+  transactions: [Transaction!] @derivedFrom(field: "block")
+	orders: [Order!] @derivedFrom(field: "block")
+  minute: Minute
+  hour: Hour
+  day: Day
+  week: Week
+}
+
 # ERC721
 
 type ERC721Contract @entity(immutable: true) {
   id: Bytes!
-  asAccount: Account!
+  type: ContractType!
   supportsMetadata: Boolean
   name: String
   symbol: String
@@ -210,7 +231,7 @@ type ERC721NftTransaction @entity {
   order: Order
   contract: ERC721Contract!
   sale: Sale
-  events: [Event!]! @derivedFrom(field: "transaction")
+  # events: [Event!]! @derivedFrom(field: "transaction")
   minute: Minute!
   hour: Hour!
   day: Day!
@@ -262,6 +283,7 @@ type ERC721WeekVolume implements ERC721Volume @entity {
 type ERC1155Contract @entity(immutable: true) {
   id: Bytes!
   asAccount: Account!
+  type: ContractType!
   name: String
   symbol: String
   owner: Account
@@ -340,7 +362,7 @@ type ERC1155NftTransaction @entity {
   order: Order
   contract: ERC1155Contract!
   sale: Sale
-  events: [Event!]! @derivedFrom(field: "transaction")
+  # events: [Event!]! @derivedFrom(field: "transaction")
   minute: Minute!
   hour: Hour!
   day: Day!
@@ -360,7 +382,7 @@ type ERC1155MinuteVolume implements ERC1155Volume @entity {
   timeUnit: TimeUnit!
 }
 
-type ERC721HourVolume implements ERC1155Volume @entity {
+type ERC1155HourVolume implements ERC1155Volume @entity {
   id: ID!
   amount: BigInt!
   transactionAmount: BigInt!
@@ -369,7 +391,7 @@ type ERC721HourVolume implements ERC1155Volume @entity {
   timeUnit: TimeUnit!
 }
 
-type ERC721DayVolume implements ERC1155Volume @entity {
+type ERC1155DayVolume implements ERC1155Volume @entity {
   id: ID!
   amount: BigInt!
   transactionAmount: BigInt!
@@ -378,7 +400,7 @@ type ERC721DayVolume implements ERC1155Volume @entity {
   timeUnit: TimeUnit!
 }
 
-type ERC721WeekVolume implements ERC1155Volume @entity {
+type ERC1155WeekVolume implements ERC1155Volume @entity {
   id: ID!
   amount: BigInt!
   transactionAmount: BigInt!
@@ -392,6 +414,10 @@ type ERC721WeekVolume implements ERC1155Volume @entity {
 type Transaction @entity(immutable: true) {
   id: ID!
   timestamp: BigInt!
-  blockNumber: BigInt!
+  block: Block!
   events: [Event!]! @derivedFrom(field: "transaction")
+  minute: Minute
+  hour: Hour
+  day: Day
+  week: Week
 }
