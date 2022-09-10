@@ -45,7 +45,6 @@ export function fetchERC1155(address: Address): ERC1155Contract {
 	let try_symbol            = erc1155.try_symbol()
 	contract.name             = try_name.reverted   ? '' : try_name.value
 	contract.symbol           = try_symbol.reverted ? '' : try_symbol.value
-	contract.asAccount = address
 	contract.save()
 
 	let account        = fetchAccount(address)

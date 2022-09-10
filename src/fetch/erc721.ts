@@ -55,7 +55,6 @@ export function fetchERC721(address: Address): ERC721Contract | null {
     contract.name = try_name.reverted ? '' : try_name.value;
     contract.symbol = try_symbol.reverted ? '' : try_symbol.value;
     contract.supportsMetadata = supportsInterface(erc721, '5b5e139f'); // ERC721Metadata
-    contract.asAccount = address;
     contract.save();
 
     let account = fetchAccount(address);

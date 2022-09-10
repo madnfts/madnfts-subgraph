@@ -282,7 +282,6 @@ type ERC721WeekVolume implements ERC721Volume @entity {
 
 type ERC1155Contract @entity(immutable: true) {
   id: Bytes!
-  asAccount: Account!
   type: ContractType!
   name: String
   symbol: String
