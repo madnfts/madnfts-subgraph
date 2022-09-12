@@ -7,11 +7,15 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ devhallsmad/marketplace",
     "create-local": "graph create --node http://localhost:8020/ devhallsmad/marketplace",
     "remove-local": "graph remove --node http://localhost:8020/ devhallsmad/marketplace",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 devhallsmad/marketplace"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 devhallsmad/marketplace subgraph.yaml.local",
+    "test": "graph test"
   },
   "dependencies": {
     "@amxx/graphprotocol-utils": "^1.1.0",
     "@graphprotocol/graph-cli": "0.30.0",
     "@graphprotocol/graph-ts": "0.27.0"
+  },
+  "devDependencies": {
+    "matchstick-as": "^0.5.0"
   }
 }

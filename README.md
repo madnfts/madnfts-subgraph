@@ -55,6 +55,10 @@ fi
 docker-compose up;
 ```
 
+NOTE: step 1 and 2 are not required as ganache is included in the docker-compose file and pre-configured to run against a rinkeby network in thegraph
+
+Once docker is started, please deploy the mad contracts (check repo and use the 'local' configuration to deploy)
+
 ---
 
 **4.** Deploy local subgraph using graph deploy
