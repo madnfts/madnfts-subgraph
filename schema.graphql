@@ -153,12 +153,12 @@ type Sale @entity {
 }
 
 type Block @entity {
-	id: ID!
-	timestamp: BigInt!	
+  id: ID!
+  timestamp: BigInt!
   number: BigInt!
-	events: [Event!]! @derivedFrom(field: "block")
+  events: [Event!]! @derivedFrom(field: "block")
   transactions: [Transaction!] @derivedFrom(field: "block")
-	orders: [Order!] @derivedFrom(field: "block")
+  orders: [Order!] @derivedFrom(field: "block")
   minute: Minute
   hour: Hour
   day: Day
@@ -170,12 +170,19 @@ type Block @entity {
 type ERC721Contract @entity(immutable: true) {
   id: Bytes!
   type: ContractType!
-  supportsMetadata: Boolean
   name: String
   symbol: String
-  owner: Account
   baseUri: String
   timestamp: BigInt
+  maxSupply: Int
+  mintPrice: BigInt
+  floorPrice: BigInt
+  lastPrice: BigInt
+  volume: BigInt
+  paused: Boolean
+  disabled: Boolean
+  supportsMetadata: Boolean
+  owner: Account
   tokens: [ERC721Token!]! @derivedFrom(field: "contract")
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
@@ -183,23 +190,24 @@ type ERC721Contract @entity(immutable: true) {
 
 type ERC721Token @entity {
   id: ID!
-  contract: ERC721Contract!
-  identifier: BigInt!
-  owner: Account!
-  approval: Account!
+  tokenId: Bytes!
   uri: String!
   name: String
-  image: String
-  type: Int
-  price: BigInt
   description: String
-  externalUrl: String
+  image: String
+  category: Int
   unlockableUrl: String
+  externalUrl: String
   explicitContent: Boolean
-  tags: [Tag!]
-  files: [File!]
-  attributes: [Attribute!]
+  price: BigInt
+  lastPrice: BigInt
+  volume: BigInt
   timestamp: BigInt
+  contract: ERC721Contract!
+  owner: Account!
+  tags: [Tag!]
+  attributes: [Attribute!]
+  files: [File!]
   transfers: [ERC721Transfer!]! @derivedFrom(field: "token")
 }
 
@@ -289,6 +297,11 @@ type ERC1155Contract @entity(immutable: true) {
   owner: Account
   baseUri: String
   timestamp: BigInt
+  maxSupply: Int
+  mintPrice: BigInt
+  floorPrice: BigInt
+  lastPrice: BigInt
+  volume: BigInt
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
   balances: [ERC1155Balance!]! @derivedFrom(field: "contract")
   operators: [ERC1155Operator!]! @derivedFrom(field: "contract")
@@ -297,22 +310,24 @@ type ERC1155Contract @entity(immutable: true) {
 
 type ERC1155Token @entity {
   id: ID!
-  contract: ERC1155Contract!
-  identifier: BigInt!
+  tokenId: Bytes!
   uri: String!
-  totalSupply: ERC1155Balance!
   name: String
-  image: String
-  type: Int
-  price: BigInt
   description: String
-  externalUrl: String
+  image: String
+  category: Int
   unlockableUrl: String
+  externalUrl: String
   explicitContent: Boolean
-  tags: [Tag!]
-  files: [File!]
-  attributes: [Attribute!]
+  price: BigInt
+  lastPrice: BigInt
+  volume: BigInt
+  totalSupply: ERC1155Balance!
   timestamp: BigInt
+  contract: ERC1155Contract!
+  tags: [Tag!]
+  attributes: [Attribute!]
+  files: [File!]
   balances: [ERC1155Balance!]! @derivedFrom(field: "token")
   transfers: [ERC1155Transfer!]! @derivedFrom(field: "token")
 }
