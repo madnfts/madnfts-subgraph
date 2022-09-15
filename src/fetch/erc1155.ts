@@ -2,7 +2,6 @@ import {
 	Address,
 	BigInt,
 } from '@graphprotocol/graph-ts'
-
 import {
 	Account,
 	ERC1155Contract,
@@ -10,48 +9,28 @@ import {
 	ERC1155Balance,
 	ERC1155Operator,
 } from '../../generated/schema';
-
 import {
 	ERC1155,
 } from '../../generated/templates/ERC1155/ERC1155'
-
 import {
 	constants,
 } from '@amxx/graphprotocol-utils'
-
-import {
-	fetchAccount,
-} from '../fetch/account'
 import { fetchIpfsERC1155 } from './ipfs';
+
+export function fetchERC1155(address: Address): ERC1155Contract {
+	let contract = ERC1155Contract.load(address);
+	if (contract == null) {
+		contract = new ERC1155Contract(address)
+		contract.save()
+	}
+	return contract
+}
 
 export function replaceURI(uri: string, identifier: BigInt): string {
 	return uri.replace(
 		'{id}',
 		identifier.toHex().slice(2).padStart(64, '0'),
 	)
-}
-
-export function fetchERC1155(address: Address): ERC1155Contract {
-	let erc1155   = ERC1155.bind(address)
-
-	// Try load entry
-	let contract = ERC1155Contract.load(address);
-	if (contract != null) {
-		return contract;
-	}
-
-	contract       = new ERC1155Contract(address)
-	let try_name              = erc1155.try_name()
-	let try_symbol            = erc1155.try_symbol()
-	contract.name             = try_name.reverted   ? '' : try_name.value
-	contract.symbol           = try_symbol.reverted ? '' : try_symbol.value
-	contract.save()
-
-	let account        = fetchAccount(address)
-	account.asERC1155  = address
-	account.save()
-
-	return contract
 }
 
 export function fetchERC1155Token(contract: ERC1155Contract, identifier: BigInt): ERC1155Token {

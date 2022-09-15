@@ -17,49 +17,52 @@ import {
   Unpaused as ERC1155Unpaused,
 } from '../generated/ERC1155Router/ERC1155Router';
 import { ERC1155Contract, ERC721Contract } from '../generated/schema';
+import { fetchERC721 } from './fetch/erc721';
+import { fetchERC1155 } from './fetch/erc1155';
 
 // 721 Event handlers
 
 export function handle721BaseUri(event: ERC721BaseURI): void {
-  let contract = ERC721Contract.load(event.address)
+  let contract = fetchERC721(event.address)
   contract.baseUri = event.params._baseURI.toString()
   contract.save()
 }
 export function handle721FreeClaimState(event: ERC721FreeClaimState): void {}
 export function handle721OwnerUpdated(event: ERC721OwnerUpdated): void {
-  let contract = ERC721Contract.load(event.address)
+  let contract = fetchERC721(event.address)
   contract.owner = event.params.newOwner
   contract.save()
 }
 export function handle721Paused(event: ERC721Paused): void {
-  toggle721Paused(ERC721Contract.load(event.address), true)
+  let contract = fetchERC721(event.address)
+  toggle721Paused(contract, true)
 }
 export function handle721PublicMintState(event: ERC721PublicMintState): void {}
 export function handle721TokenFundsWithdrawn(event: ERC721TokenFundsWithdrawn): void {}
 export function handle721Unpaused(event: ERC721Unpaused): void {
-  toggle721Paused(ERC721Contract.load(event.address), false)
+  toggle721Paused(fetchERC721(event.address), false)
 }
 
 // 1155 Event handlers
 
 export function handle1155BaseUri(event: ERC1155BaseURI): void {
-  let contract = ERC1155Contract.load(event.address)
+  let contract = fetchERC1155(event.address)
   contract.baseUri = event.params._baseURI.toString()
   contract.save()
 }
 export function handle1155FreeClaimState(event: ERC1155FreeClaimState): void {}
 export function handle1155OwnerUpdated(event: ERC1155OwnerUpdated): void {
-  let contract = ERC1155Contract.load(event.address)
+  let contract = fetchERC1155(event.address)
   contract.owner = event.params.newOwner
   contract.save()
 }
 export function handle1155Paused(event: ERC1155Paused): void {
-  toggle1155Paused(ERC1155Contract.load(event.address), true)
+  toggle1155Paused(fetchERC1155(event.address), true)
 }
 export function handle1155PublicMintState(event: ERC1155PublicMintState): void {}
 export function handle1155TokenFundsWithdrawn(event: ERC1155TokenFundsWithdrawn): void {}
 export function handle1155Unpaused(event: ERC1155Unpaused): void {
-  toggle1155Paused(ERC1155Contract.load(event.address), false)
+  toggle1155Paused(fetchERC1155(event.address), false)
 }
 
 // Functions

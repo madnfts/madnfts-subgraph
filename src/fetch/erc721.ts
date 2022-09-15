@@ -1,27 +1,23 @@
 import {
   Address,
   BigInt,
-  Bytes,
 } from '@graphprotocol/graph-ts';
-
 import {
   Account,
   ERC721Contract,
   ERC721Token,
   ERC721Operator,
 } from '../../generated/schema';
-
 import { ERC721 } from '../../generated/templates/ERC721/ERC721';
-
-import { constants } from '@amxx/graphprotocol-utils';
-
-import { fetchAccount } from './account';
-
-import { supportsInterface } from './erc165';
 import { fetchIpfsERC721 } from './ipfs';
 
-export function fetchERC721(address: Address): ERC721Contract | null {
-  return ERC721Contract.load(address);
+export function fetchERC721(address: Address): ERC721Contract {
+  let contract = ERC721Contract.load(address);
+  if (contract == null) {
+    contract = new ERC721Contract(address)
+    contract.save()
+  }
+  return contract
 }
 
 export function fetchERC721Token(
