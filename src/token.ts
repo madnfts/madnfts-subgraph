@@ -26,9 +26,9 @@ import {
   TransferSingle as ERC1155TransferSingleEvent,
 } from '../generated/templates/ERC1155/ERC1155';
 
-import { fetchERC721, fetchERC721Operator, fetchERC721Token } from './fetch/erc721';
+import { fetchERC721, fetchERC721Operator, fetchERC721Token, transferERC721Single } from './fetch/erc721';
 import { fetchAccount } from './fetch/account';
-import { fetchERC1155, fetchERC1155Operator } from './fetch/erc1155';
+import { fetchERC1155, fetchERC1155Operator, transferERC1155Batch, transferERC1155Single } from './fetch/erc1155';
 
 // 721 Token events
 
@@ -75,7 +75,10 @@ export function handle721Creators(event: ERC721CreatorsEvent): void {}
 export function handle721DefaultApproval(event: ERC721DefaultApprovalEvent): void {}
 export function handle721OwnershipTransferred(event: ERC721OwnershipTransferredEvent): void {}
 export function handle721SecondarySaleFees(event: ERC721SecondarySaleFeesEvent): void {}
-export function handle721Transfer(event: ERC721TransferEvent): void {}
+
+export function handle721Transfer(event: ERC721TransferEvent): void {
+  transferERC721Single(event)
+}
 
 // 1155 Token events
 
@@ -117,5 +120,11 @@ export function handle1155DefaultApproval(event: ERC1155DefaultApprovalEvent): v
 export function handle1155OwnershipTransferred(event: ERC1155OwnershipTransferredEvent): void {}
 export function handle1155SecondarySaleFees(event: ERC1155SecondarySaleFeesEvent): void {}
 export function handle1155Supply(event: ERC1155SupplyEvent): void {}
-export function handle1155TransferBatch(event: ERC1155TransferBatchEvent): void {}
-export function handle1155TransferSingle(event: ERC1155TransferSingleEvent): void {}
+
+export function handle1155TransferBatch(event: ERC1155TransferBatchEvent): void {
+  transferERC1155Batch(event)
+}
+
+export function handle1155TransferSingle(event: ERC1155TransferSingleEvent): void {
+  transferERC1155Single(event)
+}
