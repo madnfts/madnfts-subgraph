@@ -313,6 +313,9 @@ type ERC1155Contract @entity(immutable: true) {
   floorPrice: BigInt
   lastPrice: BigInt
   volume: BigInt
+  paused: Boolean
+  disabled: Boolean
+  supportsMetadata: Boolean
   royalties: BigInt
   splitter: Splitter!
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")

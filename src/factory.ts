@@ -21,7 +21,9 @@ import {
 import { fetchAccount } from './fetch/account';
 import { ERC721 } from '../generated/templates/ERC721/ERC721';
 import { ERC1155 } from '../generated/templates/ERC1155/ERC1155';
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
+
+// 721 Event handlers
 
 export function handle721MinimalCreated(event: ERC721MinimalCreated): void {
 	let creatorAccount = fetchAccount(event.transaction.from)
@@ -79,6 +81,8 @@ export function handle721SplitterCreated(event: ERC721SplitterCreated): void {
 	)
 }
 
+// 1155 Event handlers
+
 export function handle1155MinimalCreated(event: ERC1155MinimalCreated): void {
 	let creatorAccount = fetchAccount(event.transaction.from)
 	let contractAccount = fetchAccount(event.params.newCollection)
@@ -135,7 +139,9 @@ export function handle1155SplitterCreated(event: ERC1155SplitterCreated): void {
 	)
 }
 
-export function createSplitter(
+// Functions
+
+function createSplitter(
 	contractAddress: Address,
 	creatorAccount: Account,
 	contractAccount: Account,
@@ -149,7 +155,7 @@ export function createSplitter(
 	return splitter
 }
 
-export function create721Contract(
+function create721Contract(
 	contractAddress: Address,
 	contractType: string,
 	timestamp: BigInt,
@@ -172,7 +178,7 @@ export function create721Contract(
 	return contract
 }
 
-export function create1155Contract(
+function create1155Contract(
 	contractAddress: Address,
 	contractType: string,
 	timestamp: BigInt,

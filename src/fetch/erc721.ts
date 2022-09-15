@@ -21,43 +21,7 @@ import { supportsInterface } from './erc165';
 import { fetchIpfsERC721 } from './ipfs';
 
 export function fetchERC721(address: Address): ERC721Contract | null {
-  let erc721 = ERC721.bind(address);
-  let contract = ERC721Contract.load(address);
-  if (contract != null) return contract;
-
-  // Detect using ERC165
-  let detectionId = address.concat(Bytes.fromHexString('80ac58cd')); // Address + ERC721
-  let detectionAccount = Account.load(detectionId);
-
-  // On missing cache
-  if (detectionAccount == null) {
-    detectionAccount = new Account(detectionId);
-    let introspection_01ffc9a7 = supportsInterface(erc721, '01ffc9a7'); // ERC165
-    let introspection_80ac58cd = supportsInterface(erc721, '80ac58cd'); // ERC721
-    let introspection_00000000 = supportsInterface(erc721, '00000000', false);
-    let isERC721 =
-      introspection_01ffc9a7 &&
-      introspection_80ac58cd &&
-      introspection_00000000;
-    detectionAccount.asERC721 = isERC721 ? address : null;
-    detectionAccount.save();
-  }
-
-  // If an ERC721, build entry
-  if (detectionAccount.asERC721) {
-    contract = new ERC721Contract(address);
-    let try_name = erc721.try_name();
-    let try_symbol = erc721.try_symbol();
-    contract.name = try_name.reverted ? '' : try_name.value;
-    contract.symbol = try_symbol.reverted ? '' : try_symbol.value;
-    contract.save();
-
-    let account = fetchAccount(address);
-    account.asERC721 = address;
-    account.save();
-  }
-
-  return contract;
+  return ERC721Contract.load(address);
 }
 
 export function fetchERC721Token(
