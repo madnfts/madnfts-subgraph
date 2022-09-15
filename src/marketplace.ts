@@ -44,3 +44,6 @@ export function handle1155MakeOrder(event: ERC1155MakeOrder): void {}
 export function handle1155OwnerUpdated(event: ERC1155OwnerUpdated): void {}
 export function handle1155Paused(event: ERC1155Paused): void {}
 export function handle1155Unpaused(event: ERC1155Unpaused): void {}
+
+// Functions
+

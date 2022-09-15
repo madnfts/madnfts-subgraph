@@ -214,16 +214,26 @@ templates:
       abis:
         - name: ERC721
           file: ./abis/ERC721.json
-        - name: ERC721Factory
-          file: ./abis/MADFactory721.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
+          handler: handle721Approval
         - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
+          handler: handle721ApprovalForAll
+        - event: BaseUriChanged(string)
+          handler: handle721BaseUriChanged
+        - event: CreateERC721MadNft(address,string,string)
+          handler: handle721CreateERC721MadNft
+        - event: Creators(uint256,(address,uint96)[])
+          handler: handle721Creators
+        - event: DefaultApproval(indexed address,bool)
+          handler: handle721DefaultApproval
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handle721OwnershipTransferred
+        - event: SecondarySaleFees(uint256,address[],uint256[])
+          handler: handle721SecondarySaleFees
         - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
+          handler: handle721Transfer
+      file: ./src/token.ts
   - kind: ethereum/contract
     name: ERC1155
     network: rinkeby
@@ -238,15 +248,31 @@ templates:
       abis:
         - name: ERC1155
           file: ./abis/ERC1155.json
-        - name: ERC1155Factory
-          file: ./abis/MADFactory721.json
       eventHandlers:
         - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAllERC1155
+          handler: handle1155ApprovalForAll
+        - event: BaseUriChanged(string)
+          handler: handle1155BaseUriChanged
+        - event: BurnLazy(indexed address,indexed address,uint256,uint256)
+          handler: handle1155BurnLazy
+        - event: BurnLazyBatch(indexed address,indexed address,uint256[],uint256[])
+          handler: handle1155BurnLazyBatch
+        - event: CreateERC1155MadNft(address,string,string)
+          handler: handle1155CreateERC1155MadNft
+        - event: CreateERC1155MadNftUser(address,string,string)
+          handler: handle1155CreateERC1155MadNftUser
+        - event: Creators(uint256,(address,uint96)[])
+          handler: handle1155Creators
+        - event: DefaultApproval(indexed address,bool)
+          handler: handle1155DefaultApproval
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handle1155OwnershipTransferred
+        - event: SecondarySaleFees(uint256,address[],uint256[])
+          handler: handle1155SecondarySaleFees
+        - event: Supply(uint256,uint256)
+          handler: handle1155Supply
         - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
-          handler: handleTransferBatch
+          handler: handle1155TransferBatch
         - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
-          handler: handleTransferSingle
-        - event: URI(string,indexed uint256)
-          handler: handleURI
-      file: ./src/mapping.ts
+          handler: handle1155TransferSingle
+      file: ./src/token.ts

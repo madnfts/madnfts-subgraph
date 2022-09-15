@@ -30,6 +30,7 @@ export function handle721MinimalCreated(event: ERC721MinimalCreated): void {
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create721Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Minimal',
 		event.block.timestamp,
 		creatorAccount,
@@ -41,6 +42,7 @@ export function handle721BasicCreated(event: ERC721BasicCreated): void {
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create721Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Basic',
 		event.block.timestamp,
 		creatorAccount,
@@ -52,6 +54,7 @@ export function handle721WhitelistCreated(event: ERC721WhitelistCreated): void {
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create721Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Whitelist',
 		event.block.timestamp,
 		creatorAccount,
@@ -63,6 +66,7 @@ export function handle721LazyCreated(event: ERC721LazyCreated): void {
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create721Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Lazy',
 		event.block.timestamp,
 		creatorAccount,
@@ -88,6 +92,7 @@ export function handle1155MinimalCreated(event: ERC1155MinimalCreated): void {
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create1155Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Minimal',
 		event.block.timestamp,
 		creatorAccount,
@@ -99,6 +104,7 @@ export function handle1155BasicCreated(event: ERC1155BasicCreated): void {
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create1155Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Basic',
 		event.block.timestamp,
 		creatorAccount,
@@ -110,6 +116,7 @@ export function handle1155WhitelistCreated(event: ERC1155WhitelistCreated): void
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create1155Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Whitelist',
 		event.block.timestamp,
 		creatorAccount,
@@ -121,6 +128,7 @@ export function handle1155LazyCreated(event: ERC1155LazyCreated): void {
 	let contractAccount = fetchAccount(event.params.newCollection)
 	create1155Contract(
 		event.params.newCollection,
+		event.params.newSplitter,
 		'Lazy',
 		event.block.timestamp,
 		creatorAccount,
@@ -150,6 +158,7 @@ function createSplitter(
 ): Splitter {
 	let splitter = new Splitter(contractAddress.toString())
 	// @todo resolve payees type conflict
+	// @todo finalise based on payee structure in contracts
 	//splitter.payees = payees
 	splitter.percents = percents
 	return splitter
@@ -157,6 +166,7 @@ function createSplitter(
 
 function create721Contract(
 	contractAddress: Address,
+	splitterAddress: Address,
 	contractType: string,
 	timestamp: BigInt,
 	creatorAccount: Account,
@@ -167,6 +177,7 @@ function create721Contract(
 	let try_name = erc721.try_name()
 	let try_symbol = erc721.try_symbol()
 	let try_baseURI = erc721.try_baseURI()
+	contract.splitter = splitterAddress.toString()
 	contract.type = contractType
 	contract.owner = creatorAccount.id
 	contract.baseUri = try_baseURI.reverted ? '' : try_baseURI.value
@@ -180,6 +191,7 @@ function create721Contract(
 
 function create1155Contract(
 	contractAddress: Address,
+	splitterAddress: Address,
 	contractType: string,
 	timestamp: BigInt,
 	creatorAccount: Account,
@@ -190,6 +202,7 @@ function create1155Contract(
 	let try_name = erc1155.try_name()
 	let try_symbol = erc1155.try_symbol()
 	let try_baseURI = erc1155.try_baseURI()
+	contract.splitter = splitterAddress.toString()
 	contract.type = contractType
 	contract.owner = creatorAccount.id
 	contract.baseUri = try_baseURI.reverted ? '' : try_baseURI.value
