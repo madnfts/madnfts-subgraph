@@ -190,7 +190,6 @@ type ERC721Contract @entity(immutable: true) {
   volume: BigInt
   paused: Boolean
   disabled: Boolean
-  supportsMetadata: Boolean
   owner: Account
   royalties: BigInt
   splitter: Splitter!
@@ -201,9 +200,10 @@ type ERC721Contract @entity(immutable: true) {
 
 type ERC721Token @entity {
   id: ID!
-  tokenId: Bytes!
+  tokenId: BigInt
   uri: String!
   name: String
+  symbol: String
   description: String
   image: String
   category: Int
@@ -216,6 +216,7 @@ type ERC721Token @entity {
   timestamp: BigInt
   contract: ERC721Contract!
   owner: Account!
+  approved: Account
   tags: [Tag!]
   attributes: [Attribute!]
   files: [File!]
@@ -326,9 +327,10 @@ type ERC1155Contract @entity(immutable: true) {
 
 type ERC1155Token @entity {
   id: ID!
-  tokenId: Bytes!
+  tokenId: BigInt
   uri: String!
   name: String
+  symbol: String
   description: String
   image: String
   category: Int

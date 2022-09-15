@@ -1,54 +1,121 @@
 import {
-  Approval as ERC721Approval,
-  ApprovalForAll as ERC721ApprovalForAll,
-  BaseUriChanged as ERC721BaseUriChanged,
-  CreateERC721MadNft as ERC721CreateERC721MadNft,
-  Creators as ERC721Creators,
-  DefaultApproval as ERC721DefaultApproval,
-  OwnershipTransferred as ERC721OwnershipTransferred,
-  SecondarySaleFees as ERC721SecondarySaleFees,
-  Transfer as ERC721Transfer,
+  Approval as ERC721ApprovalEvent,
+  ApprovalForAll as ERC721ApprovalForAllEvent,
+  BaseUriChanged as ERC721BaseUriChangedEvent,
+  CreateERC721MadNft as ERC721CreateERC721MadNftEvent,
+  Creators as ERC721CreatorsEvent,
+  DefaultApproval as ERC721DefaultApprovalEvent,
+  OwnershipTransferred as ERC721OwnershipTransferredEvent,
+  SecondarySaleFees as ERC721SecondarySaleFeesEvent,
+  Transfer as ERC721TransferEvent,
 } from '../generated/templates/ERC721/ERC721';
+
 import {
-  ApprovalForAll as ERC1155ApprovalForAll,
-  BaseUriChanged as ERC1155BaseUriChanged,
-  BurnLazy as ERC1155BurnLazy,
-  BurnLazyBatch as ERC1155BurnLazyBatch,
-  CreateERC1155MadNft as ERC1155CreateERC1155MadNft,
-  CreateERC1155MadNftUser as ERC1155CreateERC1155MadNftUser,
-  Creators as ERC1155Creators,
-  DefaultApproval as ERC1155DefaultApproval,
-  OwnershipTransferred as ERC1155OwnershipTransferred,
-  SecondarySaleFees as ERC1155SecondarySaleFees,
-  Supply as ERC1155Supply,
-  TransferBatch as ERC1155TransferBatch,
-  TransferSingle as ERC1155TransferSingle,
+  ApprovalForAll as ERC1155ApprovalForAllEvent,
+  BaseUriChanged as ERC1155BaseUriChangedEvent,
+  BurnLazy as ERC1155BurnLazyEvent,
+  BurnLazyBatch as ERC1155BurnLazyBatchEvent,
+  CreateERC1155MadNft as ERC1155CreateERC1155MadNftEvent,
+  CreateERC1155MadNftUser as ERC1155CreateERC1155MadNftUserEvent,
+  Creators as ERC1155CreatorsEvent,
+  DefaultApproval as ERC1155DefaultApprovalEvent,
+  OwnershipTransferred as ERC1155OwnershipTransferredEvent,
+  SecondarySaleFees as ERC1155SecondarySaleFeesEvent,
+  Supply as ERC1155SupplyEvent,
+  TransferBatch as ERC1155TransferBatchEvent,
+  TransferSingle as ERC1155TransferSingleEvent,
 } from '../generated/templates/ERC1155/ERC1155';
+
+import { fetchERC721, fetchERC721Operator, fetchERC721Token } from './fetch/erc721';
+import { fetchAccount } from './fetch/account';
+import { fetchERC1155, fetchERC1155Operator } from './fetch/erc1155';
 
 // 721 Token events
 
-export function handle721Approval(event: ERC721Approval): void {}
-export function handle721ApprovalForAll(event: ERC721ApprovalForAll): void {}
-export function handle721BaseUriChanged(event: ERC721BaseUriChanged): void {}
-export function handle721CreateERC721MadNft(event: ERC721CreateERC721MadNft): void {}
-export function handle721Creators(event: ERC721Creators): void {}
-export function handle721DefaultApproval(event: ERC721DefaultApproval): void {}
-export function handle721OwnershipTransferred(event: ERC721OwnershipTransferred): void {}
-export function handle721SecondarySaleFees(event: ERC721SecondarySaleFees): void {}
-export function handle721Transfer(event: ERC721Transfer): void {}
+export function handle721Approval(event: ERC721ApprovalEvent): void {
+  let token = fetchERC721Token(fetchERC721(event.address), event.params.tokenId)
+  let owner = fetchAccount(event.params.owner)
+  let approved = fetchAccount(event.params.approved)
+  token.timestamp = event.block.timestamp
+  token.approved = approved.id
+  token.owner = owner.id
+  token.save()
+}
+
+export function handle721ApprovalForAll(event: ERC721ApprovalForAllEvent): void {
+  let contract = fetchERC721(event.address)
+  let owner = fetchAccount(event.params.owner)
+  let operator = fetchAccount(event.params.operator)
+  let delegation = fetchERC721Operator(contract, owner, operator)
+  delegation.approved = event.params.approved
+  delegation.save()
+}
+
+export function handle721BaseUriChanged(event: ERC721BaseUriChangedEvent): void {
+  let contract = fetchERC721(event.address)
+  // @todo we need to retrieve the tokens ID
+  // let token = fetchERC721Token(contract, event.params.tokenId)
+  // fetchIpfsERC721(token, contract.id, contract.baseUri)
+  // token.timestamp = event.block.timestamp
+  // token.owner = event.params.owner
+  // token.uri = event.params.newBaseURI
+  // token.save()
+}
+
+export function handle721CreateERC721MadNft(event: ERC721CreateERC721MadNftEvent): void {
+  let contract = fetchERC721(event.address);
+  // @todo we need to retrieve the tokens ID
+  // let token = fetchERC721Token(contract, event.params.tokenId)
+  // token.owner = event.params.owner
+  // token.timestamp = event.block.timestamp
+  // token.save()
+}
+
+export function handle721Creators(event: ERC721CreatorsEvent): void {}
+export function handle721DefaultApproval(event: ERC721DefaultApprovalEvent): void {}
+export function handle721OwnershipTransferred(event: ERC721OwnershipTransferredEvent): void {}
+export function handle721SecondarySaleFees(event: ERC721SecondarySaleFeesEvent): void {}
+export function handle721Transfer(event: ERC721TransferEvent): void {}
 
 // 1155 Token events
 
-export function handle1155ApprovalForAll(event: ERC1155ApprovalForAll): void {}
-export function handle1155BaseUriChanged(event: ERC1155BaseUriChanged): void {}
-export function handle1155BurnLazy(event: ERC1155BurnLazy): void {}
-export function handle1155BurnLazyBatch(event: ERC1155BurnLazyBatch): void {}
-export function handle1155CreateERC1155MadNft(event: ERC1155CreateERC1155MadNft): void {}
-export function handle1155CreateERC1155MadNftUser(event: ERC1155CreateERC1155MadNftUser): void {}
-export function handle1155Creators(event: ERC1155Creators): void {}
-export function handle1155DefaultApproval(event: ERC1155DefaultApproval): void {}
-export function handle1155OwnershipTransferred(event: ERC1155OwnershipTransferred): void {}
-export function handle1155SecondarySaleFees(event: ERC1155SecondarySaleFees): void {}
-export function handle1155Supply(event: ERC1155Supply): void {}
-export function handle1155TransferBatch(event: ERC1155TransferBatch): void {}
-export function handle1155TransferSingle(event: ERC1155TransferSingle): void {}
+export function handle1155ApprovalForAll(event: ERC1155ApprovalForAllEvent): void {
+  let contract = fetchERC1155(event.address)
+  let owner = fetchAccount(event.params.account)
+  let operator = fetchAccount(event.params.operator)
+  let delegation = fetchERC1155Operator(contract, owner, operator)
+  delegation.approved = event.params.approved
+  delegation.save()
+}
+
+export function handle1155BaseUriChanged(event: ERC1155BaseUriChangedEvent): void {
+  let contract = fetchERC1155(event.address)
+  // @todo we need to retrieve the tokens ID
+  // let token = fetchERC1155Token(contract, event.params.tokenId)
+  // fetchIpfsERC1155(token, contract.id, contract.baseUri)
+  // token.timestamp = event.block.timestamp
+  // token.owner = event.params.owner
+  // token.uri = event.params.newBaseURI
+  // token.save()
+}
+
+export function handle1155BurnLazy(event: ERC1155BurnLazyEvent): void {}
+export function handle1155BurnLazyBatch(event: ERC1155BurnLazyBatchEvent): void {}
+
+export function handle1155CreateERC1155MadNft(event: ERC1155CreateERC1155MadNftEvent): void {
+  let contract = fetchERC1155(event.address);
+  // @todo we need to retrieve the tokens ID
+  // let token = fetchERC1155Token(contract, event.params.tokenId)
+  // token.owner = event.params.owner
+  // token.timestamp = event.block.timestamp
+  // token.save()
+}
+
+export function handle1155CreateERC1155MadNftUser(event: ERC1155CreateERC1155MadNftUserEvent): void {}
+export function handle1155Creators(event: ERC1155CreatorsEvent): void {}
+export function handle1155DefaultApproval(event: ERC1155DefaultApprovalEvent): void {}
+export function handle1155OwnershipTransferred(event: ERC1155OwnershipTransferredEvent): void {}
+export function handle1155SecondarySaleFees(event: ERC1155SecondarySaleFeesEvent): void {}
+export function handle1155Supply(event: ERC1155SupplyEvent): void {}
+export function handle1155TransferBatch(event: ERC1155TransferBatchEvent): void {}
+export function handle1155TransferSingle(event: ERC1155TransferSingleEvent): void {}
