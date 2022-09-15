@@ -13,7 +13,7 @@ import {
 
 import {
 	ERC1155,
-} from '../../generated/ERC1155/ERC1155'
+} from '../../generated/templates/ERC1155/ERC1155'
 
 import {
 	constants,
@@ -63,7 +63,7 @@ export function fetchERC1155Token(contract: ERC1155Contract, identifier: BigInt)
 		let try_uri            = erc1155.try_uri(identifier)
 		token                  = new ERC1155Token(id)
 		token.contract         = contract.id
-		token.identifier       = identifier
+		//token.identifier       = identifier
 		token.totalSupply      = fetchERC1155Balance(token as ERC1155Token, null).id
 		token.uri 						 = try_uri.reverted ? '' : try_uri.value;
 

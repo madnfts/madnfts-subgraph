@@ -12,14 +12,14 @@ import {
   Approval as ApprovalEvent,
   ApprovalForAll as ApprovalForAllEvent,
   Transfer as TransferEvent,
-} from '../generated/ERC721/ERC721';
+} from '../generated/templates/ERC721/ERC721';
 
 import {
   ApprovalForAll as ApprovalForAllERC1155Event,
   TransferBatch as TransferBatchEvent,
   TransferSingle as TransferSingleEvent,
   URI as URIEvent,
-} from '../generated/ERC1155/ERC1155';
+} from '../generated/templates/ERC1155/ERC1155';
 
 import {
   constants,
@@ -77,7 +77,7 @@ export function handleApproval(event: ApprovalEvent): void {
     let approved = fetchAccount(event.params.approved);
 
     token.owner = owner.id;
-    token.approval = approved.id;
+    // token.approval = approved.id;
 
     token.save();
     owner.save();

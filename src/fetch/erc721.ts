@@ -11,7 +11,7 @@ import {
   ERC721Operator,
 } from '../../generated/schema';
 
-import { ERC721 } from '../../generated/ERC721/ERC721';
+import { ERC721 } from '../../generated/templates/ERC721/ERC721';
 
 import { constants } from '@amxx/graphprotocol-utils';
 
@@ -22,12 +22,8 @@ import { fetchIpfsERC721 } from './ipfs';
 
 export function fetchERC721(address: Address): ERC721Contract | null {
   let erc721 = ERC721.bind(address);
-
-  // Try load entry
   let contract = ERC721Contract.load(address);
-  if (contract != null) {
-    return contract;
-  }
+  if (contract != null) return contract;
 
   // Detect using ERC165
   let detectionId = address.concat(Bytes.fromHexString('80ac58cd')); // Address + ERC721
@@ -54,7 +50,6 @@ export function fetchERC721(address: Address): ERC721Contract | null {
     let try_symbol = erc721.try_symbol();
     contract.name = try_name.reverted ? '' : try_name.value;
     contract.symbol = try_symbol.reverted ? '' : try_symbol.value;
-    contract.supportsMetadata = supportsInterface(erc721, '5b5e139f'); // ERC721Metadata
     contract.save();
 
     let account = fetchAccount(address);
@@ -78,8 +73,8 @@ export function fetchERC721Token(
   if (token == null) {
     token = new ERC721Token(id);
     token.contract = contract.id;
-    token.identifier = identifier;
-    token.approval = fetchAccount(constants.ADDRESS_ZERO).id;
+    //token.identifier = identifier;
+    //token.approval = fetchAccount(constants.ADDRESS_ZERO).id;
 
     // @todo - this fails with check contract.supportsMetadata
     if (contract) {

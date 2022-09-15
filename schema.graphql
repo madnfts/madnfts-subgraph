@@ -73,6 +73,15 @@ type Account @entity {
   events: [Event!]! @derivedFrom(field: "emitter")
 }
 
+type Splitter @entity {
+  id: ID!
+  owner: Account
+  payees: [Bytes!]!
+  percents: [BigInt!]
+  ERC721contracts: [ERC721Contract!]! @derivedFrom(field: "splitter")
+  ERC1155contracts: [ERC1155Contract!]! @derivedFrom(field: "splitter")
+}
+
 type Attribute @entity {
   id: ID!
   displayType: String
@@ -183,6 +192,8 @@ type ERC721Contract @entity(immutable: true) {
   disabled: Boolean
   supportsMetadata: Boolean
   owner: Account
+  royalties: BigInt
+  splitter: Splitter!
   tokens: [ERC721Token!]! @derivedFrom(field: "contract")
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
@@ -302,6 +313,8 @@ type ERC1155Contract @entity(immutable: true) {
   floorPrice: BigInt
   lastPrice: BigInt
   volume: BigInt
+  royalties: BigInt
+  splitter: Splitter!
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
   balances: [ERC1155Balance!]! @derivedFrom(field: "contract")
   operators: [ERC1155Operator!]! @derivedFrom(field: "contract")
