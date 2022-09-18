@@ -10,7 +10,7 @@ export function fetchIpfsERC721(token: ERC721Token, contractId: Bytes, basUri: s
 		token.name = data.get('name') ? data.get('name')!.toString() : '';
 		token.image = data.get('image') ? data.get('image')!.toString() : '';
 		token.description = data.get('description') ? data.get('description')!.toString() : '';
-		token.category = data.get('type') ? data.get('type')!.toI64() as i32 : 1;
+		token.category = data.get('category') ? data.get('category')!.toI64() as i32 : 1;
 		token.externalUrl = (data.get('external_url') && data.mustGet('external_url').kind == JSONValueKind.STRING) ? data.get('external_url')!.toString() : '';
 		token.unlockableUrl = (data.get('unlockable_url') && data.mustGet('unlockable_url').kind == JSONValueKind.STRING) ? data.get('unlockable_url')!.toString() : '';
 		token.explicitContent = !!data.get('explicit_content');
@@ -92,7 +92,7 @@ export function fetchIpfsERC1155(token: ERC1155Token, contractId: Bytes, basUri:
 		token.name = data.get('name') ? data.get('name')!.toString() : '';
 		token.image = data.get('image') ? data.get('image')!.toString() : '';
 		token.description = data.get('description') ? data.get('description')!.toString() : '';
-		token.category = data.get('type') ? data.get('type')!.toI64() as i32 : 1;
+		token.category = data.get('category') ? data.get('category')!.toI64() as i32 : 1;
 		token.externalUrl = (data.get('external_url') && data.mustGet('external_url').kind == JSONValueKind.STRING) ? data.get('external_url')!.toString() : '';
 		token.unlockableUrl = (data.get('unlockable_url') && data.mustGet('unlockable_url').kind == JSONValueKind.STRING) ? data.get('unlockable_url')!.toString() : '';
 		token.explicitContent = !!data.get('explicit_content');

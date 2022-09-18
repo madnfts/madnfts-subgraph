@@ -23,6 +23,8 @@ dataSources:
       abis:
         - name: ERC721Factory
           file: ./abis/MADFactory721.json
+      blockHandlers:
+        - handler: handleBlock
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address)
           handler: handle721SplitterCreated
@@ -211,9 +213,12 @@ templates:
       language: wasm/assemblyscript
       entities:
         - ERC721Contract
+        - IERC721
       abis:
         - name: ERC721
           file: ./abis/ERC721.json
+        - name: IERC721
+          file: ./abis/IERC721.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handle721Approval
