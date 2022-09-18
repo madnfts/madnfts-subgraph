@@ -1,8 +1,8 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts/index';
 import { ERC1155Contract, ERC721Contract, Splitter } from '../../generated/schema';
 import { fetchAccount } from '../fetch/account';
-import { ERC721 } from '../../generated/templates/ERC721/ERC721';
-import { ERC1155 } from '../../generated/templates/ERC1155/ERC1155';
+import { ERC721Basic as ERC721 } from '../../generated/templates/ERC721/ERC721Basic';
+import { ERC1155Basic as ERC1155 } from '../../generated/templates/ERC1155/ERC1155Basic';
 
 export function createSplitter(
   contractAddress: Address,
@@ -35,7 +35,7 @@ export function createContract(
     contract.splitter = splitterAddress.toString()
     contract.type = contractType
     contract.owner = creatorAccount.id
-    contract.baseUri = contractInterface.try_baseURI().reverted ? '' : contractInterface.try_baseURI().value
+    contract.baseUri = contractInterface.try_getBaseURI().reverted ? '' : contractInterface.try_getBaseURI().value
     contract.name = contractInterface.try_name().reverted ? '' : contractInterface.try_name().value
     contract.symbol = contractInterface.try_symbol().reverted ? '' : contractInterface.try_symbol().value
     contract.save()
@@ -48,7 +48,7 @@ export function createContract(
     contract.splitter = splitterAddress.toString()
     contract.type = contractType
     contract.owner = creatorAccount.id
-    contract.baseUri = contractInterface.try_baseURI().reverted ? '' : contractInterface.try_baseURI().value
+    contract.baseUri = contractInterface.try_getURI().reverted ? '' : contractInterface.try_getURI().value
     contractAccount.asERC1155 = contractAddress
     contractAccount.save()
   }

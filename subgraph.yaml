@@ -38,38 +38,6 @@ dataSources:
           handler: handle721LazyCreated
       file: ./src/factory.ts
   - kind: ethereum/contract
-    name: ERC721Router
-    network: rinkeby
-    source:
-      address: '0xD9C0C90C082FE1Bc7cD876dEF8544bfDfEc2eC59'
-      abi: ERC721Router
-      startBlock: 11333169
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - ERC721Router
-      abis:
-        - name: ERC721Router
-          file: ./abis/MADRouter721.json
-      eventHandlers:
-        - event: BaseURI(indexed bytes32,indexed string)
-          handler: handle721BaseUri
-        - event: FreeClaimState(indexed bytes32,indexed uint8,indexed bool)
-          handler: handle721FreeClaimState
-        - event: OwnerUpdated(indexed address,indexed address)
-          handler: handle721OwnerUpdated
-        - event: Paused(address)
-          handler: handle721Paused
-        - event: PublicMintState(indexed bytes32,indexed uint8,indexed bool)
-          handler: handle721PublicMintState
-        - event: TokenFundsWithdrawn(indexed bytes32,indexed uint8,indexed address)
-          handler: handle721TokenFundsWithdrawn
-        - event: Unpaused(address)
-          handler: handle721Unpaused
-      file: ./src/router.ts
-  - kind: ethereum/contract
     name: ERC721Marketplace
     network: rinkeby
     source:
@@ -134,38 +102,6 @@ dataSources:
           handler: handle1155LazyCreated
       file: ./src/factory.ts
   - kind: ethereum/contract
-    name: ERC1155Router
-    network: rinkeby
-    source:
-      address: '0x10247872B9f202Ff9e0d371bAF7bc210f5315D99'
-      abi: ERC1155Router
-      startBlock: 11333169
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - ERC1155Router
-      abis:
-        - name: ERC1155Router
-          file: ./abis/MADRouter1155.json
-      eventHandlers:
-        - event: BaseURI(indexed bytes32,indexed string)
-          handler: handle1155BaseUri
-        - event: FreeClaimState(indexed bytes32,indexed uint8,indexed bool)
-          handler: handle1155FreeClaimState
-        - event: OwnerUpdated(indexed address,indexed address)
-          handler: handle1155OwnerUpdated
-        - event: Paused(address)
-          handler: handle1155Paused
-        - event: PublicMintState(indexed bytes32,indexed uint8,indexed bool)
-          handler: handle1155PublicMintState
-        - event: TokenFundsWithdrawn(indexed bytes32,indexed uint8,indexed address)
-          handler: handle1155TokenFundsWithdrawn
-        - event: Unpaused(address)
-          handler: handle1155Unpaused
-      file: ./src/router.ts
-  - kind: ethereum/contract
     name: ERC1155Marketplace
     network: rinkeby
     source:
@@ -206,78 +142,81 @@ templates:
     name: ERC721
     network: rinkeby
     source:
-      abi: ERC721
+      abi: ERC721Basic
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - ERC721Contract
-        - IERC721
+        - ERC721Basic
+        - ERC721Minimal
+        - ERC721Lazy
+        - ERC721Whitelist
       abis:
-        - name: ERC721
-          file: ./abis/ERC721.json
-        - name: IERC721
-          file: ./abis/IERC721.json
+        - name: ERC721Basic
+          file: ./abis/ERC721Basic.json
+        - name: ERC721Minimal
+          file: ./abis/ERC721Minimal.json
+        - name: ERC721Lazy
+          file: ./abis/ERC721Lazy.json
+        - name: ERC721Whitelist
+          file: ./abis/ERC721Whitelist.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handle721Approval
         - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handle721ApprovalForAll
-        - event: BaseUriChanged(string)
-          handler: handle721BaseUriChanged
-        - event: CreateERC721MadNft(address,string,string)
-          handler: handle721CreateERC721MadNft
-        - event: Creators(uint256,(address,uint96)[])
-          handler: handle721Creators
-        - event: DefaultApproval(indexed address,bool)
-          handler: handle721DefaultApproval
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handle721OwnershipTransferred
-        - event: SecondarySaleFees(uint256,address[],uint256[])
-          handler: handle721SecondarySaleFees
+        - event: BaseURISet(indexed string)
+          handler: handle721BaseURISet
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle721OwnerUpdated
+        - event: PublicMintStateSet(indexed bool)
+          handler: handle721PublicMintStateSet
+        - event: RoyaltyFeeSet(indexed uint256)
+          handler: handle721RoyaltyFeeSet
+        - event: RoyaltyRecipientSet(indexed address)
+          handler: handle721RoyaltyRecipientSet
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handle721Transfer
-      file: ./src/token.ts
+      file: ./src/contract.ts
   - kind: ethereum/contract
     name: ERC1155
     network: rinkeby
     source:
-      abi: ERC1155
+      abi: ERC1155Basic
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - ERC1155Contract
+        - ERC1155Basic
+        - ERC1155Minimal
+        - ERC1155Lazy
+        - ERC1155Whitelist
       abis:
-        - name: ERC1155
-          file: ./abis/ERC1155.json
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
+        - name: ERC1155Minimal
+          file: ./abis/ERC1155Minimal.json
+        - name: ERC1155Lazy
+          file: ./abis/ERC1155Lazy.json
+        - name: ERC1155Whitelist
+          file: ./abis/ERC1155Whitelist.json
       eventHandlers:
         - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handle1155ApprovalForAll
-        - event: BaseUriChanged(string)
-          handler: handle1155BaseUriChanged
-        - event: BurnLazy(indexed address,indexed address,uint256,uint256)
-          handler: handle1155BurnLazy
-        - event: BurnLazyBatch(indexed address,indexed address,uint256[],uint256[])
-          handler: handle1155BurnLazyBatch
-        - event: CreateERC1155MadNft(address,string,string)
-          handler: handle1155CreateERC1155MadNft
-        - event: CreateERC1155MadNftUser(address,string,string)
-          handler: handle1155CreateERC1155MadNftUser
-        - event: Creators(uint256,(address,uint96)[])
-          handler: handle1155Creators
-        - event: DefaultApproval(indexed address,bool)
-          handler: handle1155DefaultApproval
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handle1155OwnershipTransferred
-        - event: SecondarySaleFees(uint256,address[],uint256[])
-          handler: handle1155SecondarySaleFees
-        - event: Supply(uint256,uint256)
-          handler: handle1155Supply
+        - event: BaseURISet(indexed string)
+          handler: handle1155BaseURISet
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle1155OwnerUpdated
+        - event: PublicMintStateSet(indexed bool)
+          handler: handle1155PublicMintStateSet
+        - event: RoyaltyFeeSet(indexed uint256)
+          handler: handle1155RoyaltyFeeSet
+        - event: RoyaltyRecipientSet(indexed address)
+          handler: handle1155RoyaltyRecipientSet
         - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
-          handler: handle1155TransferBatch
+          handler: handle1155Transfer
         - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
-          handler: handle1155TransferSingle
-      file: ./src/token.ts
+          handler: handle1155Transfer
+      file: ./src/contract.ts

@@ -294,3 +294,16 @@ interface Event {
   emitter: Account!
   timestamp: BigInt!
 }
+
+interface IpfsMetaData {
+  name: String
+  image: String
+  description: String
+  category: Int
+  externalUrl: String
+  unlockableUrl: String
+  explicitContent: Boolean
+  tags: [Tag!]
+  attributes: [Attribute!]
+  files: [File!]
+}

@@ -1,8 +1,8 @@
 import { Account, ERC1155Contract, ERC1155Transfer, ERC721Transfer } from '../../generated/schema';
 import { constants, decimals, events, transactions } from '@amxx/graphprotocol-utils/index';
-import { TransferBatch, TransferSingle } from '../../generated/templates/ERC1155/ERC1155';
+import { TransferBatch, TransferSingle } from '../../generated/templates/ERC1155/ERC1155Basic';
 import { BigInt, ethereum } from '@graphprotocol/graph-ts/index';
-import { Transfer as TransferEvent } from '../../generated/templates/ERC721/ERC721';
+import { Transfer as TransferEvent } from '../../generated/templates/ERC721/ERC721Basic';
 import { fetchERC1155, fetchERC721 } from '../fetch/factory';
 import { fetchERC1155Token, fetchERC721Token } from '../fetch/token';
 import { fetchAccount } from '../fetch/account';
@@ -12,7 +12,7 @@ import { fetchERC1155Balance } from '../fetch/balance';
 export function createERC721Transfer(event: TransferEvent): void {
   let contract = fetchERC721(event.address, event.block.timestamp)
   if (contract != null) {
-    let token = fetchERC721Token(contract, event.params.tokenId, event.block.timestamp)
+    let token = fetchERC721Token(contract, event.params.id, event.block.timestamp)
     let from = fetchAccount(event.params.from)
     let to = fetchAccount(event.params.to)
     token.owner = to.id
@@ -43,7 +43,7 @@ export function createERC1155SingleTransfer(event: TransferSingle): void {
     from,
     to,
     event.params.id,
-    event.params.value,
+    event.params.amount,
   )
 }
 
@@ -53,7 +53,7 @@ export function createERC1155BatchTransfer(event: TransferBatch): void {
   let from = fetchAccount(event.params.from);
   let to = fetchAccount(event.params.to);
   let ids = event.params.ids;
-  let values = event.params.values;
+  let values = event.params.amounts;
 
   // If this equality doesn't hold (some devs actually don't follox the ERC specifications) then we just can't make
   // sens of what is happening. Don't try to make something out of stupid code, and just throw the event. This
