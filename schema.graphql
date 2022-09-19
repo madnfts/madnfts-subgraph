@@ -13,9 +13,11 @@ type ERC721Contract @entity {
   volume: BigInt
   volumePrice: BigInt
   paused: Boolean!
+  publicMintState: Boolean!
   timestamp: BigInt
   owner: Account
   splitter: Splitter!
+  royalityRecipient: Account
   tokens: [ERC721Token!]! @derivedFrom(field: "contract")
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
@@ -85,6 +87,7 @@ type ERC1155Contract @entity {
   volume: BigInt
   volumePrice: BigInt
   paused: Boolean!
+  publicMintState: Boolean!
   timestamp: BigInt
   owner: Account
   splitter: Splitter!

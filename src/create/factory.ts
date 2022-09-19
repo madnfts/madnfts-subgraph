@@ -34,6 +34,8 @@ export function createContract(
     contract.timestamp = timestamp
     contract.splitter = splitterAddress.toString()
     contract.type = contractType
+    contract.publicMintState = false
+    contract.paused = false
     contract.owner = creatorAccount.id
     contract.baseUri = contractInterface.try_getBaseURI().reverted ? '' : contractInterface.try_getBaseURI().value
     contract.name = contractInterface.try_name().reverted ? '' : contractInterface.try_name().value
@@ -47,6 +49,7 @@ export function createContract(
     contract.timestamp = timestamp
     contract.splitter = splitterAddress.toString()
     contract.type = contractType
+    contract.publicMintState = false
     contract.owner = creatorAccount.id
     contract.baseUri = contractInterface.try_getURI().reverted ? '' : contractInterface.try_getURI().value
     contractAccount.asERC1155 = contractAddress

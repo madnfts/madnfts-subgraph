@@ -3,6 +3,10 @@ import {
   ApprovalForAll as ERC721ApprovalForAllEvent,
   BaseURISet as ERC721BaseURISetEvent,
   Transfer as ERC721TransferEvent,
+  OwnerUpdated as ERC721OwnerUpdatedEvent,
+  PublicMintStateSet as ERC721PublicMintStateSetEvent,
+  RoyaltyFeeSet as ERC721RoyaltyFeeSetEvent,
+  RoyaltyRecipientSet as ERC721RoyaltyRecipientSetEvent,
 } from '../generated/templates/ERC721/ERC721Basic';
 
 import {
@@ -10,6 +14,10 @@ import {
   BaseURISet as ERC1155BaseURISetEvent,
   TransferBatch as ERC1155TransferBatchEvent,
   TransferSingle as ERC1155TransferSingleEvent,
+  OwnerUpdated as ERC1155OwnerUpdatedEvent,
+  PublicMintStateSet as ERC1155PublicMintStateSetEvent,
+  RoyaltyFeeSet as ERC1155RoyaltyFeeSetEvent,
+  RoyaltyRecipientSet as ERC1155RoyaltyRecipientSetEvent,
 } from '../generated/templates/ERC1155/ERC1155Basic';
 
 import { fetchAccount } from './fetch/account';
@@ -49,6 +57,18 @@ export function handle721Transfer(event: ERC721TransferEvent): void {
   createERC721Transfer(event)
 }
 
+export function handle721OwnerUpdated(event: ERC721OwnerUpdatedEvent): void {
+  let contract = fetchERC721(event.address, event.block.timestamp)
+  let owner = fetchAccount(event.params.newOwner)
+  contract.owner = owner.id
+  contract .save()
+}
+
+export function handle721PublicMintStateSet(event: ERC721PublicMintStateSetEvent): void {}
+
+export function handle721RoyaltyFeeSet(event: ERC721RoyaltyFeeSetEvent): void {}
+export function handle721RoyaltyRecipientSet(event: ERC721RoyaltyRecipientSetEvent): void {}
+
 // 1155 Token events
 
 export function handle1155ApprovalForAll(event: ERC1155ApprovalForAllEvent): void {
@@ -73,3 +93,8 @@ export function handle1155TransferBatch(event: ERC1155TransferBatchEvent): void 
 export function handle1155TransferSingle(event: ERC1155TransferSingleEvent): void {
   createERC1155SingleTransfer(event)
 }
+
+export function handle1155OwnerUpdated(event: ERC1155OwnerUpdatedEvent): void {}
+export function handle1155PublicMintStateSet(event: ERC1155PublicMintStateSetEvent): void {}
+export function handle1155RoyaltyFeeSet(event: ERC1155RoyaltyFeeSetEvent): void {}
+export function handle1155RoyaltyRecipientSet(event: ERC1155RoyaltyRecipientSetEvent): void {}
