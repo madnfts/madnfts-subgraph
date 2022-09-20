@@ -1,5 +1,5 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts/index';
-import { ERC1155Contract, ERC721Contract } from '../../generated/schema';
+import { ERC1155Contract, ERC721Contract, Splitter } from '../../generated/schema';
 
 export function fetchERC721(
   address: Address,
@@ -23,4 +23,10 @@ export function fetchERC1155(
     contract.save()
   }
   return contract as ERC1155Contract
+}
+
+export function fetchSplitter(
+  address: Address
+): Splitter {
+  return Splitter.load(address) as Splitter
 }

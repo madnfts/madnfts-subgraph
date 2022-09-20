@@ -30,7 +30,7 @@ export function handle721MinimalCreated(event: ERC721MinimalCreated): void {
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Minimal',
 		event.block.timestamp,
 		'721'
@@ -41,7 +41,7 @@ export function handle721BasicCreated(event: ERC721BasicCreated): void {
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Basic',
 		event.block.timestamp,
 		'721'
@@ -52,7 +52,7 @@ export function handle721WhitelistCreated(event: ERC721WhitelistCreated): void {
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Whitelist',
 		event.block.timestamp,
 		'721'
@@ -63,7 +63,7 @@ export function handle721LazyCreated(event: ERC721LazyCreated): void {
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Lazy',
 		event.block.timestamp,
 		'721'
@@ -85,7 +85,7 @@ export function handle1155MinimalCreated(event: ERC1155MinimalCreated): void {
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Minimal',
 		event.block.timestamp,
 		'1155'
@@ -96,7 +96,7 @@ export function handle1155BasicCreated(event: ERC1155BasicCreated): void {
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Basic',
 		event.block.timestamp,
 		'1155'
@@ -107,7 +107,7 @@ export function handle1155WhitelistCreated(event: ERC1155WhitelistCreated): void
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Whitelist',
 		event.block.timestamp,
 		'1155'
@@ -118,7 +118,7 @@ export function handle1155LazyCreated(event: ERC1155LazyCreated): void {
 	createContract(
 		event.params.newCollection,
 		event.params.newSplitter,
-		event.transaction.from,
+		event.params.newCreator,
 		'Lazy',
 		event.block.timestamp,
 		'1155'

@@ -21,6 +21,7 @@ import {
   Paused as ERC1155Paused,
   Unpaused as ERC1155Unpaused,
 } from '../generated/ERC1155Marketplace/ERC1155Marketplace';
+
 import { fetchOrder } from './fetch/order';
 import { fetchERC721 } from './fetch/factory';
 

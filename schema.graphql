@@ -241,10 +241,10 @@ type Block @entity(immutable: true) {
 }
 
 type Splitter @entity {
-  id: ID!
+  id: Bytes!
   owner: Account!
-  payees: [Bytes!]
-  percents: [BigInt!]
+  payees: [String!]!
+  percents: [BigInt!]!
   ERC721Contracts: [ERC721Contract!]! @derivedFrom(field: "splitter")
   ERC1155Contracts: [ERC1155Contract!]! @derivedFrom(field: "splitter")
 }

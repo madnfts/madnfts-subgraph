@@ -8,6 +8,25 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
+    name: Block
+    network: rinkeby
+    source:
+      address: '0xD9C0C90C082FE1Bc7cD876dEF8544bfDfEc2eC59'
+      abi: Block
+      startBlock: 11333169
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Block
+      abis:
+        - name: Block
+          file: ./abis/MADFactory721.json
+      blockHandlers:
+        - handler: handleBlock
+      file: ./src/factory.ts
+  - kind: ethereum/contract
     name: ERC721Factory
     network: rinkeby
     source:
@@ -23,8 +42,6 @@ dataSources:
       abis:
         - name: ERC721Factory
           file: ./abis/MADFactory721.json
-      blockHandlers:
-        - handler: handleBlock
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address)
           handler: handle721SplitterCreated
