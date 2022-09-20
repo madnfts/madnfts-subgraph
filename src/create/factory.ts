@@ -50,6 +50,7 @@ export function createContract(
     contract.maxSupply = maxSupply
     contract.mintPrice = mintPrice
     contract.royalties = royalties
+    contract.royaltyRecipient = creatorAccount.id
     contract.save()
     contractAccount.asERC721 = contractAddress
     contractAccount.save()
@@ -67,6 +68,7 @@ export function createContract(
     contract.maxSupply = maxSupply
     contract.mintPrice = mintPrice
     contract.royalties = royalties
+    contract.royaltyRecipient = creatorAccount.id
     contractAccount.asERC1155 = contractAddress
     contractAccount.save()
   }
