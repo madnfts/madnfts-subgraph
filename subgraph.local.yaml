@@ -11,9 +11,9 @@ dataSources:
     name: Block
     network: rinkeby
     source:
-      address: '0xD9C0C90C082FE1Bc7cD876dEF8544bfDfEc2eC59'
+      address: '0x900F533C204BE6a22f6195a635604Dfae8048F8d'
       abi: Block
-      startBlock: 52
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -32,7 +32,7 @@ dataSources:
     source:
       address: '0x900F533C204BE6a22f6195a635604Dfae8048F8d'
       abi: ERC721Factory
-      startBlock: 52
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -45,13 +45,13 @@ dataSources:
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address)
           handler: handle721SplitterCreated
-        - event: ERC721MinimalCreated(indexed address,indexed address,indexed address)
+        - event: ERC721MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle721MinimalCreated
-        - event: ERC721BasicCreated(indexed address,indexed address,indexed address)
+        - event: ERC721BasicCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle721BasicCreated
-        - event: ERC721WhitelistCreated(indexed address,indexed address,indexed address)
+        - event: ERC721WhitelistCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle721WhitelistCreated
-        - event: ERC721LazyCreated(indexed address,indexed address,indexed address)
+        - event: ERC721LazyCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle721LazyCreated
       file: ./src/factory.ts
   - kind: ethereum/contract
@@ -60,7 +60,7 @@ dataSources:
     source:
       address: '0x8Cdb3aeEbFEA194b5d37b8f2853afcF60a0fca14'
       abi: ERC721Marketplace
-      startBlock: 52
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -71,14 +71,24 @@ dataSources:
         - name: ERC721Marketplace
           file: ./abis/MADMarketplace721.json
       eventHandlers:
+        - event: AuctionSettingsUpdated(indexed uint256,indexed uint256,indexed uint256)
+          handler: handle721AuctionSettingsUpdated
         - event: Bid(indexed address,uint256,indexed bytes32,address,uint256)
           handler: handle721Bid
         - event: CancelOrder(indexed address,uint256,indexed bytes32,address)
           handler: handle721CancelOrder
         - event: Claim(indexed address,uint256,indexed bytes32,address,address,uint256)
           handler: handle721Claim
+        - event: FactoryUpdated(indexed address)
+          handler: handle721FactoryUpdated
         - event: MakeOrder(indexed address,uint256,indexed bytes32,address)
           handler: handle721MakeOrder
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle721OwnerUpdated
+        - event: Paused(address)
+          handler: handle721Paused
+        - event: Unpaused(address)
+          handler: handle721Unpaused
       file: ./src/marketplace.ts
   - kind: ethereum/contract
     name: ERC1155Factory
@@ -86,7 +96,7 @@ dataSources:
     source:
       address: '0xfd9D14B64BDfd5d2aA95dd787a76c689ad8Afdd2'
       abi: ERC1155Factory
-      startBlock: 52
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -99,13 +109,13 @@ dataSources:
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address)
           handler: handle1155SplitterCreated
-        - event: ERC1155MinimalCreated(indexed address,indexed address,indexed address)
+        - event: ERC1155MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle1155MinimalCreated
-        - event: ERC1155BasicCreated(indexed address,indexed address,indexed address)
+        - event: ERC1155BasicCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle1155BasicCreated
-        - event: ERC1155WhitelistCreated(indexed address,indexed address,indexed address)
+        - event: ERC1155WhitelistCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle1155WhitelistCreated
-        - event: ERC1155LazyCreated(indexed address,indexed address,indexed address)
+        - event: ERC1155LazyCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle1155LazyCreated
       file: ./src/factory.ts
   - kind: ethereum/contract
@@ -114,7 +124,7 @@ dataSources:
     source:
       address: '0x2fCF800AAb256b8497b48f7a41C1eFd1A93525B1'
       abi: ERC1155Marketplace
-      startBlock: 52
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -125,14 +135,24 @@ dataSources:
         - name: ERC1155Marketplace
           file: ./abis/MADMarketplace1155.json
       eventHandlers:
+        - event: AuctionSettingsUpdated(indexed uint256,indexed uint256,indexed uint256)
+          handler: handle1155AuctionSettingsUpdated
         - event: Bid(indexed address,uint256,uint256,indexed bytes32,address,uint256)
           handler: handle1155Bid
         - event: CancelOrder(indexed address,uint256,uint256,indexed bytes32,address)
           handler: handle1155CancelOrder
         - event: Claim(indexed address,uint256,uint256,indexed bytes32,address,address,uint256)
           handler: handle1155Claim
+        - event: FactoryUpdated(indexed address)
+          handler: handle1155FactoryUpdated
         - event: MakeOrder(indexed address,uint256,uint256,indexed bytes32,address)
           handler: handle1155MakeOrder
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle1155OwnerUpdated
+        - event: Paused(address)
+          handler: handle1155Paused
+        - event: Unpaused(address)
+          handler: handle1155Unpaused
       file: ./src/marketplace.ts
 templates:
   - kind: ethereum/contract

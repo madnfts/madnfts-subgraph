@@ -27,9 +27,14 @@ export function createContract(
   contractAddress: Address,
   splitterAddress: Address,
   creatorAddress: Address,
-  contractType: string,
   timestamp: BigInt,
-  standard: string
+  contractType: string,
+  standard: string,
+  name: string,
+  symbol: string,
+  maxSupply: BigInt,
+  mintPrice: BigInt,
+  royalties: BigInt
 ): void {
   let creatorAccount = fetchAccount(creatorAddress)
   let contractAccount = fetchAccount(contractAddress)
@@ -44,8 +49,11 @@ export function createContract(
     contract.paused = false
     contract.owner = creatorAccount.id
     contract.baseUri = contractInterface.try_getBaseURI().reverted ? '' : contractInterface.try_getBaseURI().value
-    contract.name = contractInterface.try_name().reverted ? '' : contractInterface.try_name().value
-    contract.symbol = contractInterface.try_symbol().reverted ? '' : contractInterface.try_symbol().value
+    contract.name = name
+    contract.symbol = symbol
+    contract.maxSupply = maxSupply
+    contract.mintPrice = mintPrice
+    contract.royalties = royalties
     contract.save()
     contractAccount.asERC721 = contractAddress
     contractAccount.save()
@@ -59,6 +67,11 @@ export function createContract(
     contract.publicMintState = false
     contract.owner = creatorAccount.id
     contract.baseUri = contractInterface.try_getURI().reverted ? '' : contractInterface.try_getURI().value
+    contract.name = name
+    contract.symbol = symbol
+    contract.maxSupply = maxSupply
+    contract.mintPrice = mintPrice
+    contract.royalties = royalties
     contractAccount.asERC1155 = contractAddress
     contractAccount.save()
   }

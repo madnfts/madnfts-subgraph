@@ -6,7 +6,7 @@ type ERC721Contract @entity {
   name: String!
   symbol: String!
   baseUri: String!
-  maxSupply: Int
+  maxSupply: BigInt
   royalties: BigInt
   mintPrice: BigInt
   floorPrice: BigInt
@@ -80,7 +80,7 @@ type ERC1155Contract @entity {
   name: String #  unused by hrc1155
   symbol: String # unused by hrc1155
   baseUri: String!
-  maxSupply: Int
+  maxSupply: BigInt
   royalties: BigInt
   mintPrice: BigInt
   floorPrice: BigInt
