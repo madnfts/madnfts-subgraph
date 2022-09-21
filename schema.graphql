@@ -169,10 +169,10 @@ type ERC1155Transfer implements Event @entity(immutable: true) {
 type Order @entity {
   id: ID!
   hash: Bytes!
-  quantity: BigInt
-  price: BigInt
-  endPrice: BigInt
-  endBlock: BigInt
+  quantity: Int
+  price: Int
+  endPrice: Int
+  endBlock: Int
   canceled: Boolean
   seller: Account!
   taker: Account
@@ -198,9 +198,9 @@ type Bid @entity(immutable: true) {
 
 type Sale @entity(immutable: true) {
   id: ID!
-  # token: Erc20Token
-  orders: [Order!]! @derivedFrom(field: "sale")
+  order: Order!
   block: Block!
+  price: BigInt!
   transaction: Transaction!
 }
 

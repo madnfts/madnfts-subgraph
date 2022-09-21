@@ -71,24 +71,14 @@ dataSources:
         - name: ERC721Marketplace
           file: ./abis/MADMarketplace721.json
       eventHandlers:
-        - event: AuctionSettingsUpdated(indexed uint256,indexed uint256,indexed uint256)
-          handler: handle721AuctionSettingsUpdated
         - event: Bid(indexed address,uint256,indexed bytes32,address,uint256)
           handler: handle721Bid
         - event: CancelOrder(indexed address,uint256,indexed bytes32,address)
           handler: handle721CancelOrder
         - event: Claim(indexed address,uint256,indexed bytes32,address,address,uint256)
           handler: handle721Claim
-        - event: FactoryUpdated(indexed address)
-          handler: handle721FactoryUpdated
         - event: MakeOrder(indexed address,uint256,indexed bytes32,address)
           handler: handle721MakeOrder
-        - event: OwnerUpdated(indexed address,indexed address)
-          handler: handle721OwnerUpdated
-        - event: Paused(address)
-          handler: handle721Paused
-        - event: Unpaused(address)
-          handler: handle721Unpaused
       file: ./src/marketplace.ts
   - kind: ethereum/contract
     name: ERC1155Factory
@@ -135,24 +125,14 @@ dataSources:
         - name: ERC1155Marketplace
           file: ./abis/MADMarketplace1155.json
       eventHandlers:
-        - event: AuctionSettingsUpdated(indexed uint256,indexed uint256,indexed uint256)
-          handler: handle1155AuctionSettingsUpdated
         - event: Bid(indexed address,uint256,uint256,indexed bytes32,address,uint256)
           handler: handle1155Bid
         - event: CancelOrder(indexed address,uint256,uint256,indexed bytes32,address)
           handler: handle1155CancelOrder
         - event: Claim(indexed address,uint256,uint256,indexed bytes32,address,address,uint256)
           handler: handle1155Claim
-        - event: FactoryUpdated(indexed address)
-          handler: handle1155FactoryUpdated
         - event: MakeOrder(indexed address,uint256,uint256,indexed bytes32,address)
           handler: handle1155MakeOrder
-        - event: OwnerUpdated(indexed address,indexed address)
-          handler: handle1155OwnerUpdated
-        - event: Paused(address)
-          handler: handle1155Paused
-        - event: Unpaused(address)
-          handler: handle1155Unpaused
       file: ./src/marketplace.ts
 templates:
   - kind: ethereum/contract

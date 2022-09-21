@@ -1,14 +1,23 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts/index';
-import { Order } from '../../generated/schema';
-import { createOrder } from '../create/order';
+import { Bid, Order, Sale } from '../../generated/schema';
 
 export function fetchOrder(
-  orderHash: Bytes,
-  token?: Address,
-  tokenId?: BigInt,
-  seller?: Address
+  orderHash: Bytes
 ): Order {
-  let order = Order.load(orderHash.toHex())
-  if (order == null) order = createOrder(orderHash, token, tokenId, seller)
-  return order as Order
+  return Order.load(orderHash.toHex()) as Order
+}
+
+export function fetchSale(
+  orderHash: Bytes,
+  tokenId: BigInt,
+  takerAddress: Address
+): Sale {
+  return Sale.load(orderHash.toHexString().concat('/').concat(takerAddress.toHexString())) as Sale
+}
+
+export function fetchBid(
+  orderHash: Bytes,
+  bidderAddress: Address
+): Bid {
+  return Bid.load(orderHash.toHexString().concat('/').concat(bidderAddress.toHexString())) as Bid
 }
