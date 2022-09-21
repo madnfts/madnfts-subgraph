@@ -61,6 +61,7 @@ export function createContract(
     contract.splitter = splitter.id
     contract.type = contractType
     contract.publicMintState = false
+    contract.paused = false
     contract.owner = creatorAccount.id
     contract.baseUri = 'ipfs://'
     contract.name = name
@@ -69,6 +70,7 @@ export function createContract(
     contract.mintPrice = mintPrice
     contract.royalties = royalties
     contract.royaltyRecipient = creatorAccount.id
+    contract.save()
     contractAccount.asERC1155 = contractAddress
     contractAccount.save()
   }
