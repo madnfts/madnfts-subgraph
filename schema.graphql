@@ -2,7 +2,7 @@
 
 type ERC721Contract @entity {
   id: Bytes!
-  type: ContractType!
+  type: String!
   name: String!
   symbol: String!
   baseUri: String!
@@ -76,7 +76,7 @@ type ERC721Transfer implements Event @entity(immutable: true) {
 
 type ERC1155Contract @entity {
   id: Bytes!
-  type: ContractType!
+  type: String!
   name: String #  unused by hrc1155
   symbol: String # unused by hrc1155
   baseUri: String!
@@ -271,13 +271,6 @@ type Tag @entity {
 }
 
 # Schemas & shared
-
-enum ContractType {
-  Minimal
-  Basic
-  Whitelist
-  Lazy
-}
 
 type _Schema_ @fulltext(
   name: "ERC721TokenSearch"
