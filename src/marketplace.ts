@@ -25,7 +25,7 @@ export function handle721Bid(event: ERC721Bid): void {
     event.params.bidPrice,
     event.params.bidder,
     event.address,
-    fetchBlock(event.block.hash)
+    fetchBlock(event.block)
   )
 }
 
@@ -41,7 +41,7 @@ export function handle721Claim(event: ERC721Claim): void {
     event.params.id, // @todo - check this represents the token.id?
     event.params.taker,
     event.params.price,
-    fetchBlock(event.block.hash)
+    fetchBlock(event.block)
   )
 }
 
@@ -57,7 +57,7 @@ export function handle721MakeOrder(event: ERC721MakeOrder): void {
     event.params.id, // @todo - check this represents the token.id?
     event.params.seller,
     event.address,
-    fetchBlock(event.block.hash)
+    fetchBlock(event.block)
   )
 }
 
@@ -70,7 +70,7 @@ export function handle1155Bid(event: ERC1155Bid): void {
     event.params.bidPrice,
     event.params.bidder,
     event.address,
-    fetchBlock(event.block.hash)
+    fetchBlock(event.block)
   )
 }
 
@@ -86,7 +86,7 @@ export function handle1155Claim(event: ERC1155Claim): void {
     event.params.id, // @todo - check this represents the token.id?
     event.params.taker,
     event.params.price,
-    fetchBlock(event.block.hash)
+    fetchBlock(event.block)
   )
 }
 
@@ -102,6 +102,6 @@ export function handle1155MakeOrder(event: ERC1155MakeOrder): void {
     event.params.id,
     event.params.seller,
     event.address,
-    fetchBlock(event.block.hash)
+    fetchBlock(event.block)
   )
 }

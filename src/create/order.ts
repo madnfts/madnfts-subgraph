@@ -31,7 +31,7 @@ export function createOrder(
   order.block = block.id
   if (tokenStandard == '721') {
     let contract = fetchERC721(contractAddress, null)
-    let token = fetchERC721Token(contract, tokenId, null)
+    let token = fetchERC721Token(contract, sellerAddress, tokenId, null)
     order.ERC721token = token.id
     order.ERC721contract = contract.id
   } else {

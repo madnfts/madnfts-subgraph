@@ -1,36 +1,43 @@
 import { Account, ERC1155Contract, ERC1155Transfer, ERC721Transfer } from '../../generated/schema';
+import { Transfer as ERC721TransferEvent } from '../../generated/templates/ERC721Basic/ERC721Basic'
+import { TransferBatch as ERC1155TransferBatchEvent } from '../../generated/templates/ERC1155Basic/ERC1155Basic'
+import { TransferSingle as ERC1155TransferSingleEvent } from '../../generated/templates/ERC1155Basic/ERC1155Basic'
 import { constants, decimals, events, transactions } from '@amxx/graphprotocol-utils/index';
-import { TransferBatch, TransferSingle } from '../../generated/templates/ERC1155/ERC1155Basic';
 import { BigInt, ethereum } from '@graphprotocol/graph-ts/index';
-import { Transfer as TransferEvent } from '../../generated/templates/ERC721/ERC721Basic';
 import { fetchERC1155, fetchERC721 } from '../fetch/factory';
 import { fetchERC1155Token, fetchERC721Token } from '../fetch/token';
 import { fetchAccount } from '../fetch/account';
 import { fetchBlock } from '../fetch/block';
 import { fetchERC1155Balance } from '../fetch/balance';
 
-export function createERC721Transfer(event: TransferEvent): void {
+export function createERC721Transfer(event: ERC721TransferEvent): void {
   let contract = fetchERC721(event.address, event.block.timestamp)
   if (contract != null) {
-    let token = fetchERC721Token(contract, event.params.id, event.block.timestamp)
+    let token = fetchERC721Token(contract, event.params.to, event.params.id, event.block.timestamp)
+    let contractAccount = fetchAccount(event.address)
     let from = fetchAccount(event.params.from)
     let to = fetchAccount(event.params.to)
+    // Update the tokens owner
     token.owner = to.id
+    // Set the volume counts
+    contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
+    token.volume = (token.volume > 0 ? token.volume + 1 : 1)
+    contract.save()
     token.save()
-    let ev = new ERC721Transfer(events.id(event))
-    ev.emitter = contract.id
-    ev.transaction = transactions.log(event).id
-    ev.timestamp = event.block.timestamp
-    ev.contract = contract.id
-    ev.token = token.id
-    ev.from = from.id
-    ev.to = to.id
-    ev.block = fetchBlock(event.block.hash).id
-    ev.save()
+    // Create a new transfer entity
+    let transfer = new ERC721Transfer(events.id(event))
+    transfer.emitter = contractAccount.id
+    transfer.from = from.id
+    transfer.to = to.id
+    transfer.contract = contract.id
+    transfer.token = token.id
+    transfer.block = fetchBlock(event.block).id
+    transfer.timestamp = event.block.timestamp
+    transfer.save()
   }
 }
 
-export function createERC1155SingleTransfer(event: TransferSingle): void {
+export function createERC1155SingleTransfer(event: ERC1155TransferSingleEvent): void {
   let contract = fetchERC1155(event.address, null)
   let operator = fetchAccount(event.params.operator)
   let from = fetchAccount(event.params.from)
@@ -47,7 +54,7 @@ export function createERC1155SingleTransfer(event: TransferSingle): void {
   )
 }
 
-export function createERC1155BatchTransfer(event: TransferBatch): void {
+export function createERC1155BatchTransfer(event: ERC1155TransferBatchEvent): void {
   let contract = fetchERC1155(event.address, null);
   let operator = fetchAccount(event.params.operator);
   let from = fetchAccount(event.params.from);
@@ -74,8 +81,6 @@ export function createERC1155BatchTransfer(event: TransferBatch): void {
   }
 }
 
-// Local functions
-
 function insert1155Transfer(
   event: ethereum.Event,
   suffix: string,
@@ -87,15 +92,19 @@ function insert1155Transfer(
   value: BigInt,
 ): void {
   let token = fetchERC1155Token(contract, id, event.block.timestamp);
-  let ev = new ERC1155Transfer(events.id(event).concat(suffix));
-  ev.emitter = token.contract;
-  ev.transaction = transactions.log(event).id;
-  ev.timestamp = event.block.timestamp;
-  ev.contract = contract.id;
-  ev.token = token.id;
-  ev.operator = operator.id;
-  ev.value = decimals.toDecimals(value);
-  ev.valueExact = value;
+  // Create a new transfer entity
+  let transfer = new ERC1155Transfer(events.id(event).concat(suffix))
+  transfer.emitter = contract.id
+  transfer.from = from.id
+  transfer.to = to.id
+  transfer.contract = contract.id
+  transfer.token = token.id
+  transfer.block = fetchBlock(event.block).id
+  transfer.timestamp = event.block.timestamp
+  transfer.operator = operator.id;
+  transfer.value = decimals.toDecimals(value);
+  transfer.valueExact = value;
+  transfer.save()
 
   if (from.id == constants.ADDRESS_ZERO) {
     let totalSupply = fetchERC1155Balance(token, null);
@@ -107,9 +116,8 @@ function insert1155Transfer(
     balance.valueExact = balance.valueExact.minus(value);
     balance.value = decimals.toDecimals(balance.valueExact);
     balance.save();
-
-    ev.from = from.id;
-    ev.fromBalance = balance.id;
+    transfer.from = from.id;
+    transfer.fromBalance = balance.id;
   }
 
   if (to.id == constants.ADDRESS_ZERO) {
@@ -124,12 +132,11 @@ function insert1155Transfer(
     balance.value = decimals.toDecimals(balance.valueExact);
     balance.timestamp = event.block.timestamp;
     balance.save();
-
-    ev.to = to.id;
-    ev.toBalance = balance.id;
+    transfer.to = to.id;
+    transfer.toBalance = balance.id;
   }
 
   token.timestamp = event.block.timestamp;
   token.save();
-  ev.save();
+  transfer.save();
 }

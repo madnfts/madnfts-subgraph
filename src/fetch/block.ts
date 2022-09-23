@@ -1,6 +1,11 @@
 import { Block } from '../../generated/schema';
-import { Bytes } from '@graphprotocol/graph-ts';
+import { ethereum } from '@graphprotocol/graph-ts';
+import { createBlock } from '../create/block';
 
-export function fetchBlock(blockHash: Bytes): Block {
-  return Block.load(blockHash.toHex()) as Block
+export function fetchBlock(block: ethereum.Block): Block {
+  let getBlock = Block.load(block.hash.toHex())
+  if (getBlock == null) {
+    getBlock = createBlock(block)
+  }
+  return getBlock;
 }

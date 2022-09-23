@@ -10,7 +10,7 @@ type ERC721Contract @entity {
   royalties: BigInt
   mintPrice: BigInt
   floorPrice: BigInt
-  volume: BigInt
+  volume: Int
   volumePrice: BigInt
   paused: Boolean!
   publicMintState: Boolean!
@@ -38,7 +38,7 @@ type ERC721Token @entity {
   royalties: BigInt
   price: BigInt
   lastPrice: BigInt
-  volume: BigInt
+  volume: Int
   volumePrice: BigInt
   timestamp: BigInt
   tags: [Tag!]
@@ -60,16 +60,15 @@ type ERC721Operator @entity {
   approved: Boolean!
 }
 
-type ERC721Transfer implements Event @entity(immutable: true) {
+type ERC721Transfer @entity(immutable: true) {
   id: ID!
   emitter: Account!
-  transaction: Transaction!
-  block: Block!
-  timestamp: BigInt!
-  contract: ERC721Contract!
-  token: ERC721Token!
   from: Account!
   to: Account!
+  contract: ERC721Contract!
+  token: ERC721Token!
+  block: Block!
+  timestamp: BigInt!
 }
 
 # ERC1155
@@ -84,7 +83,7 @@ type ERC1155Contract @entity {
   royalties: BigInt
   mintPrice: BigInt
   floorPrice: BigInt
-  volume: BigInt
+  volume: Int
   volumePrice: BigInt
   paused: Boolean!
   publicMintState: Boolean!
@@ -113,7 +112,7 @@ type ERC1155Token @entity {
   royalties: BigInt
   price: BigInt
   lastPrice: BigInt
-  volume: BigInt
+  volume: Int
   volumePrice: BigInt
   timestamp: BigInt
   tags: [Tag!]
@@ -206,8 +205,8 @@ type Sale @entity(immutable: true) {
 
 type Transaction @entity(immutable: true) {
   id: ID!
-  timestamp: BigInt!
-  block: Block!
+  timestamp: BigInt
+  block: Block
   events: [Event!]! @derivedFrom(field: "transaction")
   # add gas?
 }

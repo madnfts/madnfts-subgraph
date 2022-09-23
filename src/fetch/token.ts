@@ -1,14 +1,16 @@
 import { ERC1155Contract, ERC1155Token, ERC721Contract, ERC721Token } from '../../generated/schema';
 import { BigInt } from '@graphprotocol/graph-ts/index';
 import { createERC1155Token, createERC721Token } from '../create/token';
+import { Address } from '@graphprotocol/graph-ts';
 
 export function fetchERC721Token(
   contract: ERC721Contract,
+  ownerAddress: Address,
   tokenId: BigInt,
   timestamp: BigInt | null
 ): ERC721Token {
   let token = ERC721Token.load(contract.id.toHex().concat('/').concat(tokenId.toHex()))
-  if (token == null) token = createERC721Token(contract.id, contract.baseUri, tokenId, timestamp)
+  if (token == null) token = createERC721Token(ownerAddress, contract.id, contract.baseUri, tokenId, timestamp)
   if (timestamp) {
     token.timestamp = timestamp
     token.save()

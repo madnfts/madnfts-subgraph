@@ -136,7 +136,7 @@ dataSources:
       file: ./src/marketplace.ts
 templates:
   - kind: ethereum/contract
-    name: ERC721
+    name: ERC721Basic
     network: rinkeby
     source:
       abi: ERC721Basic
@@ -146,18 +146,9 @@ templates:
       language: wasm/assemblyscript
       entities:
         - ERC721Basic
-        - ERC721Minimal
-        - ERC721Lazy
-        - ERC721Whitelist
       abis:
         - name: ERC721Basic
           file: ./abis/ERC721Basic.json
-        - name: ERC721Minimal
-          file: ./abis/ERC721Minimal.json
-        - name: ERC721Lazy
-          file: ./abis/ERC721Lazy.json
-        - name: ERC721Whitelist
-          file: ./abis/ERC721Whitelist.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handle721Approval
@@ -177,7 +168,7 @@ templates:
           handler: handle721Transfer
       file: ./src/contract.ts
   - kind: ethereum/contract
-    name: ERC1155
+    name: ERC1155Basic
     network: rinkeby
     source:
       abi: ERC1155Basic
@@ -187,18 +178,9 @@ templates:
       language: wasm/assemblyscript
       entities:
         - ERC1155Basic
-        - ERC1155Minimal
-        - ERC1155Lazy
-        - ERC1155Whitelist
       abis:
         - name: ERC1155Basic
           file: ./abis/ERC1155Basic.json
-        - name: ERC1155Minimal
-          file: ./abis/ERC1155Minimal.json
-        - name: ERC1155Lazy
-          file: ./abis/ERC1155Lazy.json
-        - name: ERC1155Whitelist
-          file: ./abis/ERC1155Whitelist.json
       eventHandlers:
         - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handle1155ApprovalForAll
@@ -213,7 +195,7 @@ templates:
         - event: RoyaltyRecipientSet(indexed address)
           handler: handle1155RoyaltyRecipientSet
         - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
-          handler: handle1155Transfer
+          handler: handle1155TransferBatch
         - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
-          handler: handle1155Transfer
+          handler: handle1155TransferSingle
       file: ./src/contract.ts

@@ -2,6 +2,8 @@ import { Address, BigInt } from '@graphprotocol/graph-ts/index';
 import { ERC1155Contract, ERC721Contract, Splitter } from '../../generated/schema';
 import { fetchAccount } from '../fetch/account';
 import { fetchSplitter } from '../fetch/factory';
+import { ERC721Basic } from '../../generated/templates';
+import { ERC1155Basic } from '../../generated/templates';
 
 export function createSplitter(
   contractAddress: Address,
@@ -35,9 +37,12 @@ export function createContract(
 ): void {
   let creatorAccount = fetchAccount(creatorAddress)
   let contractAccount = fetchAccount(contractAddress)
+  let splitter = fetchSplitter(splitterAddress)
   if (standard === '721') {
+    // Create the indexing for the new contract address
+    ERC721Basic.create(contractAddress)
+    // Create the entity
     let contract = new ERC721Contract(contractAddress)
-    let splitter = fetchSplitter(splitterAddress)
     contract.timestamp = timestamp
     contract.splitter = splitter.id
     contract.type = contractType
@@ -50,13 +55,16 @@ export function createContract(
     contract.maxSupply = maxSupply
     contract.mintPrice = mintPrice
     contract.royalties = royalties
+    contract.volume = 0
     contract.royaltyRecipient = creatorAccount.id
     contract.save()
     contractAccount.asERC721 = contractAddress
     contractAccount.save()
   } else {
+    // Create the indexing for the new contract address
+    ERC1155Basic.create(contractAddress)
+    // Create the entity
     let contract = new ERC1155Contract(contractAddress)
-    let splitter = fetchSplitter(splitterAddress)
     contract.timestamp = timestamp
     contract.splitter = splitter.id
     contract.type = contractType
@@ -69,6 +77,7 @@ export function createContract(
     contract.maxSupply = maxSupply
     contract.mintPrice = mintPrice
     contract.royalties = royalties
+    contract.volume = 0
     contract.royaltyRecipient = creatorAccount.id
     contract.save()
     contractAccount.asERC1155 = contractAddress

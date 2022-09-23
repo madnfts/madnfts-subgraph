@@ -7,7 +7,7 @@ import {
   PublicMintStateSet as ERC721PublicMintStateSetEvent,
   RoyaltyFeeSet as ERC721RoyaltyFeeSetEvent,
   RoyaltyRecipientSet as ERC721RoyaltyRecipientSetEvent,
-} from '../generated/templates/ERC721/ERC721Basic';
+} from '../generated/templates/ERC721Basic/ERC721Basic';
 
 import {
   ApprovalForAll as ERC1155ApprovalForAllEvent,
@@ -25,12 +25,12 @@ import { fetchERC1155, fetchERC721 } from './fetch/factory';
 import { fetchERC721Token } from './fetch/token';
 import { fetchERC721Operator } from './fetch/operator';
 import { createERC1155Operator } from './create/operator';
-import { createERC1155BatchTransfer, createERC1155SingleTransfer, createERC721Transfer } from './create/transfer';
+import { createERC721Transfer } from './create/transfer';
 
 // 721 Token events
 
 export function handle721Approval(event: ERC721ApprovalEvent): void {
-  let token = fetchERC721Token(fetchERC721(event.address, event.block.timestamp), event.params.id, event.block.timestamp)
+  let token = fetchERC721Token(fetchERC721(event.address, event.block.timestamp), event.params.owner, event.params.id, event.block.timestamp)
   let owner = fetchAccount(event.params.owner)
   let approved = fetchAccount(event.params.spender)
   token.approved = approved.id
@@ -59,13 +59,12 @@ export function handle721Transfer(event: ERC721TransferEvent): void {
 
 export function handle721OwnerUpdated(event: ERC721OwnerUpdatedEvent): void {
   let contract = fetchERC721(event.address, event.block.timestamp)
-  let owner = fetchAccount(event.params.newOwner)
+  let owner = fetchAccount(event.transaction.from)
   contract.owner = owner.id
-  contract .save()
+  contract.save()
 }
 
 export function handle721PublicMintStateSet(event: ERC721PublicMintStateSetEvent): void {}
-
 export function handle721RoyaltyFeeSet(event: ERC721RoyaltyFeeSetEvent): void {}
 export function handle721RoyaltyRecipientSet(event: ERC721RoyaltyRecipientSetEvent): void {}
 
@@ -85,14 +84,14 @@ export function handle1155BaseURISet(event: ERC1155BaseURISetEvent): void {
   contract.baseUri = event.params.newBaseURI.toString()
   contract.save()
 }
-
-export function handle1155TransferBatch(event: ERC1155TransferBatchEvent): void {
-  createERC1155BatchTransfer(event)
-}
-
-export function handle1155TransferSingle(event: ERC1155TransferSingleEvent): void {
-  createERC1155SingleTransfer(event)
-}
+//
+// export function handle1155TransferBatch(event: ERC1155TransferBatchEvent): void {
+//   createERC1155BatchTransfer(event)
+// }
+//
+// export function handle1155TransferSingle(event: ERC1155TransferSingleEvent): void {
+//   createERC1155SingleTransfer(event)
+// }
 
 export function handle1155OwnerUpdated(event: ERC1155OwnerUpdatedEvent): void {}
 export function handle1155PublicMintStateSet(event: ERC1155PublicMintStateSetEvent): void {}
