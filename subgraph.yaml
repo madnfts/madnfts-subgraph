@@ -70,6 +70,8 @@ dataSources:
       abis:
         - name: ERC721Marketplace
           file: ./abis/MADMarketplace721.json
+        - name: ERC721Basic
+          file: ./abis/ERC721Basic.json
       eventHandlers:
         - event: Bid(indexed address,uint256,indexed bytes32,address,uint256)
           handler: handle721Bid
@@ -124,6 +126,8 @@ dataSources:
       abis:
         - name: ERC1155Marketplace
           file: ./abis/MADMarketplace1155.json
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
       eventHandlers:
         - event: Bid(indexed address,uint256,uint256,indexed bytes32,address,uint256)
           handler: handle1155Bid

@@ -11,7 +11,7 @@ import { fetchBlock } from '../fetch/block';
 import { fetchERC1155Balance } from '../fetch/balance';
 
 export function createERC721Transfer(event: ERC721TransferEvent): void {
-  let contract = fetchERC721(event.address, event.block.timestamp)
+  let contract = fetchERC721(event.address)
   if (contract != null) {
     let token = fetchERC721Token(contract, event.params.to, event.params.id, event.block.timestamp)
     let contractAccount = fetchAccount(event.address)
@@ -20,10 +20,10 @@ export function createERC721Transfer(event: ERC721TransferEvent): void {
     // Update the tokens owner
     token.owner = to.id
     // Set the volume counts
-    contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
     token.volume = (token.volume > 0 ? token.volume + 1 : 1)
-    contract.save()
     token.save()
+    contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
+    contract.save()
     // Create a new transfer entity
     let transfer = new ERC721Transfer(events.id(event))
     transfer.emitter = contractAccount.id
@@ -38,7 +38,7 @@ export function createERC721Transfer(event: ERC721TransferEvent): void {
 }
 
 export function createERC1155SingleTransfer(event: ERC1155TransferSingleEvent): void {
-  let contract = fetchERC1155(event.address, null)
+  let contract = fetchERC1155(event.address)
   let operator = fetchAccount(event.params.operator)
   let from = fetchAccount(event.params.from)
   let to = fetchAccount(event.params.to)
@@ -55,7 +55,7 @@ export function createERC1155SingleTransfer(event: ERC1155TransferSingleEvent): 
 }
 
 export function createERC1155BatchTransfer(event: ERC1155TransferBatchEvent): void {
-  let contract = fetchERC1155(event.address, null);
+  let contract = fetchERC1155(event.address);
   let operator = fetchAccount(event.params.operator);
   let from = fetchAccount(event.params.from);
   let to = fetchAccount(event.params.to);

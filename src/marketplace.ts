@@ -15,9 +15,12 @@ import {
 import { fetchOrder } from './fetch/order';
 import { fetchBlock } from './fetch/block';
 import { createBid, createOrder, createSale } from './create/order';
+import { fetchERC1155Token, fetchERC721Token } from './fetch/token';
+import { fetchERC1155, fetchERC721 } from './fetch/factory';
 
 // 721 Marketplace events
 
+// @todo test the bid event mappings
 export function handle721Bid(event: ERC721Bid): void {
   createBid(
     event.params.hash, // @todo - confirm this is the orders hash, or is is unique to the bid?
@@ -33,13 +36,21 @@ export function handle721CancelOrder(event: ERC721CancelOrder): void {
   let order = fetchOrder(event.params.hash)
   order.canceled = true
   order.save()
+  let contract = fetchERC721(event.params.token)
+  let token = fetchERC721Token(contract, event.params.seller, event.params.id, null)
+  token.onSale = false
+  token.price = token.lastPrice
+  token.save()
 }
 
-export function handle721Claim(event: ERC721Claim): void {
+export function handle721Claim(event: ERC721Claim): void  {
   createSale(
-    event.params.hash, // @todo - confirm this is the orders hash, or is is unique to the sale?
-    event.params.id, // @todo - check this represents the token.id?
+    '721',
+    event.params.hash,
+    event.params.id,
     event.params.taker,
+    event.params.token,
+    event.address,
     event.params.price,
     fetchBlock(event.block)
   )
@@ -47,15 +58,11 @@ export function handle721Claim(event: ERC721Claim): void {
 
 export function handle721MakeOrder(event: ERC721MakeOrder): void {
   createOrder(
-    event.params.hash,
-    0, // @todo - add to event data
     '721',
-    0, // @todo - add to event data
-    0, // @todo - add to event data
-    0, // @todo - add to event data
-    0, // @todo - add to event data
-    event.params.id, // @todo - check this represents the token.id?
+    event.params.hash,
+    event.params.id,
     event.params.seller,
+    event.params.token,
     event.address,
     fetchBlock(event.block)
   )
@@ -63,6 +70,7 @@ export function handle721MakeOrder(event: ERC721MakeOrder): void {
 
 // 1155 Marketplace events
 
+// @todo test the bid event mappings
 export function handle1155Bid(event: ERC1155Bid): void {
   createBid(
     event.params.hash, // @todo - confirm this is the orders hash, or is is unique to the bid?
@@ -78,13 +86,21 @@ export function handle1155CancelOrder(event: ERC1155CancelOrder): void {
   let order = fetchOrder(event.params.hash)
   order.canceled = true
   order.save()
+  let contract = fetchERC1155(event.params.token)
+  let token = fetchERC1155Token(contract, event.params.id, null)
+  token.onSale = false
+  token.price = token.lastPrice
+  token.save()
 }
 
 export function handle1155Claim(event: ERC1155Claim): void {
   createSale(
-    event.params.hash, // @todo - confirm this is the orders hash, or is is unique to the sale?
-    event.params.id, // @todo - check this represents the token.id?
+    '1155',
+    event.params.hash,
+    event.params.id,
     event.params.taker,
+    event.params.token,
+    event.address,
     event.params.price,
     fetchBlock(event.block)
   )
@@ -92,15 +108,11 @@ export function handle1155Claim(event: ERC1155Claim): void {
 
 export function handle1155MakeOrder(event: ERC1155MakeOrder): void {
   createOrder(
-    event.params.hash,
-    0, // @todo - add to event data
     '1155',
-    0, // @todo - add to event data
-    0, // @todo - add to event data
-    0, // @todo - add to event data
-    0, // @todo - add to event data
+    event.params.hash,
     event.params.id,
     event.params.seller,
+    event.params.token,
     event.address,
     fetchBlock(event.block)
   )

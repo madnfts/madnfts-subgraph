@@ -18,16 +18,21 @@ export function createERC721Token(
   let token = new ERC721Token(id)
   let erc721interface = ERC721Basic.bind(Address.fromBytes(contractAddress))
   let try_tokenURI = erc721interface.try_tokenURI(tokenId)
+  let try_name = erc721interface.try_name()
+  let try_symbol = erc721interface.try_symbol()
+  let try_price = erc721interface.try_price()
+  token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
+  token.name = try_name.reverted ? '' : try_name.value
+  token.symbol = try_symbol.reverted ? '' : try_symbol.value
+  token.price = try_price.reverted ? null : try_price.value
   token.volume = 0
   token.contract = contractAddress
   token.tokenId = tokenId
-  token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
   token.timestamp = timestamp
   token.owner = owner.id
   if (token.uri) {
     // @todo enable IPFS data fetching
     //fetchIpfsERC721(token, contractAddress, baseUri.toString())
-    token.name = 'Token number: ' + tokenId.toString()
     token.category = 1
     token.image = 'https://picsum.photos/seed/'+tokenId.toString()+contractAddress.toHexString()+'/300/300'
   }
@@ -43,16 +48,17 @@ export function createERC1155Token(
 ): ERC1155Token {
   let id = contractAddress.toHex().concat('/').concat(tokenId.toHex())
   let token = new ERC1155Token(id)
-  let erc721interface = ERC1155Basic.bind(Address.fromBytes(contractAddress))
-  let try_tokenURI = erc721interface.try_uri(tokenId)
+  let erc1155interface = ERC1155Basic.bind(Address.fromBytes(contractAddress))
+  let try_tokenURI = erc1155interface.try_uri(tokenId)
+  let try_price = erc1155interface.try_price()
+  token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
+  token.price = try_price.reverted ? null : try_price.value
   token.contract = contractAddress
   token.tokenId = tokenId
-  token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
   token.timestamp = timestamp
   if (token.uri) {
     // @todo enable IPFS data fetching
     //fetchIpfsERC1155(token, contractAddress, baseUri.toString())
-    token.name = 'Token number: ' + tokenId.toString()
     token.category = 1
     token.image = 'https://picsum.photos/seed/'+tokenId.toString()+contractAddress.toHexString()+'/300/300'
   }

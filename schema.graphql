@@ -2,7 +2,7 @@
 
 type ERC721Contract @entity {
   id: Bytes!
-  type: String!
+  type: String! # 0=Minimal; 1=Basic; 2=Whitelist; 3=Lazy;
   name: String!
   symbol: String!
   baseUri: String!
@@ -36,6 +36,8 @@ type ERC721Token @entity {
   externalUrl: String
   explicitContent: Boolean
   royalties: BigInt
+  onSale: Boolean
+  onSaleType: Int # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
   price: BigInt
   lastPrice: BigInt
   volume: Int
@@ -75,9 +77,9 @@ type ERC721Transfer @entity(immutable: true) {
 
 type ERC1155Contract @entity {
   id: Bytes!
-  type: String!
-  name: String #  unused by hrc1155
-  symbol: String # unused by hrc1155
+  type: String! # 0=Minimal; 1=Basic; 2=Whitelist; 3=Lazy;
+  name: String!
+  symbol: String!
   baseUri: String!
   maxSupply: BigInt
   royalties: BigInt
@@ -110,6 +112,8 @@ type ERC1155Token @entity {
   externalUrl: String
   explicitContent: Boolean
   royalties: BigInt
+  onSale: Boolean
+  onSaleType: Int # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
   price: BigInt
   lastPrice: BigInt
   volume: Int
@@ -118,7 +122,7 @@ type ERC1155Token @entity {
   tags: [Tag!]
   attributes: [Attribute!]
   files: [File!]
-  totalSupply: ERC1155Balance!
+  totalSupply: ERC1155Balance
   contract: ERC1155Contract!
   order: Order
   orders: [Order!] @derivedFrom(field: "ERC1155token")
@@ -146,10 +150,9 @@ type ERC1155Operator @entity {
   approved: Boolean!
 }
 
-type ERC1155Transfer implements Event @entity(immutable: true) {
+type ERC1155Transfer @entity(immutable: true) {
   id: ID!
   emitter: Account!
-  transaction: Transaction!
   timestamp: BigInt!
   block: Block!
   contract: ERC1155Contract!
@@ -167,18 +170,20 @@ type ERC1155Transfer implements Event @entity(immutable: true) {
 
 type Order @entity {
   id: ID!
+  type: Int! # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
   hash: Bytes!
   quantity: Int
-  price: Int
-  endPrice: Int
-  endBlock: Int
+  price: BigInt
+  endPrice: BigInt
+  endBlock: BigInt
+  startPrice: BigInt
+  startBlock: BigInt
   canceled: Boolean
   seller: Account!
   taker: Account
   sale: Sale
   bids: [Bid!] @derivedFrom(field: "order")
   block: Block!
-  transaction: Transaction!
   ERC721token: ERC721Token
   ERC1155token: ERC1155Token
   ERC721contract: ERC721Contract
@@ -200,7 +205,6 @@ type Sale @entity(immutable: true) {
   order: Order!
   block: Block!
   price: BigInt!
-  transaction: Transaction!
 }
 
 type Transaction @entity(immutable: true) {
@@ -280,8 +284,6 @@ type _Schema_ @fulltext(
     { entity: "ERC1155Token", fields: [{ name: "name" }, { name: "description" }] }
   ]
 )
-
-# interface
 
 interface Event {
   id: ID!
