@@ -34,21 +34,25 @@ export function createOrder(
     order.block = block.id
     if (tokenStandard == '721') {
       let contract = fetchERC721(contractAddress)
-      let token = fetchERC721Token(contract, sellerAddress, tokenId, null)
+      let token = fetchERC721Token(contract, sellerAddress, tokenId, block.timestamp)
       order.ERC721token = token.id
       order.ERC721contract = contract.id
+      token.onSaleHash = orderHash
       token.onSaleType = orderInfo.getOrderType()
       token.onSale = true
       token.price = orderInfo.getStartPrice()
+      token.timestamp = block.timestamp
       token.save()
     } else {
       let contract = fetchERC1155(contractAddress)
       let token = fetchERC1155Token(contract, tokenId, null)
       order.ERC1155token = token.id
       order.ERC1155contract = contract.id
+      token.onSaleHash = orderHash
       token.onSaleType = orderInfo.getOrderType()
       token.onSale = true
       token.price = orderInfo.getStartPrice()
+      token.timestamp = block.timestamp
       token.save()
     }
     order.save()
@@ -78,7 +82,9 @@ export function createSale(
   order.save()
   if (tokenStandard == '721') {
     let contract = fetchERC721(contractAddress)
-    let token = fetchERC721Token(contract, takerAddress, tokenId, null)
+    let token = fetchERC721Token(contract, takerAddress, tokenId, block.timestamp)
+    token.timestamp = block.timestamp
+    token.onSaleHash = null
     token.onSaleType = 0
     token.onSale = false
     token.price = price
@@ -91,6 +97,8 @@ export function createSale(
   } else {
     let contract = fetchERC1155(contractAddress)
     let token = fetchERC1155Token(contract, tokenId, null)
+    token.timestamp = block.timestamp
+    token.onSaleHash = null
     token.onSaleType = 0
     token.onSale = false
     token.price = price

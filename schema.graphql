@@ -38,6 +38,7 @@ type ERC721Token @entity {
   royalties: BigInt
   onSale: Boolean
   onSaleType: Int # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
+  onSaleHash: Bytes
   price: BigInt
   lastPrice: BigInt
   volume: Int
@@ -114,6 +115,7 @@ type ERC1155Token @entity {
   royalties: BigInt
   onSale: Boolean
   onSaleType: Int # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
+  onSaleHash: Bytes
   price: BigInt
   lastPrice: BigInt
   volume: Int
