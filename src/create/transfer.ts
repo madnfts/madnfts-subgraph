@@ -19,11 +19,6 @@ export function createERC721Transfer(event: ERC721TransferEvent): void {
     let to = fetchAccount(event.params.to)
     // Update the tokens owner
     token.owner = to.id
-    // Set the volume counts
-    token.volume = (token.volume > 0 ? token.volume + 1 : 1)
-    token.save()
-    contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
-    contract.save()
     // Create a new transfer entity
     let transfer = new ERC721Transfer(events.id(event))
     transfer.emitter = contractAccount.id

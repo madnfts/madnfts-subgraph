@@ -83,7 +83,11 @@ export function createSale(
     token.onSale = false
     token.price = price
     token.lastPrice = price
+    // Set the volume counts
+    token.volume = (token.volume > 0 ? token.volume + 1 : 1)
     token.save()
+    contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
+    contract.save()
   } else {
     let contract = fetchERC1155(contractAddress)
     let token = fetchERC1155Token(contract, tokenId, null)
@@ -91,7 +95,11 @@ export function createSale(
     token.onSale = false
     token.price = price
     token.lastPrice = price
+    // Set the volume counts
+    token.volume = (token.volume > 0 ? token.volume + 1 : 1)
     token.save()
+    contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
+    contract.save()
   }
   return sale as Sale
 }

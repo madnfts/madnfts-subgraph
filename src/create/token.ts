@@ -53,6 +53,7 @@ export function createERC1155Token(
   let try_price = erc1155interface.try_price()
   token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
   token.price = try_price.reverted ? null : try_price.value
+  token.volume = 0
   token.contract = contractAddress
   token.tokenId = tokenId
   token.timestamp = timestamp
