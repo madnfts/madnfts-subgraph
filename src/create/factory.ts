@@ -9,7 +9,8 @@ export function createSplitter(
   contractAddress: Address,
   ownerAddress: Address,
   payees: Address[],
-  percents: BigInt[]
+  percents: BigInt[],
+  flag: BigInt
 ): void {
   let splitter = new Splitter(contractAddress)
   let payeesFormatted: string[] = []
@@ -19,6 +20,7 @@ export function createSplitter(
   splitter.payees = payeesFormatted
   splitter.percents = percents
   splitter.owner = ownerAddress
+  splitter.flag = flag
   splitter.save()
 }
 

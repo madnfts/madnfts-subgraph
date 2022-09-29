@@ -36,11 +36,6 @@ export function handle721CancelOrder(event: ERC721CancelOrder): void {
   let order = fetchOrder(event.params.hash)
   order.canceled = true
   order.save()
-  let contract = fetchERC721(event.params.token)
-  let token = fetchERC721Token(contract, event.params.seller, event.params.id, null)
-  token.onSale = false
-  token.price = token.lastPrice
-  token.save()
 }
 
 export function handle721Claim(event: ERC721Claim): void  {
@@ -86,11 +81,6 @@ export function handle1155CancelOrder(event: ERC1155CancelOrder): void {
   let order = fetchOrder(event.params.hash)
   order.canceled = true
   order.save()
-  let contract = fetchERC1155(event.params.token)
-  let token = fetchERC1155Token(contract, event.params.id, null)
-  token.onSale = false
-  token.price = token.lastPrice
-  token.save()
 }
 
 export function handle1155Claim(event: ERC1155Claim): void {

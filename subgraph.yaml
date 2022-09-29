@@ -9,11 +9,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Block
-    network: rinkeby
+    network: harmony
     source:
-      address: '0x900F533C204BE6a22f6195a635604Dfae8048F8d'
+      address: '0xe6D9EB2E7FE11b75e430e62888736405BD994885'
       abi: Block
-      startBlock: 1
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -28,11 +28,11 @@ dataSources:
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC721Factory
-    network: rinkeby
+    network: harmony
     source:
-      address: '0x900F533C204BE6a22f6195a635604Dfae8048F8d'
+      address: '0xe6D9EB2E7FE11b75e430e62888736405BD994885'
       abi: ERC721Factory
-      startBlock: 1
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -43,7 +43,7 @@ dataSources:
         - name: ERC721Factory
           file: ./abis/MADFactory721.json
       eventHandlers:
-        - event: SplitterCreated(indexed address,uint256[],address[],address)
+        - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle721SplitterCreated
         - event: ERC721MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle721MinimalCreated
@@ -56,11 +56,11 @@ dataSources:
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC721Marketplace
-    network: rinkeby
+    network: harmony
     source:
-      address: '0x8Cdb3aeEbFEA194b5d37b8f2853afcF60a0fca14'
+      address: '0xF2eBc232B2feCc689D8b45498bE12aC3772d98b0'
       abi: ERC721Marketplace
-      startBlock: 1
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -84,11 +84,11 @@ dataSources:
       file: ./src/marketplace.ts
   - kind: ethereum/contract
     name: ERC1155Factory
-    network: rinkeby
+    network: harmony
     source:
-      address: '0xfd9D14B64BDfd5d2aA95dd787a76c689ad8Afdd2'
+      address: '0x8629c862f2eA6703cDd537c018125a2eE4ead130'
       abi: ERC1155Factory
-      startBlock: 1
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -99,7 +99,7 @@ dataSources:
         - name: ERC1155Factory
           file: ./abis/MADFactory1155.json
       eventHandlers:
-        - event: SplitterCreated(indexed address,uint256[],address[],address)
+        - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle1155SplitterCreated
         - event: ERC1155MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle1155MinimalCreated
@@ -112,11 +112,11 @@ dataSources:
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC1155Marketplace
-    network: rinkeby
+    network: harmony
     source:
-      address: '0x2fCF800AAb256b8497b48f7a41C1eFd1A93525B1'
+      address: '0xd374deb7805254eD3748C696985D3C9118bB0376'
       abi: ERC1155Marketplace
-      startBlock: 1
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -141,7 +141,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ERC721Basic
-    network: rinkeby
+    network: harmony
     source:
       abi: ERC721Basic
     mapping:
@@ -173,7 +173,7 @@ templates:
       file: ./src/contract.ts
   - kind: ethereum/contract
     name: ERC1155Basic
-    network: rinkeby
+    network: harmony
     source:
       abi: ERC1155Basic
     mapping:

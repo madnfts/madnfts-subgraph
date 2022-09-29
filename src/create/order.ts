@@ -26,9 +26,10 @@ export function createOrder(
     let seller = fetchAccount(sellerAddress)
     order.hash = orderHash
     order.type = orderInfo.getOrderType()
-    order.price = orderInfo.getStartPrice()
     order.endPrice = orderInfo.getEndPrice()
-    order.endBlock = orderInfo.getEndBlock()
+    order.endTime = orderInfo.getEndTime()
+    order.startPrice = orderInfo.getStartPrice()
+    order.startTime = orderInfo.getStartTime()
     order.canceled = false
     order.seller = seller.id
     order.block = block.id
@@ -37,10 +38,7 @@ export function createOrder(
       let token = fetchERC721Token(contract, sellerAddress, tokenId, block.timestamp)
       order.ERC721token = token.id
       order.ERC721contract = contract.id
-      token.onSaleHash = orderHash
-      token.onSaleType = orderInfo.getOrderType()
-      token.onSale = true
-      token.price = orderInfo.getStartPrice()
+      token.order = order.id
       token.timestamp = block.timestamp
       token.save()
     } else {
@@ -48,10 +46,7 @@ export function createOrder(
       let token = fetchERC1155Token(contract, tokenId, null)
       order.ERC1155token = token.id
       order.ERC1155contract = contract.id
-      token.onSaleHash = orderHash
-      token.onSaleType = orderInfo.getOrderType()
-      token.onSale = true
-      token.price = orderInfo.getStartPrice()
+      token.order = order.id
       token.timestamp = block.timestamp
       token.save()
     }
@@ -84,12 +79,9 @@ export function createSale(
     let contract = fetchERC721(contractAddress)
     let token = fetchERC721Token(contract, takerAddress, tokenId, block.timestamp)
     token.timestamp = block.timestamp
-    token.onSaleHash = null
-    token.onSaleType = 0
-    token.onSale = false
-    token.price = price
     token.lastPrice = price
     // Set the volume counts
+    token.order = null
     token.volume = (token.volume > 0 ? token.volume + 1 : 1)
     token.save()
     contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
@@ -98,12 +90,9 @@ export function createSale(
     let contract = fetchERC1155(contractAddress)
     let token = fetchERC1155Token(contract, tokenId, null)
     token.timestamp = block.timestamp
-    token.onSaleHash = null
-    token.onSaleType = 0
-    token.onSale = false
-    token.price = price
     token.lastPrice = price
     // Set the volume counts
+    token.order = null
     token.volume = (token.volume > 0 ? token.volume + 1 : 1)
     token.save()
     contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)

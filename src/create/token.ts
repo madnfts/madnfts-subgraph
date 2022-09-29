@@ -20,11 +20,9 @@ export function createERC721Token(
   let try_tokenURI = erc721interface.try_tokenURI(tokenId)
   let try_name = erc721interface.try_name()
   let try_symbol = erc721interface.try_symbol()
-  let try_price = erc721interface.try_price()
   token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
   token.name = try_name.reverted ? '' : try_name.value
   token.symbol = try_symbol.reverted ? '' : try_symbol.value
-  token.price = try_price.reverted ? null : try_price.value
   token.volume = 0
   token.contract = contractAddress
   token.tokenId = tokenId
@@ -50,9 +48,7 @@ export function createERC1155Token(
   let token = new ERC1155Token(id)
   let erc1155interface = ERC1155Basic.bind(Address.fromBytes(contractAddress))
   let try_tokenURI = erc1155interface.try_uri(tokenId)
-  let try_price = erc1155interface.try_price()
   token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
-  token.price = try_price.reverted ? null : try_price.value
   token.volume = 0
   token.contract = contractAddress
   token.tokenId = tokenId

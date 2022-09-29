@@ -36,10 +36,6 @@ type ERC721Token @entity {
   externalUrl: String
   explicitContent: Boolean
   royalties: BigInt
-  onSale: Boolean
-  onSaleType: Int # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
-  onSaleHash: Bytes
-  price: BigInt
   lastPrice: BigInt
   volume: Int
   volumePrice: BigInt
@@ -113,10 +109,6 @@ type ERC1155Token @entity {
   externalUrl: String
   explicitContent: Boolean
   royalties: BigInt
-  onSale: Boolean
-  onSaleType: Int # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
-  onSaleHash: Bytes
-  price: BigInt
   lastPrice: BigInt
   volume: Int
   volumePrice: BigInt
@@ -175,11 +167,10 @@ type Order @entity {
   type: Int! # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
   hash: Bytes!
   quantity: Int
-  price: BigInt
   endPrice: BigInt
-  endBlock: BigInt
+  endTime: BigInt
   startPrice: BigInt
-  startBlock: BigInt
+  startTime: BigInt
   canceled: Boolean
   seller: Account!
   taker: Account
@@ -251,6 +242,7 @@ type Splitter @entity {
   owner: Account!
   payees: [String!]!
   percents: [BigInt!]!
+  flag: BigInt
   ERC721Contracts: [ERC721Contract!]! @derivedFrom(field: "splitter")
   ERC1155Contracts: [ERC1155Contract!]! @derivedFrom(field: "splitter")
 }

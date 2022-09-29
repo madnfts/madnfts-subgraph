@@ -95,7 +95,8 @@ export function handle721SplitterCreated(event: ERC721SplitterCreated): void {
 		event.params.splitter,
 		event.params.creator,
 		event.params.payees,
-		event.params.shares
+		event.params.shares,
+		event.params.flag
 	)
 }
 
@@ -170,6 +171,7 @@ export function handle1155SplitterCreated(event: ERC1155SplitterCreated): void {
 		event.params.splitter,
 		event.params.creator,
 		event.params.payees,
-		event.params.shares
+		event.params.shares,
+		event.params.flag
 	)
 }

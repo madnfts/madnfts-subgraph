@@ -43,7 +43,7 @@ dataSources:
         - name: ERC721Factory
           file: ./abis/MADFactory721.json
       eventHandlers:
-        - event: SplitterCreated(indexed address,uint256[],address[],address)
+        - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle721SplitterCreated
         - event: ERC721MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle721MinimalCreated
@@ -99,7 +99,7 @@ dataSources:
         - name: ERC1155Factory
           file: ./abis/MADFactory1155.json
       eventHandlers:
-        - event: SplitterCreated(indexed address,uint256[],address[],address)
+        - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle1155SplitterCreated
         - event: ERC1155MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
           handler: handle1155MinimalCreated
