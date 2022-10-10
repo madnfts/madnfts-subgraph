@@ -13,7 +13,6 @@ import {
 } from '../generated/ERC1155Marketplace/ERC1155Marketplace';
 
 import { fetchOrder } from './fetch/order';
-import { fetchBlock } from './fetch/block';
 import { createBid, createOrder, createSale } from './create/order';
 import { fetchERC1155Token, fetchERC721Token } from './fetch/token';
 import { fetchERC1155, fetchERC721 } from './fetch/factory';
@@ -28,7 +27,7 @@ export function handle721Bid(event: ERC721Bid): void {
   //   event.params.bidPrice,
   //   event.params.bidder,
   //   event.address,
-  //   fetchBlock(event.block)
+  //   event.block
   // )
 }
 
@@ -47,7 +46,7 @@ export function handle721Claim(event: ERC721Claim): void  {
     event.params.token,
     event.address,
     event.params.price,
-    fetchBlock(event.block)
+    event.block
   )
 }
 
@@ -59,7 +58,7 @@ export function handle721MakeOrder(event: ERC721MakeOrder): void {
     event.params.seller,
     event.params.token,
     event.address,
-    fetchBlock(event.block)
+    event.block
   )
 }
 
@@ -73,7 +72,7 @@ export function handle1155Bid(event: ERC1155Bid): void {
   //   event.params.bidPrice,
   //   event.params.bidder,
   //   event.address,
-  //   fetchBlock(event.block)
+  //   event.block
   // )
 }
 
@@ -92,7 +91,7 @@ export function handle1155Claim(event: ERC1155Claim): void {
     event.params.token,
     event.address,
     event.params.price,
-    fetchBlock(event.block)
+    event.block
   )
 }
 
@@ -104,6 +103,6 @@ export function handle1155MakeOrder(event: ERC1155MakeOrder): void {
     event.params.seller,
     event.params.token,
     event.address,
-    fetchBlock(event.block)
+    event.block
   )
 }

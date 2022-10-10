@@ -1,5 +1,5 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts/index';
-import { Bid, Block, Order, Sale } from '../../generated/schema';
+import { Bid, Order, Sale } from '../../generated/schema';
 import { fetchERC1155Token, fetchERC721Token } from '../fetch/token';
 import { fetchERC1155, fetchERC721 } from '../fetch/factory';
 import { fetchAccount } from '../fetch/account';
@@ -8,6 +8,8 @@ import {
   ERC721Marketplace,
   ERC721Marketplace__orderInfoResult as OrderInfo,
 } from '../../generated/ERC721Marketplace/ERC721Marketplace';
+import { ethereum } from '@graphprotocol/graph-ts';
+import { integer, decimal, DEFAULT_DECIMALS, ZERO_ADDRESS } from '@protofire/subgraph-toolkit'
 
 export function createOrder(
   tokenStandard: String,
@@ -16,7 +18,7 @@ export function createOrder(
   sellerAddress: Address,
   contractAddress: Address,
   marketplaceAddress: Address,
-  block: Block
+  block: ethereum.Block
 ): Order {
   let marketplace721interface = ERC721Marketplace.bind(Address.fromBytes(marketplaceAddress))
   let try_orderInfo = marketplace721interface.try_orderInfo(orderHash)
@@ -32,7 +34,6 @@ export function createOrder(
     order.startTime = orderInfo.getStartTime()
     order.canceled = false
     order.seller = seller.id
-    order.block = block.id
     if (tokenStandard == '721') {
       let contract = fetchERC721(contractAddress)
       let token = fetchERC721Token(contract, sellerAddress, tokenId, block.timestamp)
@@ -63,13 +64,12 @@ export function createSale(
   contractAddress: Address,
   marketplaceAddress: Address,
   price: BigInt,
-  block?: Block
+  block?: ethereum.Block
 ): Sale {
   let order = fetchOrder(orderHash)
   let taker = fetchAccount(takerAddress)
   let sale = new Sale(orderHash.toHexString().concat('/').concat(takerAddress.toHexString()))
   sale.price = price
-  sale.block = block.id
   sale.order = order.id
   sale.save()
   order.sale = sale.id
@@ -80,11 +80,17 @@ export function createSale(
     let token = fetchERC721Token(contract, takerAddress, tokenId, block.timestamp)
     token.timestamp = block.timestamp
     token.lastPrice = price
-    // Set the volume counts
     token.order = null
+    // Set the volume counts
+    let amount = decimal.max(
+      decimal.ZERO,
+      decimal.fromBigInt(price, DEFAULT_DECIMALS)
+    )
     token.volume = (token.volume > 0 ? token.volume + 1 : 1)
+    token.volumePrice = token.volumePrice + amount
     token.save()
     contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
+    contract.volumePrice = contract.volumePrice + amount
     contract.save()
   } else {
     let contract = fetchERC1155(contractAddress)
@@ -92,10 +98,15 @@ export function createSale(
     token.timestamp = block.timestamp
     token.lastPrice = price
     // Set the volume counts
-    token.order = null
+    let amount = decimal.max(
+      decimal.ZERO,
+      decimal.fromBigInt(price, DEFAULT_DECIMALS)
+    )
     token.volume = (token.volume > 0 ? token.volume + 1 : 1)
+    token.volumePrice = token.volumePrice + amount
     token.save()
     contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
+    contract.volumePrice = contract.volumePrice + amount
     contract.save()
   }
   return sale as Sale
@@ -107,13 +118,12 @@ export function createBid(
   price: BigInt,
   bidderAddress: Address,
   contractAddress: Address,
-  block: Block
+  block: ethereum.Block
 ): Bid {
   let order = fetchOrder(orderHash)
   let bidder = fetchAccount(bidderAddress)
   let bid = new Bid(orderHash.toHexString().concat('/').concat(bidderAddress.toHexString()))
   bid.price = price
-  bid.block = block.id
   bid.order = order.id
   bid.owner = bidder.id
   bid.save()

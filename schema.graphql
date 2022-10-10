@@ -11,7 +11,7 @@ type ERC721Contract @entity {
   mintPrice: BigInt
   floorPrice: BigInt
   volume: Int
-  volumePrice: BigInt
+  volumePrice: BigDecimal
   paused: Boolean!
   publicMintState: Boolean!
   timestamp: BigInt
@@ -38,7 +38,7 @@ type ERC721Token @entity {
   royalties: BigInt
   lastPrice: BigInt
   volume: Int
-  volumePrice: BigInt
+  volumePrice: BigDecimal
   timestamp: BigInt
   tags: [Tag!]
   attributes: [Attribute!]
@@ -66,7 +66,6 @@ type ERC721Transfer @entity(immutable: true) {
   to: Account!
   contract: ERC721Contract!
   token: ERC721Token!
-  block: Block!
   timestamp: BigInt!
 }
 
@@ -83,7 +82,7 @@ type ERC1155Contract @entity {
   mintPrice: BigInt
   floorPrice: BigInt
   volume: Int
-  volumePrice: BigInt
+  volumePrice: BigDecimal
   paused: Boolean!
   publicMintState: Boolean!
   timestamp: BigInt
@@ -111,7 +110,7 @@ type ERC1155Token @entity {
   royalties: BigInt
   lastPrice: BigInt
   volume: Int
-  volumePrice: BigInt
+  volumePrice: BigDecimal
   timestamp: BigInt
   tags: [Tag!]
   attributes: [Attribute!]
@@ -148,7 +147,6 @@ type ERC1155Transfer @entity(immutable: true) {
   id: ID!
   emitter: Account!
   timestamp: BigInt!
-  block: Block!
   contract: ERC1155Contract!
   token: ERC1155Token!
   operator: Account!
@@ -176,7 +174,6 @@ type Order @entity {
   taker: Account
   sale: Sale
   bids: [Bid!] @derivedFrom(field: "order")
-  block: Block!
   ERC721token: ERC721Token
   ERC1155token: ERC1155Token
   ERC721contract: ERC721Contract
@@ -189,21 +186,18 @@ type Bid @entity(immutable: true) {
   timestamp: BigInt!
   owner: Account!
   order: Order!
-  block: Block!
   transaction: Transaction!
 }
 
 type Sale @entity(immutable: true) {
   id: ID!
   order: Order!
-  block: Block!
   price: BigInt!
 }
 
 type Transaction @entity(immutable: true) {
   id: ID!
   timestamp: BigInt
-  block: Block
   events: [Event!]! @derivedFrom(field: "transaction")
   # add gas?
 }
@@ -226,15 +220,6 @@ type Account @entity {
   ERC1155transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "to")
   ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
   events: [Event!]! @derivedFrom(field: "emitter")
-}
-
-type Block @entity(immutable: true) {
-  id: ID!
-  timestamp: BigInt!
-  number: BigInt!
-  events: [Event!]! @derivedFrom(field: "block")
-  transactions: [Transaction!] @derivedFrom(field: "block")
-  orders: [Order!] @derivedFrom(field: "block")
 }
 
 type Splitter @entity {
@@ -282,7 +267,6 @@ type _Schema_ @fulltext(
 interface Event {
   id: ID!
   transaction: Transaction!
-  block: Block!
   emitter: Account!
   timestamp: BigInt!
 }

@@ -14,15 +14,7 @@ import {
 	ERC1155LazyCreated,
 } from '../generated/ERC1155Factory/ERC1155Factory'
 
-import { ethereum } from '@graphprotocol/graph-ts';
 import { createContract, createSplitter } from './create/factory';
-import { createBlock } from './create/block';
-
-// Block handler
-
-export function handleBlock(block: ethereum.Block): void {
-	createBlock(block)
-}
 
 // 721 Event handlers
 

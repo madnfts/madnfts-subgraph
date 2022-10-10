@@ -8,25 +8,6 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Block
-    network: harmony
-    source:
-      address: '0xe6D9EB2E7FE11b75e430e62888736405BD994885'
-      abi: Block
-      startBlock: 31949600
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - Block
-      abis:
-        - name: Block
-          file: ./abis/MADFactory721.json
-      blockHandlers:
-        - handler: handleBlock
-      file: ./src/factory.ts
-  - kind: ethereum/contract
     name: ERC721Factory
     network: harmony
     source:
