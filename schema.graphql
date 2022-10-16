@@ -164,7 +164,7 @@ type Order @entity {
   id: ID!
   type: Int! # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
   hash: Bytes!
-  quantity: Int
+  quantity: BigInt
   endPrice: BigInt
   endTime: BigInt
   startPrice: BigInt
@@ -220,6 +220,8 @@ type Account @entity {
   ERC1155transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "to")
   ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
   events: [Event!]! @derivedFrom(field: "emitter")
+  volume: Int
+  volumePrice: BigDecimal
 }
 
 type Splitter @entity {
