@@ -5,6 +5,7 @@ import { Address, BigInt } from '@graphprotocol/graph-ts/index';
 import { Bytes } from '@graphprotocol/graph-ts';
 import { fetchAccount } from '../fetch/account';
 import { fetchIpfsERC1155, fetchIpfsERC721 } from '../fetch/ipfs';
+import { decimal } from '@protofire/subgraph-toolkit/index';
 
 export function createERC721Token(
   ownerAddress: Address,
@@ -14,7 +15,7 @@ export function createERC721Token(
   timestamp: BigInt | null
 ): ERC721Token {
   let owner = fetchAccount(ownerAddress)
-  let id = contractAddress.toHex().concat('/').concat(tokenId.toString())
+  let id = contractAddress.toHex().concat('/').concat(tokenId.toHex())
   let token = new ERC721Token(id)
   let erc721interface = ERC721Basic.bind(Address.fromBytes(contractAddress))
   let try_tokenURI = erc721interface.try_tokenURI(tokenId)
@@ -24,6 +25,7 @@ export function createERC721Token(
   token.name = try_name.reverted ? '' : try_name.value
   token.symbol = try_symbol.reverted ? '' : try_symbol.value
   token.volume = 0
+  token.volumePrice = decimal.ZERO
   token.contract = contractAddress
   token.tokenId = tokenId
   token.timestamp = timestamp
@@ -50,6 +52,7 @@ export function createERC1155Token(
   let try_tokenURI = erc1155interface.try_uri(tokenId)
   token.uri = try_tokenURI.reverted ? '' : try_tokenURI.value
   token.volume = 0
+  token.volumePrice = decimal.ZERO
   token.contract = contractAddress
   token.tokenId = tokenId
   token.timestamp = timestamp

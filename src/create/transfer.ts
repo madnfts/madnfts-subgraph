@@ -7,7 +7,6 @@ import { BigInt, ethereum } from '@graphprotocol/graph-ts/index';
 import { fetchERC1155, fetchERC721 } from '../fetch/factory';
 import { fetchERC1155Token, fetchERC721Token } from '../fetch/token';
 import { fetchAccount } from '../fetch/account';
-import { fetchBlock } from '../fetch/block';
 import { fetchERC1155Balance } from '../fetch/balance';
 
 export function createERC721Transfer(event: ERC721TransferEvent): void {
@@ -28,7 +27,6 @@ export function createERC721Transfer(event: ERC721TransferEvent): void {
     transfer.to = to.id
     transfer.contract = contract.id
     transfer.token = token.id
-    transfer.block = fetchBlock(event.block).id
     transfer.timestamp = event.block.timestamp
     transfer.save()
   }
@@ -96,7 +94,6 @@ function insert1155Transfer(
   transfer.to = to.id
   transfer.contract = contract.id
   transfer.token = token.id
-  transfer.block = fetchBlock(event.block).id
   transfer.timestamp = event.block.timestamp
   transfer.operator = operator.id;
   transfer.value = decimals.toDecimals(value);

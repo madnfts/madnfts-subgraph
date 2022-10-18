@@ -8,25 +8,6 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Block
-    network: rinkeby
-    source:
-      address: '0x900F533C204BE6a22f6195a635604Dfae8048F8d'
-      abi: Block
-      startBlock: 1
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - Block
-      abis:
-        - name: Block
-          file: ./abis/MADFactory721.json
-      blockHandlers:
-        - handler: handleBlock
-      file: ./src/factory.ts
-  - kind: ethereum/contract
     name: ERC721Factory
     network: rinkeby
     source:

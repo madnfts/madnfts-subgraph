@@ -4,6 +4,7 @@ import { fetchAccount } from '../fetch/account';
 import { fetchSplitter } from '../fetch/factory';
 import { ERC721Basic } from '../../generated/templates';
 import { ERC1155Basic } from '../../generated/templates';
+import { decimal } from '@protofire/subgraph-toolkit/index';
 
 export function createSplitter(
   contractAddress: Address,
@@ -51,13 +52,14 @@ export function createContract(
     contract.publicMintState = false
     contract.paused = false
     contract.owner = creatorAccount.id
-    contract.baseUri = 'ipfs://'
+    contract.baseUri = 'mad://'
     contract.name = name
     contract.symbol = symbol
     contract.maxSupply = maxSupply
     contract.mintPrice = mintPrice
     contract.royalties = royalties
     contract.volume = 0
+    contract.volumePrice = decimal.ZERO
     contract.royaltyRecipient = creatorAccount.id
     contract.save()
     contractAccount.asERC721 = contractAddress
@@ -73,13 +75,14 @@ export function createContract(
     contract.publicMintState = false
     contract.paused = false
     contract.owner = creatorAccount.id
-    contract.baseUri = 'ipfs://'
+    contract.baseUri = 'mad://'
     contract.name = name
     contract.symbol = symbol
     contract.maxSupply = maxSupply
     contract.mintPrice = mintPrice
     contract.royalties = royalties
     contract.volume = 0
+    contract.volumePrice = decimal.ZERO
     contract.royaltyRecipient = creatorAccount.id
     contract.save()
     contractAccount.asERC1155 = contractAddress
