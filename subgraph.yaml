@@ -11,9 +11,9 @@ dataSources:
     name: ERC721Factory
     network: harmony
     source:
-      address: '0xe6D9EB2E7FE11b75e430e62888736405BD994885'
+      address: '0xCd216d6A328fc46d47b107C9E054800E7B8cf9E5'
       abi: ERC721Factory
-      startBlock: 31949600
+      startBlock: 32790089
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -23,6 +23,8 @@ dataSources:
       abis:
         - name: ERC721Factory
           file: ./abis/MADFactory721.json
+        - name: ERC721Basic
+          file: ./abis/ERC721Basic.json
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle721SplitterCreated
@@ -39,9 +41,9 @@ dataSources:
     name: ERC721Marketplace
     network: harmony
     source:
-      address: '0xF2eBc232B2feCc689D8b45498bE12aC3772d98b0'
+      address: '0xE1028BCb22331DfBAC27bce019d4F89989598038'
       abi: ERC721Marketplace
-      startBlock: 31949600
+      startBlock: 32790089
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -67,9 +69,9 @@ dataSources:
     name: ERC1155Factory
     network: harmony
     source:
-      address: '0x8629c862f2eA6703cDd537c018125a2eE4ead130'
+      address: '0x1F8Bcf30095E87Bd569Cfe1d832568D4361b9a3E'
       abi: ERC1155Factory
-      startBlock: 31949600
+      startBlock: 32790089
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -79,6 +81,8 @@ dataSources:
       abis:
         - name: ERC1155Factory
           file: ./abis/MADFactory1155.json
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle1155SplitterCreated
@@ -95,9 +99,9 @@ dataSources:
     name: ERC1155Marketplace
     network: harmony
     source:
-      address: '0xd374deb7805254eD3748C696985D3C9118bB0376'
+      address: '0x3572b4FBb51AFcd07E83c24193318614cEeE0Cd5'
       abi: ERC1155Marketplace
-      startBlock: 31949600
+      startBlock: 32790089
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5

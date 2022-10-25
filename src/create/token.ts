@@ -4,7 +4,6 @@ import { ERC1155Basic } from '../../generated/templates/ERC1155Basic/ERC1155Basi
 import { Address, BigInt } from '@graphprotocol/graph-ts/index';
 import { Bytes } from '@graphprotocol/graph-ts';
 import { fetchAccount } from '../fetch/account';
-import { fetchIpfsERC1155, fetchIpfsERC721 } from '../fetch/ipfs';
 import { decimal } from '@protofire/subgraph-toolkit/index';
 
 export function createERC721Token(

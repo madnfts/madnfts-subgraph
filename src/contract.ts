@@ -64,8 +64,13 @@ export function handle721OwnerUpdated(event: ERC721OwnerUpdatedEvent): void {
   contract.save()
 }
 
+export function handle721PublicMintStateSet(event: ERC721PublicMintStateSetEvent): void {
+  let contract = fetchERC721(event.address)
+  contract.publicMintState = event.params.newPublicState
+  contract.save()
+}
+
 // @todo implement these event mappings to update contract entities
-export function handle721PublicMintStateSet(event: ERC721PublicMintStateSetEvent): void {}
 export function handle721RoyaltyFeeSet(event: ERC721RoyaltyFeeSetEvent): void {}
 export function handle721RoyaltyRecipientSet(event: ERC721RoyaltyRecipientSetEvent): void {}
 
@@ -101,7 +106,12 @@ export function handle1155OwnerUpdated(event: ERC1155OwnerUpdatedEvent): void {
   contract.save()
 }
 
+export function handle1155PublicMintStateSet(event: ERC1155PublicMintStateSetEvent): void {
+  let contract = fetchERC1155(event.address)
+  contract.publicMintState = event.params.newPublicState
+  contract.save()
+}
+
 // @todo implement these event mappings to update contract entities
-export function handle1155PublicMintStateSet(event: ERC1155PublicMintStateSetEvent): void {}
 export function handle1155RoyaltyFeeSet(event: ERC1155RoyaltyFeeSetEvent): void {}
 export function handle1155RoyaltyRecipientSet(event: ERC1155RoyaltyRecipientSetEvent): void {}

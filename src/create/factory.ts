@@ -2,6 +2,8 @@ import { Address, BigInt } from '@graphprotocol/graph-ts/index';
 import { ERC1155Contract, ERC721Contract, Splitter } from '../../generated/schema';
 import { fetchAccount } from '../fetch/account';
 import { fetchSplitter } from '../fetch/factory';
+import { ERC721Basic as ERC721BasicTemplate } from '../../generated/templates/ERC721Basic/ERC721Basic';
+import { ERC1155Basic as ERC1155BasicTemplate } from '../../generated/templates/ERC1155Basic/ERC1155Basic';
 import { ERC721Basic } from '../../generated/templates';
 import { ERC1155Basic } from '../../generated/templates';
 import { decimal } from '@protofire/subgraph-toolkit/index';
@@ -42,6 +44,8 @@ export function createContract(
   let contractAccount = fetchAccount(contractAddress)
   let splitter = fetchSplitter(splitterAddress)
   if (standard === '721') {
+    let erc721interface = ERC721BasicTemplate.bind(Address.fromBytes(contractAddress))
+    let try_baseUri = erc721interface.try_getBaseURI()
     // Create the indexing for the new contract address
     ERC721Basic.create(contractAddress)
     // Create the entity
@@ -52,7 +56,7 @@ export function createContract(
     contract.publicMintState = false
     contract.paused = false
     contract.owner = creatorAccount.id
-    contract.baseUri = 'mad://'
+    contract.baseUri = try_baseUri.reverted ? 'mad://' : try_baseUri.value
     contract.name = name
     contract.symbol = symbol
     contract.maxSupply = maxSupply
@@ -65,6 +69,8 @@ export function createContract(
     contractAccount.asERC721 = contractAddress
     contractAccount.save()
   } else {
+    let erc1155interface = ERC1155BasicTemplate.bind(Address.fromBytes(contractAddress))
+    let try_baseUri = erc1155interface.try_getURI()
     // Create the indexing for the new contract address
     ERC1155Basic.create(contractAddress)
     // Create the entity
@@ -75,7 +81,7 @@ export function createContract(
     contract.publicMintState = false
     contract.paused = false
     contract.owner = creatorAccount.id
-    contract.baseUri = 'mad://'
+    contract.baseUri = try_baseUri.reverted ? 'mad://' : try_baseUri.value
     contract.name = name
     contract.symbol = symbol
     contract.maxSupply = maxSupply
