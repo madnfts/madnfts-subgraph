@@ -6,7 +6,7 @@ import { ERC721Basic as ERC721BasicTemplate } from '../../generated/templates/ER
 import { ERC1155Basic as ERC1155BasicTemplate } from '../../generated/templates/ERC1155Basic/ERC1155Basic';
 import { ERC721Basic } from '../../generated/templates';
 import { ERC1155Basic } from '../../generated/templates';
-import { decimal } from '@protofire/subgraph-toolkit/index';
+import { decimal, DEFAULT_DECIMALS } from '@protofire/subgraph-toolkit/index';
 
 export function createSplitter(
   contractAddress: Address,
@@ -43,6 +43,10 @@ export function createContract(
   let creatorAccount = fetchAccount(creatorAddress)
   let contractAccount = fetchAccount(contractAddress)
   let splitter = fetchSplitter(splitterAddress)
+  let mintPriceDecimal = decimal.max(
+    decimal.ZERO,
+    decimal.fromBigInt(mintPrice, DEFAULT_DECIMALS)
+  )
   if (standard === '721') {
     let erc721interface = ERC721BasicTemplate.bind(Address.fromBytes(contractAddress))
     let try_baseUri = erc721interface.try_getBaseURI()
@@ -60,7 +64,7 @@ export function createContract(
     contract.name = name
     contract.symbol = symbol
     contract.maxSupply = maxSupply
-    contract.mintPrice = mintPrice
+    contract.mintPrice = mintPriceDecimal
     contract.royalties = royalties
     contract.volume = 0
     contract.volumePrice = decimal.ZERO
@@ -85,7 +89,7 @@ export function createContract(
     contract.name = name
     contract.symbol = symbol
     contract.maxSupply = maxSupply
-    contract.mintPrice = mintPrice
+    contract.mintPrice = mintPriceDecimal
     contract.royalties = royalties
     contract.volume = 0
     contract.volumePrice = decimal.ZERO

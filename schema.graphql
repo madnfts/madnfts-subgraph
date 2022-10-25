@@ -8,7 +8,7 @@ type ERC721Contract @entity {
   baseUri: String!
   maxSupply: BigInt
   royalties: BigInt
-  mintPrice: BigInt
+  mintPrice: BigDecimal
   floorPrice: BigInt
   volume: Int
   volumePrice: BigDecimal
@@ -79,7 +79,7 @@ type ERC1155Contract @entity {
   baseUri: String!
   maxSupply: BigInt
   royalties: BigInt
-  mintPrice: BigInt
+  mintPrice: BigDecimal
   floorPrice: BigInt
   volume: Int
   volumePrice: BigDecimal
