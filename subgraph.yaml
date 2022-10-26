@@ -1,5 +1,5 @@
 specVersion: 0.0.5
-description: Subgraph for both ERC721 and ERC1155
+description: Subgraph for MAD factory and marketplace for ERC721 and ERC1155 token standards
 features:
   - fullTextSearch
   - ipfsOnEthereumContracts
@@ -11,9 +11,9 @@ dataSources:
     name: ERC721Factory
     network: harmony
     source:
-      address: '0xCd216d6A328fc46d47b107C9E054800E7B8cf9E5'
+      address: '0x490B06Ba06B7d711B77a8E4f73ce0eD600Cd971B'
       abi: ERC721Factory
-      startBlock: 32790089
+      startBlock: 33108400
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -41,9 +41,9 @@ dataSources:
     name: ERC721Marketplace
     network: harmony
     source:
-      address: '0xE1028BCb22331DfBAC27bce019d4F89989598038'
+      address: '0x80e85f41EA978bfFB31fF58A77adD901ae523C4F'
       abi: ERC721Marketplace
-      startBlock: 32790089
+      startBlock: 33108400
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -69,9 +69,9 @@ dataSources:
     name: ERC1155Factory
     network: harmony
     source:
-      address: '0x1F8Bcf30095E87Bd569Cfe1d832568D4361b9a3E'
+      address: '0x7591d0581CcC10a92cbB378F4f0213b5f25cb362'
       abi: ERC1155Factory
-      startBlock: 32790089
+      startBlock: 33108400
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -99,9 +99,9 @@ dataSources:
     name: ERC1155Marketplace
     network: harmony
     source:
-      address: '0x3572b4FBb51AFcd07E83c24193318614cEeE0Cd5'
+      address: '0x425A331bAc9DBEffdC3851201fEC99967E94505f'
       abi: ERC1155Marketplace
-      startBlock: 32790089
+      startBlock: 33108400
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
