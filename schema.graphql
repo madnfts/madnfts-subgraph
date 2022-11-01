@@ -87,7 +87,7 @@ type ERC1155Contract @entity {
   publicMintState: Boolean!
   timestamp: BigInt
   owner: Account
-  splitter: Splitter!
+  splitter: Splitter
   royaltyRecipient: Account
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
   balances: [ERC1155Balance!]! @derivedFrom(field: "contract")
@@ -169,10 +169,12 @@ type Order @entity {
   endTime: BigInt
   startPrice: BigInt
   startTime: BigInt
+  bidPrice: BigInt
   canceled: Boolean
   seller: Account!
   taker: Account
   sale: Sale
+  timestamp: BigInt!
   bids: [Bid!] @derivedFrom(field: "order")
   ERC721token: ERC721Token
   ERC1155token: ERC1155Token
@@ -186,7 +188,6 @@ type Bid @entity(immutable: true) {
   timestamp: BigInt!
   owner: Account!
   order: Order!
-  transaction: Transaction!
 }
 
 type Sale @entity(immutable: true) {

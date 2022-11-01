@@ -33,6 +33,7 @@ export function createOrder(
     if (orderInfo) {
       let seller = fetchAccount(sellerAddress)
       order.hash = orderHash
+      order.timestamp = block.timestamp
       order.type = orderInfo.getOrderType()
       order.endPrice = orderInfo.getEndPrice()
       order.endTime = orderInfo.getEndTime()
@@ -65,6 +66,7 @@ export function createOrder(
       order.startTime = orderInfo.getStartTime()
       order.quantity = quantity as BigInt
       order.canceled = false
+      order.timestamp = block.timestamp
       order.seller = seller.id
       let contract = fetchERC1155(contractAddress)
       let token = fetchERC1155Token(contract, tokenId, null)
@@ -95,6 +97,7 @@ export function createSale(
   sale.price = price
   sale.order = order.id
   sale.save()
+  order.timestamp = block.timestamp
   order.sale = sale.id
   order.taker = taker.id
   order.save()
@@ -144,6 +147,7 @@ export function createSale(
 }
 
 export function createBid(
+  tokenStandard: String,
   orderHash: Bytes,
   tokenId: BigInt,
   price: BigInt,
@@ -153,13 +157,14 @@ export function createBid(
 ): Bid {
   let order = fetchOrder(orderHash)
   let bidder = fetchAccount(bidderAddress)
-  let bid = new Bid(orderHash.toHexString().concat('/').concat(bidderAddress.toHexString()))
+  let bid = new Bid(orderHash.toHexString().concat('/').concat(bidderAddress.toHexString()).concat(price.toString()))
   bid.price = price
   bid.order = order.id
   bid.owner = bidder.id
+  bid.timestamp = block.timestamp
   bid.save()
-
-  // @todo update token price / volume counters after we confirm the token.id parameter
-
+  order.bidPrice = price
+  order.timestamp = block.timestamp
+  order.save()
   return bid as Bid
 }

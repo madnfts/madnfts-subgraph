@@ -89,3 +89,35 @@ export function createContract(
     contractAccount.save()
   }
 }
+
+export function createDefaultContract1155(
+  contractAddress: Address
+): ERC1155Contract {
+  let erc1155interface = ERC1155BasicTemplate.bind(Address.fromBytes(contractAddress))
+  const try_baseUri = erc1155interface.try_getURI()
+  const try_owner = erc1155interface.try_owner()
+  const try_maxSupply = erc1155interface.try_maxSupply()
+  const baseUri = try_baseUri.reverted ? 'ipfs://' : try_baseUri.value
+  const owner = try_owner.reverted ? contractAddress : try_owner.value
+  const maxSupply = try_maxSupply.reverted ? BigInt.fromI32(1) : try_maxSupply.value
+  // Create the indexing for the new contract address
+  ERC1155Basic.create(contractAddress)
+  // Create the entities
+  let creatorAccount = fetchAccount(owner)
+  let contractAccount = fetchAccount(contractAddress)
+  let contract = new ERC1155Contract(contractAddress)
+  contract.type = '1'
+  contract.publicMintState = false
+  contract.paused = false
+  contract.name = 'unknown'
+  contract.symbol = 'unknown'
+  contract.baseUri = baseUri
+  contract.owner = owner
+  contract.maxSupply = maxSupply
+  contract.volume = 0
+  contract.volumePrice = decimal.ZERO
+  contract.save()
+  contractAccount.asERC1155 = contractAddress
+  contractAccount.save()
+  return contract
+}
