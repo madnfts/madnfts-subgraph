@@ -4,7 +4,8 @@ import { fetchAccount } from '../fetch/account';
 import { fetchSplitter } from '../fetch/factory';
 import { ERC721Basic } from '../../generated/templates';
 import { ERC1155Basic } from '../../generated/templates';
-import { decimal } from '@protofire/subgraph-toolkit/index';
+import { ERC1155Basic as ERC1155BasicTemplate } from '../../generated/templates/ERC1155Basic/ERC1155Basic';
+import { decimal, DEFAULT_DECIMALS } from '@protofire/subgraph-toolkit/index';
 
 export function createSplitter(
   contractAddress: Address,
@@ -106,7 +107,7 @@ export function createDefaultContract1155(
   let creatorAccount = fetchAccount(owner)
   let contractAccount = fetchAccount(contractAddress)
   let contract = new ERC1155Contract(contractAddress)
-  contract.type = '1'
+  contract.type = '1' // Basic default
   contract.publicMintState = false
   contract.paused = false
   contract.name = 'unknown'

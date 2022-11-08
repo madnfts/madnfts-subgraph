@@ -29,20 +29,11 @@ type ERC721Token @entity {
   uri: String!
   name: String
   symbol: String
-  description: String
-  image: String
-  category: Int
-  unlockableUrl: String
-  externalUrl: String
-  explicitContent: Boolean
   royalties: BigInt
   lastPrice: BigInt
   volume: Int
   volumePrice: BigDecimal
   timestamp: BigInt
-  tags: [Tag!]
-  attributes: [Attribute!]
-  files: [File!]
   approved: Account
   owner: Account!
   contract: ERC721Contract!
@@ -101,20 +92,11 @@ type ERC1155Token @entity {
   uri: String!
   name: String
   symbol: String
-  description: String
-  image: String
-  category: Int
-  unlockableUrl: String
-  externalUrl: String
-  explicitContent: Boolean
   royalties: BigInt
   lastPrice: BigInt
   volume: Int
   volumePrice: BigDecimal
   timestamp: BigInt
-  tags: [Tag!]
-  attributes: [Attribute!]
-  files: [File!]
   totalSupply: ERC1155Balance
   contract: ERC1155Contract!
   order: Order
@@ -235,54 +217,11 @@ type Splitter @entity {
   ERC1155Contracts: [ERC1155Contract!]! @derivedFrom(field: "splitter")
 }
 
-type Attribute @entity {
-  id: ID!
-  displayType: String
-  traitType: String
-  value: String
-  maxValue: String
-}
-
-type File @entity {
-  id: ID!
-  displayType: String
-  traitType: String
-  value: String
-}
-
-type Tag @entity {
-  id: ID!
-  value: String
-}
-
 # Schemas & shared
-
-type _Schema_ @fulltext(
-  name: "ERC721TokenSearch"
-  language: en
-  algorithm: rank
-  include: [
-    { entity: "ERC721Token", fields: [{ name: "name" }, { name: "description" }] },
-    { entity: "ERC1155Token", fields: [{ name: "name" }, { name: "description" }] }
-  ]
-)
 
 interface Event {
   id: ID!
   transaction: Transaction!
   emitter: Account!
   timestamp: BigInt!
-}
-
-interface IpfsMetaData {
-  name: String
-  image: String
-  description: String
-  category: Int
-  externalUrl: String
-  unlockableUrl: String
-  explicitContent: Boolean
-  tags: [Tag!]
-  attributes: [Attribute!]
-  files: [File!]
 }

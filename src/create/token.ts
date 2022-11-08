@@ -4,7 +4,6 @@ import { ERC1155Basic } from '../../generated/templates/ERC1155Basic/ERC1155Basi
 import { Address, BigInt } from '@graphprotocol/graph-ts/index';
 import { Bytes } from '@graphprotocol/graph-ts';
 import { fetchAccount } from '../fetch/account';
-import { fetchIpfsERC1155, fetchIpfsERC721 } from '../fetch/ipfs';
 import { decimal } from '@protofire/subgraph-toolkit/index';
 
 export function createERC721Token(
@@ -30,12 +29,6 @@ export function createERC721Token(
   token.tokenId = tokenId
   token.timestamp = timestamp
   token.owner = owner.id
-  if (token.uri) {
-    // @todo enable IPFS data fetching
-    //fetchIpfsERC721(token, contractAddress, baseUri.toString())
-    token.category = 1
-    token.image = 'https://picsum.photos/seed/'+tokenId.toString()+contractAddress.toHexString()+'/300/300'
-  }
   token.save()
   return token as ERC721Token;
 }
@@ -56,12 +49,6 @@ export function createERC1155Token(
   token.contract = contractAddress
   token.tokenId = tokenId
   token.timestamp = timestamp
-  if (token.uri) {
-    // @todo enable IPFS data fetching
-    //fetchIpfsERC1155(token, contractAddress, baseUri.toString())
-    token.category = 1
-    token.image = 'https://picsum.photos/seed/'+tokenId.toString()+contractAddress.toHexString()+'/300/300'
-  }
   token.save()
   return token as ERC1155Token;
 }
