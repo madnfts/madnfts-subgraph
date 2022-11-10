@@ -1,5 +1,7 @@
 specVersion: 0.0.5
 description: MADNFTs Harmony ERC721, ERC1155 and Davinci subgraph
+features:
+  - ipfsOnEthereumContracts
 repository: https://github.com/madnfts/madnfts-subgraph
 schema:
   file: ./schema.graphql
@@ -10,7 +12,7 @@ dataSources:
     source:
       address: '0x490B06Ba06B7d711B77a8E4f73ce0eD600Cd971B'
       abi: ERC721Factory
-      startBlock: 33108400
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -20,8 +22,6 @@ dataSources:
       abis:
         - name: ERC721Factory
           file: ./abis/MADFactory721.json
-        - name: ERC721Basic
-          file: ./abis/ERC721Basic.json
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle721SplitterCreated
@@ -40,7 +40,7 @@ dataSources:
     source:
       address: '0x80e85f41EA978bfFB31fF58A77adD901ae523C4F'
       abi: ERC721Marketplace
-      startBlock: 33108400
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -68,7 +68,7 @@ dataSources:
     source:
       address: '0x7591d0581CcC10a92cbB378F4f0213b5f25cb362'
       abi: ERC1155Factory
-      startBlock: 33108400
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -78,8 +78,6 @@ dataSources:
       abis:
         - name: ERC1155Factory
           file: ./abis/MADFactory1155.json
-        - name: ERC1155Basic
-          file: ./abis/ERC1155Basic.json
       eventHandlers:
         - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle1155SplitterCreated
@@ -98,7 +96,7 @@ dataSources:
     source:
       address: '0x425A331bAc9DBEffdC3851201fEC99967E94505f'
       abi: ERC1155Marketplace
-      startBlock: 33108400
+      startBlock: 31949600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -120,6 +118,74 @@ dataSources:
         - event: MakeOrder(indexed address,uint256,uint256,indexed bytes32,address)
           handler: handle1155MakeOrder
       file: ./src/marketplace.ts
+  - kind: ethereum/contract
+    name: DavinciImages
+    network: harmony
+    source:
+      address: '0x1548c6227CBD78E51eB0A679c1f329B9a5a99BEb'
+      abi: ERC1155Basic
+      startBlock: 11253482
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC1155Basic
+      abis:
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
+      eventHandlers:
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handle1155ApprovalForAll
+        - event: BaseURISet(indexed string)
+          handler: handle1155BaseURISet
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle1155OwnerUpdated
+        - event: PublicMintStateSet(indexed bool)
+          handler: handle1155PublicMintStateSet
+        - event: RoyaltyFeeSet(indexed uint256)
+          handler: handle1155RoyaltyFeeSet
+        - event: RoyaltyRecipientSet(indexed address)
+          handler: handle1155RoyaltyRecipientSet
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handle1155TransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handle1155TransferSingle
+      file: ./src/contract.ts
+  - kind: ethereum/contract
+    name: DavinciVideos
+    network: harmony
+    source:
+      address: '0x474D8fd12780fbe2b7B7bD74eb326bb75DED91D8'
+      abi: ERC1155Basic
+      startBlock: 11253482
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC1155Basic
+      abis:
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
+      eventHandlers:
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handle1155ApprovalForAll
+        - event: BaseURISet(indexed string)
+          handler: handle1155BaseURISet
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle1155OwnerUpdated
+        - event: PublicMintStateSet(indexed bool)
+          handler: handle1155PublicMintStateSet
+        - event: RoyaltyFeeSet(indexed uint256)
+          handler: handle1155RoyaltyFeeSet
+        - event: RoyaltyRecipientSet(indexed address)
+          handler: handle1155RoyaltyRecipientSet
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handle1155TransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handle1155TransferSingle
+      file: ./src/contract.ts
 templates:
   - kind: ethereum/contract
     name: ERC721Basic

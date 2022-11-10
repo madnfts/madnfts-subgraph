@@ -1,8 +1,5 @@
 specVersion: 0.0.5
-description: Subgraph for both ERC721 and ERC1155
-features:
-  - fullTextSearch
-  - ipfsOnEthereumContracts
+description: MADNFTs Harmony ERC721, ERC1155 and Davinci subgraph
 repository: https://github.com/madnfts/madnfts-subgraph
 schema:
   file: ./schema.graphql

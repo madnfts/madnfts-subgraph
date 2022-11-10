@@ -1,5 +1,6 @@
 import { Address } from '@graphprotocol/graph-ts/index';
 import { ERC1155Contract, ERC721Contract, Splitter } from '../../generated/schema';
+import { createDefaultContract1155 } from '../create/factory';
 
 export function fetchERC721(
   address: Address
@@ -10,7 +11,11 @@ export function fetchERC721(
 export function fetchERC1155(
   address: Address
 ): ERC1155Contract {
-  return ERC1155Contract.load(address) as ERC1155Contract
+  let contract = ERC1155Contract.load(address)
+  if (contract == null) {
+    contract = createDefaultContract1155(address)
+  }
+  return contract as ERC1155Contract
 }
 
 export function fetchSplitter(
