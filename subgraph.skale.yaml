@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ERC721Factory
-    network: mainnet
+    network: ethereum
     source:
       address: '0x0d4B2684aa1f73d5c060F6E6C779206eDFeB5EEd'
       abi: ERC721Factory
@@ -34,7 +34,7 @@ dataSources:
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC721Marketplace
-    network: mainnet
+    network: ethereum
     source:
       address: '0xbB7d736DDa85FefAD2Ff5b7FF3ed51dAcAaf6aA3'
       abi: ERC721Marketplace
@@ -62,7 +62,7 @@ dataSources:
       file: ./src/marketplace.ts
   - kind: ethereum/contract
     name: ERC1155Factory
-    network: mainnet
+    network: ethereum
     source:
       address: '0x8C19495529A32e10d41FB54489bb354e7fCb0396'
       abi: ERC1155Factory
@@ -90,7 +90,7 @@ dataSources:
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC1155Marketplace
-    network: mainnet
+    network: ethereum
     source:
       address: '0xBf1f200F7a3DF69304a194cf86585416Cc27eEb2'
       abi: ERC1155Marketplace
@@ -119,7 +119,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ERC721Basic
-    network: mainnet
+    network: ethereum
     source:
       abi: ERC721Basic
     mapping:
@@ -151,7 +151,7 @@ templates:
       file: ./src/contract.ts
   - kind: ethereum/contract
     name: ERC1155Basic
-    network: mainnet
+    network: ethereum
     source:
       abi: ERC1155Basic
     mapping:
