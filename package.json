@@ -8,6 +8,7 @@
     "deploy-harmony": "graph deploy --node https://api.thegraph.com/deploy/ devhallsmad/marketplace",
     "deploy-goerli": "graph deploy --node https://api.thegraph.com/deploy/ devhallsmad/marketplacegoerli subgraph.goerli.yaml",
     "deploy-davinci": "graph deploy --node https://api.thegraph.com/deploy/ devhallsmad/madnfts-davinci subgraph.davinci.yaml",
+    "deploy-skale": "graph deploy --node http://3.10.26.0:8020/ devhallsmad/marketplace-skale subgraph.skale.yaml",
     "create-local": "graph create --node http://localhost:8020/ devhallsmad/marketplace",
     "remove-local": "graph remove --node http://localhost:8020/ devhallsmad/marketplace",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 devhallsmad/marketplace subgraph.local.yaml",

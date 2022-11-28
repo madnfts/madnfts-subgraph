@@ -11,7 +11,7 @@ type ERC721Contract @entity {
   mintPrice: BigDecimal
   floorPrice: BigInt
   volume: Int
-  volumePrice: BigDecimal
+  volumePrice: BigDecimal!
   paused: Boolean!
   publicMintState: Boolean!
   timestamp: BigInt
@@ -32,7 +32,7 @@ type ERC721Token @entity {
   royalties: BigInt
   lastPrice: BigInt
   volume: Int
-  volumePrice: BigDecimal
+  volumePrice: BigDecimal!
   timestamp: BigInt
   approved: Account
   owner: Account!
@@ -73,7 +73,7 @@ type ERC1155Contract @entity {
   mintPrice: BigDecimal
   floorPrice: BigInt
   volume: Int
-  volumePrice: BigDecimal
+  volumePrice: BigDecimal!
   paused: Boolean!
   publicMintState: Boolean!
   timestamp: BigInt
@@ -95,7 +95,7 @@ type ERC1155Token @entity {
   royalties: BigInt
   lastPrice: BigInt
   volume: Int
-  volumePrice: BigDecimal
+  volumePrice: BigDecimal!
   timestamp: BigInt
   totalSupply: ERC1155Balance
   contract: ERC1155Contract!
@@ -204,7 +204,7 @@ type Account @entity {
   ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
   events: [Event!]! @derivedFrom(field: "emitter")
   volume: Int
-  volumePrice: BigDecimal
+  volumePrice: BigDecimal!
 }
 
 type Splitter @entity {

@@ -34,11 +34,11 @@ export function createOrder(
       let seller = fetchAccount(sellerAddress)
       order.hash = orderHash
       order.timestamp = block.timestamp
-      order.type = orderInfo.getOrderType()
-      order.endPrice = orderInfo.getEndPrice()
-      order.endTime = orderInfo.getEndTime()
-      order.startPrice = orderInfo.getStartPrice()
-      order.startTime = orderInfo.getStartTime()
+      order.type = orderInfo.value9 as i32
+      order.endPrice = orderInfo.value2
+      order.endTime = orderInfo.value4
+      order.startPrice = orderInfo.value1
+      order.startTime = orderInfo.value3
       order.canceled = false
       order.seller = seller.id
       let contract = fetchERC721(contractAddress)
@@ -59,11 +59,11 @@ export function createOrder(
     if (orderInfo) {
       let seller = fetchAccount(sellerAddress)
       order.hash = orderHash
-      order.type = orderInfo.getOrderType()
-      order.endPrice = orderInfo.getEndPrice()
-      order.endTime = orderInfo.getEndTime()
-      order.startPrice = orderInfo.getStartPrice()
-      order.startTime = orderInfo.getStartTime()
+      order.type = orderInfo.value10
+      order.endPrice = orderInfo.value3
+      order.endTime = orderInfo.value5
+      order.startPrice = orderInfo.value2
+      order.startTime = orderInfo.value4
       order.quantity = quantity as BigInt
       order.canceled = false
       order.timestamp = block.timestamp
@@ -113,14 +113,14 @@ export function createSale(
       decimal.fromBigInt(price, DEFAULT_DECIMALS)
     )
     token.volume = (token.volume > 0 ? token.volume + 1 : 1)
-    token.volumePrice = token.volumePrice + amount
+    token.volumePrice = token.volumePrice.plus(amount)
     token.save()
     contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
-    contract.volumePrice = contract.volumePrice + amount
+    contract.volumePrice = contract.volumePrice.plus(amount)
     contract.save()
     let ownerAccount = Account.load(contract.owner as Bytes) as Account
     ownerAccount.volume = (ownerAccount.volume > 0 ? ownerAccount.volume + 1 : 1)
-    ownerAccount.volumePrice = ownerAccount.volumePrice + amount
+    ownerAccount.volumePrice = ownerAccount.volumePrice.plus(amount)
     ownerAccount.save()
   } else {
     let contract = fetchERC1155(contractAddress)
@@ -133,14 +133,14 @@ export function createSale(
       decimal.fromBigInt(price, DEFAULT_DECIMALS)
     )
     token.volume = (token.volume > 0 ? token.volume + 1 : 1)
-    token.volumePrice = token.volumePrice + amount
+    token.volumePrice = token.volumePrice.plus(amount)
     token.save()
     contract.volume = (contract.volume > 0 ? contract.volume + 1 : 1)
-    contract.volumePrice = contract.volumePrice + amount
+    contract.volumePrice = contract.volumePrice.plus(amount)
     contract.save()
     let ownerAccount = Account.load(contract.owner as Bytes) as Account
     ownerAccount.volume = (ownerAccount.volume > 0 ? ownerAccount.volume + 1 : 1)
-    ownerAccount.volumePrice = ownerAccount.volumePrice + amount
+    ownerAccount.volumePrice = ownerAccount.volumePrice.plus(amount)
     ownerAccount.save()
   }
   return sale as Sale

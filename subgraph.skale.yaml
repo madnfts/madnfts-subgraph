@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ERC721Factory
-    network: goerli
+    network: mainnet
     source:
-      address: '0x208B50e7F4A9a2573CA7b3E98f0df84C9ae16A3b'
+      address: '0x0d4B2684aa1f73d5c060F6E6C779206eDFeB5EEd'
       abi: ERC721Factory
-      startBlock: 7799301
+      startBlock: 261000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -34,11 +34,11 @@ dataSources:
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC721Marketplace
-    network: goerli
+    network: mainnet
     source:
-      address: '0x9167a2F9aCB7d4604496cd42095d837514a92d58'
+      address: '0xbB7d736DDa85FefAD2Ff5b7FF3ed51dAcAaf6aA3'
       abi: ERC721Marketplace
-      startBlock: 7799301
+      startBlock: 261000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -62,11 +62,11 @@ dataSources:
       file: ./src/marketplace.ts
   - kind: ethereum/contract
     name: ERC1155Factory
-    network: goerli
+    network: mainnet
     source:
-      address: '0x8B949Cb08b15F92AAF1fe06494C534C484440B3f'
+      address: '0x8C19495529A32e10d41FB54489bb354e7fCb0396'
       abi: ERC1155Factory
-      startBlock: 7799301
+      startBlock: 261000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -90,11 +90,11 @@ dataSources:
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC1155Marketplace
-    network: goerli
+    network: mainnet
     source:
-      address: '0x80df237219044192c5D4c948917cAfD436eDf812'
+      address: '0xBf1f200F7a3DF69304a194cf86585416Cc27eEb2'
       abi: ERC1155Marketplace
-      startBlock: 7799301
+      startBlock: 261000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -119,7 +119,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ERC721Basic
-    network: goerli
+    network: mainnet
     source:
       abi: ERC721Basic
     mapping:
@@ -151,7 +151,7 @@ templates:
       file: ./src/contract.ts
   - kind: ethereum/contract
     name: ERC1155Basic
-    network: goerli
+    network: mainnet
     source:
       abi: ERC1155Basic
     mapping:
