@@ -34,7 +34,7 @@ export function createOrder(
       let seller = fetchAccount(sellerAddress)
       order.hash = orderHash
       order.timestamp = block.timestamp
-      order.type = orderInfo.value9 as i32
+      order.type = orderInfo.value9
       order.endPrice = orderInfo.value2
       order.endTime = orderInfo.value4
       order.startPrice = orderInfo.value1
