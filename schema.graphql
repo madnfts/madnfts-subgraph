@@ -6,17 +6,18 @@ type ERC721Contract @entity {
   name: String!
   symbol: String!
   baseUri: String!
-  maxSupply: BigInt
-  royalties: BigInt
-  mintPrice: BigDecimal
-  floorPrice: BigInt
-  volume: Int
+  maxSupply: BigInt!
+  royalties: BigInt!
+  mintPrice: BigDecimal!
+  mintPriceExact: BigInt!
   volumePrice: BigDecimal!
+  volumePriceExact: BigInt!
+  volume: Int!
   paused: Boolean!
   publicMintState: Boolean!
-  timestamp: BigInt
-  owner: Account
-  splitter: Splitter!
+  timestamp: BigInt!
+  owner: Account!
+  splitter: Splitter
   royaltyRecipient: Account
   tokens: [ERC721Token!]! @derivedFrom(field: "contract")
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
@@ -29,15 +30,15 @@ type ERC721Token @entity {
   uri: String!
   name: String
   symbol: String
-  royalties: BigInt
-  lastPrice: BigInt
-  volume: Int
+  lastPrice: BigDecimal!
+  lastPriceExact: BigInt!
   volumePrice: BigDecimal!
-  timestamp: BigInt
-  approved: Account
+  volumePriceExact: BigInt!
+  volume: Int!
+  timestamp: BigInt!
   owner: Account!
   contract: ERC721Contract!
-  order: Order
+  approved: Account
   orders: [Order!] @derivedFrom(field: "ERC721token")
   transfers: [ERC721Transfer!] @derivedFrom(field: "token")
 }
@@ -68,40 +69,38 @@ type ERC1155Contract @entity {
   name: String!
   symbol: String!
   baseUri: String!
-  maxSupply: BigInt
-  royalties: BigInt
-  mintPrice: BigDecimal
-  floorPrice: BigInt
-  volume: Int
+  maxSupply: BigInt!
+  royalties: BigInt!
+  mintPrice: BigDecimal!
+  mintPriceExact: BigInt!
+  volume: Int!
   volumePrice: BigDecimal!
+  volumePriceExact: BigInt!
   paused: Boolean!
   publicMintState: Boolean!
-  timestamp: BigInt
-  owner: Account
+  timestamp: BigInt!
+  owner: Account!
   splitter: Splitter
   royaltyRecipient: Account
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
-  balances: [ERC1155Balance!]! @derivedFrom(field: "contract")
   operators: [ERC1155Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC1155Transfer!]! @derivedFrom(field: "contract")
+  balances: [ERC1155Balance!]! @derivedFrom(field: "contract")
 }
 
 type ERC1155Token @entity {
   id: ID!
   tokenId: BigInt
   uri: String!
-  name: String
-  symbol: String
-  royalties: BigInt
-  lastPrice: BigInt
-  volume: Int
+  lastPrice: BigDecimal!
+  lastPriceExact: BigInt!
   volumePrice: BigDecimal!
+  volumePriceExact: BigInt!
+  volume: Int
   timestamp: BigInt
-  totalSupply: ERC1155Balance
   contract: ERC1155Contract!
-  order: Order
-  orders: [Order!] @derivedFrom(field: "ERC1155token")
   balances: [ERC1155Balance!]! @derivedFrom(field: "token")
+  orders: [Order!] @derivedFrom(field: "ERC1155token")
   transfers: [ERC1155Transfer!]! @derivedFrom(field: "token")
 }
 
@@ -147,26 +146,30 @@ type Order @entity {
   type: Int! # 0=Fixed Price; 1=Dutch Auction; 2=English Auction;
   hash: Bytes!
   quantity: BigInt
-  endPrice: BigInt
   endTime: BigInt
-  startPrice: BigInt
   startTime: BigInt
-  bidPrice: BigInt
+  startPrice: BigDecimal!
+  startPriceExact: BigInt!
+  endPrice: BigDecimal!
+  endPriceExact: BigInt!
+  bidPrice: BigDecimal!
+  bidPriceExact: BigInt!
   canceled: Boolean
+  timestamp: BigInt!
   seller: Account!
   taker: Account
   sale: Sale
-  timestamp: BigInt!
-  bids: [Bid!] @derivedFrom(field: "order")
   ERC721token: ERC721Token
   ERC1155token: ERC1155Token
   ERC721contract: ERC721Contract
   ERC1155contract: ERC1155Contract
+  bids: [Bid!] @derivedFrom(field: "order")
 }
 
 type Bid @entity(immutable: true) {
   id: ID!
-  price: BigInt!
+  price: BigDecimal!
+  priceExact: BigInt!
   timestamp: BigInt!
   owner: Account!
   order: Order!
@@ -175,7 +178,8 @@ type Bid @entity(immutable: true) {
 type Sale @entity(immutable: true) {
   id: ID!
   order: Order!
-  price: BigInt!
+  price: BigDecimal!
+  priceExact: BigInt!
 }
 
 type Transaction @entity(immutable: true) {
@@ -203,8 +207,9 @@ type Account @entity {
   ERC1155transferToEvent: [ERC1155Transfer!]! @derivedFrom(field: "to")
   ERC1155transferOperatorEvent: [ERC1155Transfer!]! @derivedFrom(field: "operator")
   events: [Event!]! @derivedFrom(field: "emitter")
-  volume: Int
+  volume: Int!
   volumePrice: BigDecimal!
+  volumePriceExact: BigInt!
 }
 
 type Splitter @entity {

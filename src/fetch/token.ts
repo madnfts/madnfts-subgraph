@@ -7,7 +7,7 @@ export function fetchERC721Token(
   contract: ERC721Contract,
   ownerAddress: Address,
   tokenId: BigInt,
-  timestamp: BigInt | null
+  timestamp: BigInt
 ): ERC721Token {
   let token = ERC721Token.load(contract.id.toHex().concat('/').concat(tokenId.toHex()))
   if (token == null) token = createERC721Token(ownerAddress, contract.id, contract.baseUri, tokenId, timestamp)
@@ -17,7 +17,7 @@ export function fetchERC721Token(
 export function fetchERC1155Token(
   contract: ERC1155Contract,
   tokenId: BigInt,
-  timestamp: BigInt | null
+  timestamp: BigInt
 ): ERC1155Token {
   let token = ERC1155Token.load(contract.id.toHex().concat('/').concat(tokenId.toHex()))
   if (token == null) token = createERC1155Token(contract.id, contract.baseUri, tokenId, timestamp)

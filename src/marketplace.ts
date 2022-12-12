@@ -12,10 +12,7 @@ import {
   MakeOrder as ERC1155MakeOrder,
 } from '../generated/ERC1155Marketplace/ERC1155Marketplace';
 
-import { fetchOrder } from './fetch/order';
-import { createBid, createOrder, createSale } from './create/order';
-import { fetchERC1155Token, fetchERC721Token } from './fetch/token';
-import { fetchERC1155, fetchERC721 } from './fetch/factory';
+import { cancelSale, createBid, createOrder, createSale } from './create/order';
 
 // 721 Marketplace events
 
@@ -26,15 +23,18 @@ export function handle721Bid(event: ERC721Bid): void {
     event.params.id,
     event.params.bidPrice,
     event.params.bidder,
-    event.address,
+    event.params.token,
     event.block
   )
 }
 
 export function handle721CancelOrder(event: ERC721CancelOrder): void {
-  let order = fetchOrder(event.params.hash)
-  order.canceled = true
-  order.save()
+  cancelSale(
+    '721',
+    event.params.hash,
+    event.params.token,
+    event.block
+  )
 }
 
 export function handle721Claim(event: ERC721Claim): void  {
@@ -72,15 +72,18 @@ export function handle1155Bid(event: ERC1155Bid): void {
     event.params.id,
     event.params.bidPrice,
     event.params.bidder,
-    event.address,
+    event.params.token,
     event.block
   )
 }
 
 export function handle1155CancelOrder(event: ERC1155CancelOrder): void {
-  let order = fetchOrder(event.params.hash)
-  order.canceled = true
-  order.save()
+  cancelSale(
+    '1155',
+    event.params.hash,
+    event.params.token,
+    event.block
+  )
 }
 
 export function handle1155Claim(event: ERC1155Claim): void {

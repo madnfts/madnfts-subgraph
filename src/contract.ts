@@ -77,7 +77,7 @@ export function handle721RoyaltyRecipientSet(event: ERC721RoyaltyRecipientSetEve
 // 1155 Token events
 
 export function handle1155ApprovalForAll(event: ERC1155ApprovalForAllEvent): void {
-  let contract = fetchERC1155(event.address)
+  let contract = fetchERC1155(event.address, event.block.timestamp)
   let owner = fetchAccount(event.params.owner)
   let operator = fetchAccount(event.params.operator)
   let delegation = createERC1155Operator(contract, owner, operator)
@@ -86,7 +86,7 @@ export function handle1155ApprovalForAll(event: ERC1155ApprovalForAllEvent): voi
 }
 
 export function handle1155BaseURISet(event: ERC1155BaseURISetEvent): void {
-  let contract = fetchERC1155(event.address)
+  let contract = fetchERC1155(event.address, event.block.timestamp)
   contract.baseUri = event.params.newBaseURI.toString()
   contract.save()
 }
@@ -100,14 +100,14 @@ export function handle1155TransferSingle(event: ERC1155TransferSingleEvent): voi
 }
 
 export function handle1155OwnerUpdated(event: ERC1155OwnerUpdatedEvent): void {
-  let contract = fetchERC1155(event.address)
+  let contract = fetchERC1155(event.address, event.block.timestamp)
   let owner = fetchAccount(event.transaction.from)
   contract.owner = owner.id
   contract.save()
 }
 
 export function handle1155PublicMintStateSet(event: ERC1155PublicMintStateSetEvent): void {
-  let contract = fetchERC1155(event.address)
+  let contract = fetchERC1155(event.address, event.block.timestamp)
   contract.publicMintState = event.params.newPublicState
   contract.save()
 }

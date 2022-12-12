@@ -2,7 +2,7 @@ import { Account, ERC1155Contract, ERC1155Transfer, ERC721Transfer } from '../..
 import { Transfer as ERC721TransferEvent } from '../../generated/templates/ERC721Basic/ERC721Basic'
 import { TransferBatch as ERC1155TransferBatchEvent } from '../../generated/templates/ERC1155Basic/ERC1155Basic'
 import { TransferSingle as ERC1155TransferSingleEvent } from '../../generated/templates/ERC1155Basic/ERC1155Basic'
-import { constants, decimals, events, transactions } from '@amxx/graphprotocol-utils/index';
+import { constants, decimals, events } from '@amxx/graphprotocol-utils/index';
 import { BigInt, ethereum } from '@graphprotocol/graph-ts/index';
 import { fetchERC1155, fetchERC721 } from '../fetch/factory';
 import { fetchERC1155Token, fetchERC721Token } from '../fetch/token';
@@ -33,7 +33,7 @@ export function createERC721Transfer(event: ERC721TransferEvent): void {
 }
 
 export function createERC1155SingleTransfer(event: ERC1155TransferSingleEvent): void {
-  let contract = fetchERC1155(event.address)
+  let contract = fetchERC1155(event.address, event.block.timestamp)
   let operator = fetchAccount(event.params.operator)
   let from = fetchAccount(event.params.from)
   let to = fetchAccount(event.params.to)
@@ -50,7 +50,7 @@ export function createERC1155SingleTransfer(event: ERC1155TransferSingleEvent): 
 }
 
 export function createERC1155BatchTransfer(event: ERC1155TransferBatchEvent): void {
-  let contract = fetchERC1155(event.address);
+  let contract = fetchERC1155(event.address, event.block.timestamp);
   let operator = fetchAccount(event.params.operator);
   let from = fetchAccount(event.params.from);
   let to = fetchAccount(event.params.to);

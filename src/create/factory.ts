@@ -6,7 +6,7 @@ import { ERC721Basic as ERC721BasicTemplate } from '../../generated/templates/ER
 import { ERC1155Basic as ERC1155BasicTemplate } from '../../generated/templates/ERC1155Basic/ERC1155Basic';
 import { ERC721Basic } from '../../generated/templates';
 import { ERC1155Basic } from '../../generated/templates';
-import { decimal, DEFAULT_DECIMALS } from '@protofire/subgraph-toolkit/index';
+import { constants, decimals } from '@amxx/graphprotocol-utils/index';
 
 export function createSplitter(
   contractAddress: Address,
@@ -43,33 +43,33 @@ export function createContract(
   let creatorAccount = fetchAccount(creatorAddress)
   let contractAccount = fetchAccount(contractAddress)
   let splitter = fetchSplitter(splitterAddress)
-  let mintPriceDecimal = decimal.max(
-    decimal.ZERO,
-    decimal.fromBigInt(mintPrice, DEFAULT_DECIMALS)
-  )
+
   if (standard === '721') {
     let erc721interface = ERC721BasicTemplate.bind(Address.fromBytes(contractAddress))
     let try_baseUri = erc721interface.try_getBaseURI()
     // Create the indexing for the new contract address
     ERC721Basic.create(contractAddress)
-    // Create the entity
+    // Create the contract entity
     let contract = new ERC721Contract(contractAddress)
-    contract.timestamp = timestamp
-    contract.splitter = splitter.id
     contract.type = contractType
-    contract.publicMintState = false
-    contract.paused = false
-    contract.owner = creatorAccount.id
-    contract.baseUri = try_baseUri.reverted ? 'mad://' : try_baseUri.value
     contract.name = name
     contract.symbol = symbol
+    contract.baseUri = try_baseUri.reverted ? 'mad://' : try_baseUri.value
     contract.maxSupply = maxSupply
-    contract.mintPrice = mintPriceDecimal
     contract.royalties = royalties
+    contract.mintPrice = decimals.toDecimals(mintPrice)
+    contract.mintPriceExact = mintPrice
+    contract.volumePrice = constants.BIGDECIMAL_ZERO
+    contract.volumePriceExact = constants.BIGINT_ZERO
     contract.volume = 0
-    contract.volumePrice = decimal.ZERO
+    contract.paused = false
+    contract.publicMintState = false
+    contract.timestamp = timestamp
+    contract.owner = creatorAccount.id
+    contract.splitter = splitter.id
     contract.royaltyRecipient = creatorAccount.id
     contract.save()
+    // Save the contract account
     contractAccount.asERC721 = contractAddress
     contractAccount.save()
   } else {
@@ -79,29 +79,33 @@ export function createContract(
     ERC1155Basic.create(contractAddress)
     // Create the entity
     let contract = new ERC1155Contract(contractAddress)
-    contract.timestamp = timestamp
-    contract.splitter = splitter.id
     contract.type = contractType
-    contract.publicMintState = false
-    contract.paused = false
-    contract.owner = creatorAccount.id
-    contract.baseUri = try_baseUri.reverted ? 'mad://' : try_baseUri.value
     contract.name = name
     contract.symbol = symbol
+    contract.baseUri = try_baseUri.reverted ? 'mad://' : try_baseUri.value
     contract.maxSupply = maxSupply
-    contract.mintPrice = mintPriceDecimal
     contract.royalties = royalties
+    contract.mintPrice = decimals.toDecimals(mintPrice)
+    contract.mintPriceExact = mintPrice
+    contract.volumePrice = constants.BIGDECIMAL_ZERO
+    contract.volumePriceExact = constants.BIGINT_ZERO
     contract.volume = 0
-    contract.volumePrice = decimal.ZERO
+    contract.paused = false
+    contract.publicMintState = false
+    contract.timestamp = timestamp
+    contract.owner = creatorAccount.id
+    contract.splitter = splitter.id
     contract.royaltyRecipient = creatorAccount.id
     contract.save()
+    // Save the contract account
     contractAccount.asERC1155 = contractAddress
     contractAccount.save()
   }
 }
 
 export function createDefaultContract1155(
-  contractAddress: Address
+  contractAddress: Address,
+  timestamp: BigInt
 ): ERC1155Contract {
   let erc1155interface = ERC1155BasicTemplate.bind(Address.fromBytes(contractAddress))
   const try_baseUri = erc1155interface.try_getURI()
@@ -117,16 +121,22 @@ export function createDefaultContract1155(
   let contractAccount = fetchAccount(contractAddress)
   let contract = new ERC1155Contract(contractAddress)
   contract.type = '1' // Basic default
-  contract.publicMintState = false
-  contract.paused = false
   contract.name = 'unknown'
   contract.symbol = 'unknown'
   contract.baseUri = baseUri
-  contract.owner = owner
   contract.maxSupply = maxSupply
+  contract.royalties = constants.BIGINT_ZERO
+  contract.mintPrice = constants.BIGDECIMAL_ZERO
+  contract.mintPriceExact = constants.BIGINT_ZERO
+  contract.volumePrice = constants.BIGDECIMAL_ZERO
+  contract.volumePriceExact = constants.BIGINT_ZERO
   contract.volume = 0
-  contract.volumePrice = decimal.ZERO
+  contract.paused = false
+  contract.publicMintState = false
+  contract.timestamp = timestamp
+  contract.owner = creatorAccount.id
   contract.save()
+  // Save the contract account
   contractAccount.asERC1155 = contractAddress
   contractAccount.save()
   return contract
