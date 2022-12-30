@@ -151,7 +151,7 @@ export function handle1155LazyCreated(event: ERC1155LazyCreated): void {
 
 export function handle721MinimalCreated1(event: ERC721MinimalCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -167,7 +167,7 @@ export function handle721MinimalCreated1(event: ERC721MinimalCreated): void {
 }
 export function handle721BasicCreated1(event: ERC721BasicCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -183,7 +183,7 @@ export function handle721BasicCreated1(event: ERC721BasicCreated): void {
 }
 export function handle721WhitelistCreated1(event: ERC721WhitelistCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -199,7 +199,7 @@ export function handle721WhitelistCreated1(event: ERC721WhitelistCreated): void 
 }
 export function handle721LazyCreated1(event: ERC721LazyCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -215,7 +215,7 @@ export function handle721LazyCreated1(event: ERC721LazyCreated): void {
 }
 export function handle1155MinimalCreated1(event: ERC1155MinimalCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -231,7 +231,7 @@ export function handle1155MinimalCreated1(event: ERC1155MinimalCreated): void {
 }
 export function handle1155BasicCreated1(event: ERC1155BasicCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -247,7 +247,7 @@ export function handle1155BasicCreated1(event: ERC1155BasicCreated): void {
 }
 export function handle1155WhitelistCreated1(event: ERC1155WhitelistCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -263,7 +263,7 @@ export function handle1155WhitelistCreated1(event: ERC1155WhitelistCreated): voi
 }
 export function handle1155LazyCreated1(event: ERC1155LazyCreated): void {
 	createContract(
-		'0.9',
+		'1.0',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
