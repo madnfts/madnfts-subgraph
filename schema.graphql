@@ -19,6 +19,7 @@ type ERC721Contract @entity {
   owner: Account!
   splitter: Splitter
   royaltyRecipient: Account
+  version: String!
   tokens: [ERC721Token!]! @derivedFrom(field: "contract")
   operators: [ERC721Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC721Transfer!]! @derivedFrom(field: "contract")
@@ -82,6 +83,7 @@ type ERC1155Contract @entity {
   owner: Account!
   splitter: Splitter
   royaltyRecipient: Account
+  version: String!
   tokens: [ERC1155Token!]! @derivedFrom(field: "contract")
   operators: [ERC1155Operator!]! @derivedFrom(field: "contract")
   transfers: [ERC1155Transfer!]! @derivedFrom(field: "contract")
@@ -159,6 +161,7 @@ type Order @entity {
   seller: Account!
   taker: Account
   sale: Sale
+  version: String!
   ERC721token: ERC721Token
   ERC1155token: ERC1155Token
   ERC721contract: ERC721Contract

@@ -28,6 +28,7 @@ export function createSplitter(
 }
 
 export function createContract(
+  version: string,
   contractAddress: Address,
   splitterAddress: Address,
   creatorAddress: Address,
@@ -64,6 +65,7 @@ export function createContract(
     contract.volume = 0
     contract.paused = false
     contract.publicMintState = false
+    contract.version = version
     contract.timestamp = timestamp
     contract.owner = creatorAccount.id
     contract.splitter = splitter.id
@@ -75,7 +77,7 @@ export function createContract(
   } else {
     let erc1155interface = ERC1155BasicTemplate.bind(Address.fromBytes(contractAddress))
     let try_baseUri = erc1155interface.try_getURI()
-    // Create the indexing for the new contract address
+    // Init template indexing for the new contract address
     ERC1155Basic.create(contractAddress)
     // Create the entity
     let contract = new ERC1155Contract(contractAddress)
@@ -92,6 +94,7 @@ export function createContract(
     contract.volume = 0
     contract.paused = false
     contract.publicMintState = false
+    contract.version = version
     contract.timestamp = timestamp
     contract.owner = creatorAccount.id
     contract.splitter = splitter.id
@@ -121,8 +124,8 @@ export function createDefaultContract1155(
   let contractAccount = fetchAccount(contractAddress)
   let contract = new ERC1155Contract(contractAddress)
   contract.type = '1' // Basic default
-  contract.name = 'unknown'
-  contract.symbol = 'unknown'
+  contract.name = ''
+  contract.symbol = ''
   contract.baseUri = baseUri
   contract.maxSupply = maxSupply
   contract.royalties = constants.BIGINT_ZERO
@@ -133,6 +136,7 @@ export function createDefaultContract1155(
   contract.volume = 0
   contract.paused = false
   contract.publicMintState = false
+  contract.version = 'external'
   contract.timestamp = timestamp
   contract.owner = creatorAccount.id
   contract.save()

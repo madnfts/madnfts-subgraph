@@ -14,7 +14,65 @@ import {
 
 import { cancelSale, createBid, createOrder, createSale } from './create/order';
 
-// 721 Marketplace events
+// 0.9 Marketplace events
+
+export function handle721MakeOrder(event: ERC721MakeOrder): void {
+  createOrder(
+    '0.9',
+    '721',
+    event.params.hash,
+    event.params.id,
+    null,
+    event.params.seller,
+    event.params.token,
+    event.address,
+    event.block
+  )
+}
+export function handle1155MakeOrder(event: ERC1155MakeOrder): void {
+  createOrder(
+    '0.9',
+    '1155',
+    event.params.hash,
+    event.params.id,
+    event.params.amount,
+    event.params.seller,
+    event.params.token,
+    event.address,
+    event.block
+  )
+}
+
+// 1.0 Marketplace events
+
+export function handle721MakeOrder1(event: ERC721MakeOrder): void {
+  createOrder(
+    '1.0',
+    '721',
+    event.params.hash,
+    event.params.id,
+    null,
+    event.params.seller,
+    event.params.token,
+    event.address,
+    event.block
+  )
+}
+export function handle1155MakeOrder1(event: ERC1155MakeOrder): void {
+  createOrder(
+    '1.0',
+    '1155',
+    event.params.hash,
+    event.params.id,
+    event.params.amount,
+    event.params.seller,
+    event.params.token,
+    event.address,
+    event.block
+  )
+}
+
+// 0.9 + 1.0 Marketplace events
 
 export function handle721Bid(event: ERC721Bid): void {
   createBid(
@@ -27,7 +85,6 @@ export function handle721Bid(event: ERC721Bid): void {
     event.block
   )
 }
-
 export function handle721CancelOrder(event: ERC721CancelOrder): void {
   cancelSale(
     '721',
@@ -36,7 +93,6 @@ export function handle721CancelOrder(event: ERC721CancelOrder): void {
     event.block
   )
 }
-
 export function handle721Claim(event: ERC721Claim): void  {
   createSale(
     '721',
@@ -49,22 +105,6 @@ export function handle721Claim(event: ERC721Claim): void  {
     event.block
   )
 }
-
-export function handle721MakeOrder(event: ERC721MakeOrder): void {
-  createOrder(
-    '721',
-    event.params.hash,
-    event.params.id,
-    null,
-    event.params.seller,
-    event.params.token,
-    event.address,
-    event.block
-  )
-}
-
-// 1155 Marketplace events
-
 export function handle1155Bid(event: ERC1155Bid): void {
   createBid(
     '1155',
@@ -76,7 +116,6 @@ export function handle1155Bid(event: ERC1155Bid): void {
     event.block
   )
 }
-
 export function handle1155CancelOrder(event: ERC1155CancelOrder): void {
   cancelSale(
     '1155',
@@ -85,7 +124,6 @@ export function handle1155CancelOrder(event: ERC1155CancelOrder): void {
     event.block
   )
 }
-
 export function handle1155Claim(event: ERC1155Claim): void {
   createSale(
     '1155',
@@ -99,15 +137,3 @@ export function handle1155Claim(event: ERC1155Claim): void {
   )
 }
 
-export function handle1155MakeOrder(event: ERC1155MakeOrder): void {
-  createOrder(
-    '1155',
-    event.params.hash,
-    event.params.id,
-    event.params.amount,
-    event.params.seller,
-    event.params.token,
-    event.address,
-    event.block
-  )
-}

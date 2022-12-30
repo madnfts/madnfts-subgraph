@@ -16,10 +16,11 @@ import {
 
 import { createContract, createSplitter } from './create/factory';
 
-// 721 Event handlers
+// 0.9 Event handlers
 
 export function handle721MinimalCreated(event: ERC721MinimalCreated): void {
 	createContract(
+		'0.9',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -33,9 +34,9 @@ export function handle721MinimalCreated(event: ERC721MinimalCreated): void {
 		event.params.royalties
 	)
 }
-
 export function handle721BasicCreated(event: ERC721BasicCreated): void {
 	createContract(
+		'0.9',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -49,9 +50,9 @@ export function handle721BasicCreated(event: ERC721BasicCreated): void {
 		event.params.royalties
 	)
 }
-
 export function handle721WhitelistCreated(event: ERC721WhitelistCreated): void {
 	createContract(
+		'0.9',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -65,9 +66,9 @@ export function handle721WhitelistCreated(event: ERC721WhitelistCreated): void {
 		event.params.royalties
 	)
 }
-
 export function handle721LazyCreated(event: ERC721LazyCreated): void {
 	createContract(
+		'0.9',
 		event.params.newCollection,
 		event.params.newSplitter,
 		event.transaction.from,
@@ -81,6 +82,203 @@ export function handle721LazyCreated(event: ERC721LazyCreated): void {
 		event.params.royalties
 	)
 }
+export function handle1155MinimalCreated(event: ERC1155MinimalCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'0',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle1155BasicCreated(event: ERC1155BasicCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'1',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle1155WhitelistCreated(event: ERC1155WhitelistCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'2',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle1155LazyCreated(event: ERC1155LazyCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'3',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+
+// 1.0 Event handlers
+
+export function handle721MinimalCreated1(event: ERC721MinimalCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'0',
+		'721',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle721BasicCreated1(event: ERC721BasicCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'1',
+		'721',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle721WhitelistCreated1(event: ERC721WhitelistCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'2',
+		'721',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle721LazyCreated1(event: ERC721LazyCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'3',
+		'721',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle1155MinimalCreated1(event: ERC1155MinimalCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'0',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle1155BasicCreated1(event: ERC1155BasicCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'1',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle1155WhitelistCreated1(event: ERC1155WhitelistCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'2',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+export function handle1155LazyCreated1(event: ERC1155LazyCreated): void {
+	createContract(
+		'0.9',
+		event.params.newCollection,
+		event.params.newSplitter,
+		event.transaction.from,
+		event.block.timestamp,
+		'3',
+		'1155',
+		event.params.name,
+		event.params.symbol,
+		event.params.maxSupply,
+		event.params.mintPrice,
+		event.params.royalties
+	)
+}
+
+// 0.9 + 1.0 Event handlers
 
 export function handle721SplitterCreated(event: ERC721SplitterCreated): void {
 	createSplitter(
@@ -91,73 +289,6 @@ export function handle721SplitterCreated(event: ERC721SplitterCreated): void {
 		event.params.flag
 	)
 }
-
-// 1155 Event handlers
-
-export function handle1155MinimalCreated(event: ERC1155MinimalCreated): void {
-	createContract(
-		event.params.newCollection,
-		event.params.newSplitter,
-		event.transaction.from,
-		event.block.timestamp,
-		'0',
-		'1155',
-		event.params.name,
-		event.params.symbol,
-		event.params.maxSupply,
-		event.params.mintPrice,
-		event.params.royalties
-	)
-}
-
-export function handle1155BasicCreated(event: ERC1155BasicCreated): void {
-	createContract(
-		event.params.newCollection,
-		event.params.newSplitter,
-		event.transaction.from,
-		event.block.timestamp,
-		'1',
-		'1155',
-		event.params.name,
-		event.params.symbol,
-		event.params.maxSupply,
-		event.params.mintPrice,
-		event.params.royalties
-	)
-}
-
-export function handle1155WhitelistCreated(event: ERC1155WhitelistCreated): void {
-	createContract(
-		event.params.newCollection,
-		event.params.newSplitter,
-		event.transaction.from,
-		event.block.timestamp,
-		'2',
-		'1155',
-		event.params.name,
-		event.params.symbol,
-		event.params.maxSupply,
-		event.params.mintPrice,
-		event.params.royalties
-	)
-}
-
-export function handle1155LazyCreated(event: ERC1155LazyCreated): void {
-	createContract(
-		event.params.newCollection,
-		event.params.newSplitter,
-		event.transaction.from,
-		event.block.timestamp,
-		'3',
-		'1155',
-		event.params.name,
-		event.params.symbol,
-		event.params.maxSupply,
-		event.params.mintPrice,
-		event.params.royalties
-	)
-}
-
 export function handle1155SplitterCreated(event: ERC1155SplitterCreated): void {
 	createSplitter(
 		event.params.splitter,

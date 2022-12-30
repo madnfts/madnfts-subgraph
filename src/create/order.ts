@@ -25,6 +25,7 @@ import {
 import { constants, decimals } from '@amxx/graphprotocol-utils/index';
 
 export function createOrder(
+  version: String,
   tokenStandard: String,
   orderHash: Bytes,
   tokenId: BigInt,
@@ -41,6 +42,7 @@ export function createOrder(
     let order = new Order(orderHash.toHex())
     if (orderInfo) {
       let seller = fetchAccount(sellerAddress)
+      order.version = version.toString()
       order.type = orderInfo.value9
       order.quantity = constants.BIGINT_ONE
       order.hash = orderHash
@@ -73,6 +75,7 @@ export function createOrder(
     let order = new Order(orderHash.toHex())
     if (orderInfo) {
       let seller = fetchAccount(sellerAddress)
+      order.version = version.toString()
       order.type = orderInfo.value10
       order.hash = orderHash
       order.quantity = quantity as BigInt
