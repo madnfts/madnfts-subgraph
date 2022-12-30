@@ -1,5 +1,5 @@
 specVersion: 0.0.5
-description: MADNFTs Harmony ERC721, ERC1155 and Davinci subgraph
+description: MADNFTs ERC721, ERC1155 marketplace subgraph
 repository: https://github.com/madnfts/madnfts-subgraph
 schema:
   file: ./schema.graphql
@@ -143,13 +143,13 @@ dataSources:
         - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle721SplitterCreated
         - event: ERC721MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle721MinimalCreated
+          handler: handle721MinimalCreated1
         - event: ERC721BasicCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle721BasicCreated
+          handler: handle721BasicCreated1
         - event: ERC721WhitelistCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle721WhitelistCreated
+          handler: handle721WhitelistCreated1
         - event: ERC721LazyCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle721LazyCreated
+          handler: handle721LazyCreated1
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC721Marketplace1
@@ -177,7 +177,7 @@ dataSources:
         - event: Claim(indexed address,uint256,indexed bytes32,address,address,uint256)
           handler: handle721Claim
         - event: MakeOrder(indexed address,uint256,indexed bytes32,address)
-          handler: handle721MakeOrder
+          handler: handle721MakeOrder1
       file: ./src/marketplace.ts
   - kind: ethereum/contract
     name: ERC1155Factory1
@@ -201,13 +201,13 @@ dataSources:
         - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
           handler: handle1155SplitterCreated
         - event: ERC1155MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle1155MinimalCreated
+          handler: handle1155MinimalCreated1
         - event: ERC1155BasicCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle1155BasicCreated
+          handler: handle1155BasicCreated1
         - event: ERC1155WhitelistCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle1155WhitelistCreated
+          handler: handle1155WhitelistCreated1
         - event: ERC1155LazyCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
-          handler: handle1155LazyCreated
+          handler: handle1155LazyCreated1
       file: ./src/factory.ts
   - kind: ethereum/contract
     name: ERC1155Marketplace1
@@ -235,7 +235,7 @@ dataSources:
         - event: Claim(indexed address,uint256,uint256,indexed bytes32,address,address,uint256)
           handler: handle1155Claim
         - event: MakeOrder(indexed address,uint256,uint256,indexed bytes32,address)
-          handler: handle1155MakeOrder
+          handler: handle1155MakeOrder1
       file: ./src/marketplace.ts
 templates:
   - kind: ethereum/contract
