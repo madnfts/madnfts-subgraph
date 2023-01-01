@@ -10,6 +10,8 @@
     "deploy-davinci": "graph deploy --node https://api.thegraph.com/deploy/ devhallsmad/madnfts-davinci subgraph.davinci.yaml",
     "create-skale": "graph create --node http://localhost:8020/ madmarketplace",
     "deploy-skale": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 madmarketplace subgraph.skale.yaml",
+    "create-skale-staging": "graph create --node http://localhost:8020/ madmarketplacestaging",
+    "deploy-skale-staging": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 madmarketplacestaging subgraph.skale.staging.yaml",
     "create-local": "graph create --node http://localhost:8020/ devhallsmad/marketplace",
     "remove-local": "graph remove --node http://localhost:8020/ devhallsmad/marketplace",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 devhallsmad/marketplace subgraph.local.yaml",
