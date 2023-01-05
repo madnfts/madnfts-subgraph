@@ -1,0 +1,187 @@
+specVersion: 0.0.5
+description: MADNFTs ERC721, ERC1155 marketplace subgraph
+repository: https://github.com/madnfts/madnfts-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ERC721Factory1
+    network: mainnet
+    source:
+      address: '0x'
+      abi: ERC721Factory
+      startBlock: 8224100
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC721Contract
+      abis:
+        - name: ERC721Factory
+          file: ./abis/MADFactory721.json
+        - name: ERC721Basic
+          file: ./abis/ERC721Basic.json
+      eventHandlers:
+        - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
+          handler: handle721SplitterCreated
+        - event: ERC721MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle721MinimalCreated1
+        - event: ERC721BasicCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle721BasicCreated1
+        - event: ERC721WhitelistCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle721WhitelistCreated1
+        - event: ERC721LazyCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle721LazyCreated1
+      file: ./src/factory.ts
+  - kind: ethereum/contract
+    name: ERC721Marketplace1
+    network: mainnet
+    source:
+      address: '0x'
+      abi: ERC721Marketplace
+      startBlock: 8224100
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC721Marketplace
+      abis:
+        - name: ERC721Marketplace
+          file: ./abis/MADMarketplace721.json
+        - name: ERC721Basic
+          file: ./abis/ERC721Basic.json
+      eventHandlers:
+        - event: Bid(indexed address,uint256,indexed bytes32,address,uint256)
+          handler: handle721Bid
+        - event: CancelOrder(indexed address,uint256,indexed bytes32,address)
+          handler: handle721CancelOrder
+        - event: Claim(indexed address,uint256,indexed bytes32,address,address,uint256)
+          handler: handle721Claim
+        - event: MakeOrder(indexed address,uint256,indexed bytes32,address)
+          handler: handle721MakeOrder1
+      file: ./src/marketplace.ts
+  - kind: ethereum/contract
+    name: ERC1155Factory1
+    network: mainnet
+    source:
+      address: '0x'
+      abi: ERC1155Factory
+      startBlock: 8224100
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC1155Factory
+      abis:
+        - name: ERC1155Factory
+          file: ./abis/MADFactory1155.json
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
+      eventHandlers:
+        - event: SplitterCreated(indexed address,uint256[],address[],address,uint256)
+          handler: handle1155SplitterCreated
+        - event: ERC1155MinimalCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle1155MinimalCreated1
+        - event: ERC1155BasicCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle1155BasicCreated1
+        - event: ERC1155WhitelistCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle1155WhitelistCreated1
+        - event: ERC1155LazyCreated(indexed address,indexed address,string,string,uint256,uint256,uint256)
+          handler: handle1155LazyCreated1
+      file: ./src/factory.ts
+  - kind: ethereum/contract
+    name: ERC1155Marketplace1
+    network: mainnet
+    source:
+      address: '0x'
+      abi: ERC1155Marketplace
+      startBlock: 8224100
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC1155Marketplace
+      abis:
+        - name: ERC1155Marketplace
+          file: ./abis/MADMarketplace1155.json
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
+      eventHandlers:
+        - event: Bid(indexed address,uint256,uint256,indexed bytes32,address,uint256)
+          handler: handle1155Bid
+        - event: CancelOrder(indexed address,uint256,uint256,indexed bytes32,address)
+          handler: handle1155CancelOrder
+        - event: Claim(indexed address,uint256,uint256,indexed bytes32,address,address,uint256)
+          handler: handle1155Claim
+        - event: MakeOrder(indexed address,uint256,uint256,indexed bytes32,address)
+          handler: handle1155MakeOrder1
+      file: ./src/marketplace.ts
+templates:
+  - kind: ethereum/contract
+    name: ERC721Basic
+    network: mainnet
+    source:
+      abi: ERC721Basic
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC721Basic
+      abis:
+        - name: ERC721Basic
+          file: ./abis/ERC721Basic.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handle721Approval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handle721ApprovalForAll
+        - event: BaseURISet(indexed string)
+          handler: handle721BaseURISet
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle721OwnerUpdated
+        - event: PublicMintStateSet(indexed bool)
+          handler: handle721PublicMintStateSet
+        - event: RoyaltyFeeSet(indexed uint256)
+          handler: handle721RoyaltyFeeSet
+        - event: RoyaltyRecipientSet(indexed address)
+          handler: handle721RoyaltyRecipientSet
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handle721Transfer
+      file: ./src/contract.ts
+  - kind: ethereum/contract
+    name: ERC1155Basic
+    network: mainnet
+    source:
+      abi: ERC1155Basic
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC1155Basic
+      abis:
+        - name: ERC1155Basic
+          file: ./abis/ERC1155Basic.json
+      eventHandlers:
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handle1155ApprovalForAll
+        - event: BaseURISet(indexed string)
+          handler: handle1155BaseURISet
+        - event: OwnerUpdated(indexed address,indexed address)
+          handler: handle1155OwnerUpdated
+        - event: PublicMintStateSet(indexed bool)
+          handler: handle1155PublicMintStateSet
+        - event: RoyaltyFeeSet(indexed uint256)
+          handler: handle1155RoyaltyFeeSet
+        - event: RoyaltyRecipientSet(indexed address)
+          handler: handle1155RoyaltyRecipientSet
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handle1155TransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handle1155TransferSingle
+      file: ./src/contract.ts
