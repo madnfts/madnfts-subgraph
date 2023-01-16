@@ -125,7 +125,7 @@ dataSources:
     name: ERC721Factory1
     network: skale
     source:
-      address: '0xEA39e3e8e74f3125aBc79B4b574b3d41D7fe68f7'
+      address: '0x432d6B56CE7BEb482EeD124784Db9e0f3D3e8450'
       abi: ERC721Factory
       startBlock: 261000
     mapping:
@@ -155,7 +155,7 @@ dataSources:
     name: ERC721Marketplace1
     network: skale
     source:
-      address: '0x4DA21bC6f1175D437CeeE54F54D467Ef9B3a8F88'
+      address: '0x9C5e5dccdD3296da210D2073046123965F7bFED7'
       abi: ERC721Marketplace
       startBlock: 261000
     mapping:
@@ -183,7 +183,7 @@ dataSources:
     name: ERC1155Factory1
     network: skale
     source:
-      address: '0x541636aE0e138Cdd8e8f617F2dFD60dD9674471d'
+      address: '0x4658aC5435f90Db13344dA390FdB6696dc69D3F3'
       abi: ERC1155Factory
       startBlock: 261000
     mapping:
@@ -213,7 +213,7 @@ dataSources:
     name: ERC1155Marketplace1
     network: skale
     source:
-      address: '0x1a33489e47E95dc7997B47Ae8766849D4910c684'
+      address: '0x2995BE3fEBB5aa16AACEA449966386fa58f822D4'
       abi: ERC1155Marketplace
       startBlock: 261000
     mapping:
