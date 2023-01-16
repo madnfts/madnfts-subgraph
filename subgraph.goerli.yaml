@@ -125,7 +125,7 @@ dataSources:
     name: ERC721Factory1
     network: goerli
     source:
-      address: '0x3CFC118cede96e98d50242136e22F986806e2316'
+      address: '0x96925d93fe27C74c42958Ffce7872e07658df255'
       abi: ERC721Factory
       startBlock: 8224100
     mapping:
@@ -155,7 +155,7 @@ dataSources:
     name: ERC721Marketplace1
     network: goerli
     source:
-      address: '0xEA39e3e8e74f3125aBc79B4b574b3d41D7fe68f7'
+      address: '0x0af9e8C2Eb68f826994d67CcA8dB903818b6F3E0'
       abi: ERC721Marketplace
       startBlock: 8224100
     mapping:
@@ -183,7 +183,7 @@ dataSources:
     name: ERC1155Factory1
     network: goerli
     source:
-      address: '0xAEb71dc79aA51BE036e5F7aa50690f4C2c9668aE'
+      address: '0x6D3687E8324e3a06E2A0EB3fddCa26c30E1dfFA7'
       abi: ERC1155Factory
       startBlock: 8224100
     mapping:
@@ -213,7 +213,7 @@ dataSources:
     name: ERC1155Marketplace1
     network: goerli
     source:
-      address: '0x387Ff56f9F7e00762e91f9899E0a8314d5b87DdB'
+      address: '0xa9621977eC268E593Daf8aE37FFFF286Dd988848'
       abi: ERC1155Marketplace
       startBlock: 8224100
     mapping:
