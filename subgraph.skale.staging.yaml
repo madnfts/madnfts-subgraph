@@ -127,7 +127,7 @@ dataSources:
     source:
       address: '0x432d6B56CE7BEb482EeD124784Db9e0f3D3e8450'
       abi: ERC721Factory
-      startBlock: 680000
+      startBlock: 736300
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -157,7 +157,7 @@ dataSources:
     source:
       address: '0x9C5e5dccdD3296da210D2073046123965F7bFED7'
       abi: ERC721Marketplace
-      startBlock: 680000
+      startBlock: 736300
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -185,7 +185,7 @@ dataSources:
     source:
       address: '0x4658aC5435f90Db13344dA390FdB6696dc69D3F3'
       abi: ERC1155Factory
-      startBlock: 680000
+      startBlock: 736300
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -215,7 +215,7 @@ dataSources:
     source:
       address: '0x2995BE3fEBB5aa16AACEA449966386fa58f822D4'
       abi: ERC1155Marketplace
-      startBlock: 680000
+      startBlock: 736300
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
