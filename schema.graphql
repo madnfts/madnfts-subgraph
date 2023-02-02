@@ -220,7 +220,6 @@ type Account @entity {
   volume: Int!
   volumePrice: BigDecimal!
   volumePriceExact: BigInt!
-  created: BigInt!
 }
 
 type Splitter @entity {
