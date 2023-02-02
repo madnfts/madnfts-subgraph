@@ -16,6 +16,7 @@ type ERC721Contract @entity {
   paused: Boolean!
   publicMintState: Boolean!
   timestamp: BigInt!
+  created: BigInt!
   owner: Account!
   splitter: Splitter
   royaltyRecipient: Account
@@ -37,6 +38,7 @@ type ERC721Token @entity {
   volumePriceExact: BigInt!
   volume: Int!
   timestamp: BigInt!
+  created: BigInt!
   owner: Account!
   contract: ERC721Contract!
   approved: Account
@@ -80,6 +82,7 @@ type ERC1155Contract @entity {
   paused: Boolean!
   publicMintState: Boolean!
   timestamp: BigInt!
+  created: BigInt!
   owner: Account!
   splitter: Splitter
   royaltyRecipient: Account
@@ -100,6 +103,7 @@ type ERC1155Token @entity {
   volumePriceExact: BigInt!
   volume: Int
   timestamp: BigInt
+  created: BigInt!
   contract: ERC1155Contract!
   balances: [ERC1155Balance!]! @derivedFrom(field: "token")
   orders: [Order!] @derivedFrom(field: "ERC1155token")
@@ -158,6 +162,7 @@ type Order @entity {
   bidPriceExact: BigInt!
   canceled: Boolean
   timestamp: BigInt!
+  created: BigInt!
   seller: Account!
   taker: Account
   sale: Sale
@@ -174,6 +179,7 @@ type Bid @entity(immutable: true) {
   price: BigDecimal!
   priceExact: BigInt!
   timestamp: BigInt!
+  created: BigInt!
   owner: Account!
   order: Order!
 }
@@ -183,6 +189,7 @@ type Sale @entity(immutable: true) {
   order: Order!
   price: BigDecimal!
   priceExact: BigInt!
+  created: BigInt!
 }
 
 type Transaction @entity(immutable: true) {
@@ -213,6 +220,7 @@ type Account @entity {
   volume: Int!
   volumePrice: BigDecimal!
   volumePriceExact: BigInt!
+  created: BigInt!
 }
 
 type Splitter @entity {

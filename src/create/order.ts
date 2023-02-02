@@ -55,6 +55,7 @@ export function createOrder(
       order.bidPrice = constants.BIGDECIMAL_ZERO
       order.bidPriceExact = constants.BIGINT_ZERO
       order.timestamp = block.timestamp
+      order.created = block.timestamp
       order.canceled = false
       order.seller = seller.id
       let contract = fetchERC721(contractAddress)
@@ -89,6 +90,7 @@ export function createOrder(
       order.bidPriceExact = constants.BIGINT_ZERO
       order.canceled = false
       order.timestamp = block.timestamp
+      order.created = block.timestamp
       order.seller = seller.id
       let contract = fetchERC1155(contractAddress, block.timestamp)
       let token = fetchERC1155Token(contract, tokenId, block.timestamp)
@@ -120,6 +122,7 @@ export function createSale(
   sale.price = decimals.toDecimals(price)
   sale.priceExact = price
   sale.order = order.id
+  sale.created = block.timestamp
   sale.save()
   order.timestamp = block.timestamp
   order.sale = sale.id
@@ -188,6 +191,7 @@ export function createBid(
   bid.order = order.id
   bid.owner = bidder.id
   bid.timestamp = block.timestamp
+  bid.created = block.timestamp
   bid.save()
   order.bidPrice = decimals.toDecimals(price)
   order.bidPriceExact = price

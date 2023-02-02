@@ -67,6 +67,7 @@ export function createContract(
     contract.publicMintState = false
     contract.version = version
     contract.timestamp = timestamp
+    contract.created = timestamp
     contract.owner = creatorAccount.id
     contract.splitter = splitter.id
     contract.royaltyRecipient = creatorAccount.id
@@ -96,6 +97,7 @@ export function createContract(
     contract.publicMintState = false
     contract.version = version
     contract.timestamp = timestamp
+    contract.created = timestamp
     contract.owner = creatorAccount.id
     contract.splitter = splitter.id
     contract.royaltyRecipient = creatorAccount.id
@@ -138,6 +140,7 @@ export function createDefaultContract1155(
   contract.publicMintState = false
   contract.version = 'external'
   contract.timestamp = timestamp
+  contract.created = timestamp
   contract.owner = creatorAccount.id
   contract.save()
   // Save the contract account

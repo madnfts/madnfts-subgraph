@@ -30,6 +30,7 @@ export function createERC721Token(
   token.volumePriceExact = constants.BIGINT_ZERO
   token.volume = 0
   token.timestamp = timestamp
+  token.created = timestamp
   token.owner = owner.id
   token.contract = contractAddress
   token.save()
@@ -53,7 +54,8 @@ export function createERC1155Token(
   token.volumePrice = constants.BIGDECIMAL_ZERO
   token.volumePriceExact = constants.BIGINT_ZERO
   token.volume = 0
-  token.timestamp = timestamp as BigInt
+  token.timestamp = timestamp
+  token.created = timestamp
   token.contract = contractAddress
   token.save()
   return token as ERC1155Token;
