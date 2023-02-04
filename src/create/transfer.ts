@@ -8,11 +8,12 @@ import { fetchERC1155, fetchERC721 } from '../fetch/factory';
 import { fetchERC1155Token, fetchERC721Token } from '../fetch/token';
 import { fetchAccount } from '../fetch/account';
 import { fetchERC1155Balance } from '../fetch/balance';
+import { Address } from '@graphprotocol/graph-ts';
 
 export function createERC721Transfer(event: ERC721TransferEvent): void {
   let contract = fetchERC721(event.address)
   if (contract != null) {
-    let token = fetchERC721Token(contract, event.params.to, event.params.id, event.block.timestamp)
+    let token = fetchERC721Token(contract, event.params.to, event.params.id, event.block.timestamp, event.params.to)
     let contractAccount = fetchAccount(event.address)
     let from = fetchAccount(event.params.from)
     let to = fetchAccount(event.params.to)
@@ -86,7 +87,7 @@ function insert1155Transfer(
   id: BigInt,
   value: BigInt,
 ): void {
-  let token = fetchERC1155Token(contract, id, event.block.timestamp);
+  let token = fetchERC1155Token(contract, id, event.block.timestamp, to.id);
   // Create a new transfer entity
   let transfer = new ERC1155Transfer(events.id(event).concat(suffix))
   transfer.emitter = contract.id

@@ -11,7 +11,8 @@ export function createERC721Token(
   contractAddress: Bytes,
   baseUri: String,
   tokenId: BigInt,
-  timestamp: BigInt
+  timestamp: BigInt,
+  minterAddress: Bytes
 ): ERC721Token {
   let owner = fetchAccount(ownerAddress)
   let id = contractAddress.toHex().concat('/').concat(tokenId.toHex())
@@ -32,6 +33,7 @@ export function createERC721Token(
   token.timestamp = timestamp
   token.created = timestamp
   token.owner = owner.id
+  token.minter = minterAddress
   token.contract = contractAddress
   token.save()
   return token as ERC721Token;
@@ -41,7 +43,8 @@ export function createERC1155Token(
   contractAddress: Bytes,
   baseUri: String,
   tokenId: BigInt,
-  timestamp: BigInt
+  timestamp: BigInt,
+  minterAddress: Bytes
 ): ERC1155Token {
   let id = contractAddress.toHex().concat('/').concat(tokenId.toHex())
   let token = new ERC1155Token(id)
@@ -57,6 +60,7 @@ export function createERC1155Token(
   token.timestamp = timestamp
   token.created = timestamp
   token.contract = contractAddress
+  token.minter = minterAddress
   token.save()
   return token as ERC1155Token;
 }

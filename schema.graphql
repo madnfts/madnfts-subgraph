@@ -40,6 +40,7 @@ type ERC721Token @entity {
   timestamp: BigInt!
   created: BigInt!
   owner: Account!
+  minter: Account!
   contract: ERC721Contract!
   approved: Account
   orders: [Order!] @derivedFrom(field: "ERC721token")
@@ -104,6 +105,7 @@ type ERC1155Token @entity {
   volume: Int
   timestamp: BigInt
   created: BigInt!
+  minter: Account!
   contract: ERC1155Contract!
   balances: [ERC1155Balance!]! @derivedFrom(field: "token")
   orders: [Order!] @derivedFrom(field: "ERC1155token")

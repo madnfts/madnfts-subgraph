@@ -33,7 +33,7 @@ import { Address } from '@graphprotocol/graph-ts/index';
 // 721 Token events
 
 export function handle721Approval(event: ERC721ApprovalEvent): void {
-  let token = fetchERC721Token(fetchERC721(event.address), event.params.owner, event.params.id, event.block.timestamp)
+  let token = fetchERC721Token(fetchERC721(event.address), event.params.owner, event.params.id, event.block.timestamp, event.params.owner)
   let owner = fetchAccount(event.params.owner)
   let approved = fetchAccount(event.params.spender)
   token.approved = approved.id
