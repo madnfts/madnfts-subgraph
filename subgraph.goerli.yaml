@@ -8,9 +8,9 @@ dataSources:
     name: ERC721Factory1
     network: goerli
     source:
-      address: '0xfFd82c7c4f52D92a47a5C6EdcEC48082b3695739'
+      address: '0x68DC5fB886094E57F7DdAce404F665471E7e3926'
       abi: ERC721Factory
-      startBlock: 8358500
+      startBlock: 8490700
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -38,9 +38,9 @@ dataSources:
     name: ERC721Marketplace1
     network: goerli
     source:
-      address: '0x38f549E194B5Ea366cAa61CbBf4C794782F70835'
+      address: '0xBD476f8905C8f3842f34f112B489BcF6dEB84b33'
       abi: ERC721Marketplace
-      startBlock: 8358500
+      startBlock: 8490700
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -66,9 +66,9 @@ dataSources:
     name: ERC1155Factory1
     network: goerli
     source:
-      address: '0xACFfB8AcD6a7150b57aEddB484fF667e15dC0438'
+      address: '0x8938AD3B5A8C69278Bf13a36314EEEf7fe988A7d'
       abi: ERC1155Factory
-      startBlock: 8358500
+      startBlock: 8490700
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -96,9 +96,9 @@ dataSources:
     name: ERC1155Marketplace1
     network: goerli
     source:
-      address: '0xd3d530A8E983BA235be793C70c168E22eadA0103'
+      address: '0x901c7Fd4DAF701841131408D2920CeE13E5F2050'
       abi: ERC1155Marketplace
-      startBlock: 8358500
+      startBlock: 8490700
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5

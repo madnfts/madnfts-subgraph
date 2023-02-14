@@ -8,9 +8,9 @@ dataSources:
     name: ERC721Factory1
     network: skale
     source:
-      address: '0x00Ad356CcA2be2b9D78aaca24B452618eb6858DA'
+      address: '0x68e9fB37425d5E0e3Ca8424C6FfC6a3064A478a9'
       abi: ERC721Factory
-      startBlock: 736300
+      startBlock: 923800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -38,9 +38,9 @@ dataSources:
     name: ERC721Marketplace1
     network: skale
     source:
-      address: '0xB5B8DdA48875b189a4f4Bace0F6Be2E49FcFd488'
+      address: '0x1AD5617A4daF50848561a0d08f2a36c18CEa0355'
       abi: ERC721Marketplace
-      startBlock: 736300
+      startBlock: 923800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -66,9 +66,9 @@ dataSources:
     name: ERC1155Factory1
     network: skale
     source:
-      address: '0xf908399c3dc80DFB5c691041B041C12fcCA6FAA4'
+      address: '0xaDE128D87aeC477B841f5E74ab79c908898CFa3b'
       abi: ERC1155Factory
-      startBlock: 736300
+      startBlock: 923800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -96,9 +96,9 @@ dataSources:
     name: ERC1155Marketplace1
     network: skale
     source:
-      address: '0xdcC7760EEb5e66c1CcC94cabA024802A6872635B'
+      address: '0x39f615c936a74c4dEB7FEBAb00F7Bf7cb5087FFc'
       abi: ERC1155Marketplace
-      startBlock: 736300
+      startBlock: 923800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
