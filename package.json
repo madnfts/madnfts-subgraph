@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy-harmony": "graph deploy --node https://api.thegraph.com/deploy/ devhalls/madnfts-harmony-marketplace",
+    "deploy-harmony": "graph deploy --node https://api.thegraph.com/deploy/ devhalls/madnfts-harmony-marketplace subgraph.harmony.yaml",
     "deploy-davinci": "graph deploy --node https://api.thegraph.com/deploy/ devhalls/madnfts-harmony-davinci subgraph.davinci.yaml",
     "deploy-goerli": "graph deploy --node https://api.thegraph.com/deploy/ devhalls/madnfts-goerli-marketplace subgraph.goerli.yaml",
     "create-skale": "graph create --node http://localhost:8020/ madmarketplace",
